@@ -7,3 +7,7 @@ let myVariable = 5;
 if (myVariable === 5) {
   console.log("The variable is 5!");
 }
+
+
+myVariable = 10
+console.log(myVariable)
