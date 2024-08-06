@@ -11,3 +11,15 @@ if (myVariable === 5) {
 
 myVariable = 10
 console.log(myVariable)
+
+
+let myVariable2 = 5
+{
+let myVariable2 = 10
+console.log(myVariable2)
+}
+console.log(myVariable2)
+
+var myVariableA = 5
+var myVariableA = 10
+console.log(myVariableA)
