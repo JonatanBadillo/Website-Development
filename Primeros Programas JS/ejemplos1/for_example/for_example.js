@@ -9,5 +9,6 @@ while(num <= 6) {  // Check if we are done
 	num = num + 1;
 } 
 
+// Display the sum
 alert("The sum of the numbers 1 through 6 is " + sum);
 
