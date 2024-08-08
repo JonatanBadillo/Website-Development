@@ -43,3 +43,17 @@ console.log(myVariableTwo);
 let x = 5
 x *= 5
 console.log(x)
+
+x += 5
+console.log(x) // Console logs 30 (25 plus 5 = 30)
+x /= 5
+console.log(x) // Console logs 6 (30 divided by 5 = 6)
+x -= 1
+console.log(x) // Console logs 5 (6 minus 1 = 5)
+x %= 4
+console.log(x) /*
+Console logs 1 (if you divide 5 by 4, the remainder is 1.
+% is the remainder operator
+*/
+
+
