@@ -38,3 +38,8 @@ console.log(myArray)
 // Definición de variables sin valores
 let myVariableTwo ;
 console.log(myVariableTwo);
+
+// Operadores de asignacion
+let x = 5
+x *= 5
+console.log(x)
