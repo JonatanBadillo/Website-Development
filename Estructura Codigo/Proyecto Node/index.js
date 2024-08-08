@@ -23,3 +23,8 @@ console.log(myVariable2)
 var myVariableA = 5
 var myVariableA = 10
 console.log(myVariableA)
+
+
+// Mutación de variables const
+const myArray = [ "some", "set", "of", "content" ]
+console.log(myArray)
