@@ -122,3 +122,9 @@ switch (x) {
     break;
   }
 }
+
+// Operador condicional en variables
+x = 5
+// Returns "Big Number"
+let y = x > 3 ? "Big Number" : "Small Number"
+console.log(y)
