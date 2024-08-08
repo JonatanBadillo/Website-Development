@@ -64,3 +64,8 @@ let combine = myVariable + myOtherVariable // "helloworld"
 combine = myVariable + " " + myOtherVariable
 console.log(combine) 
 
+myVariable = 5
+myOtherVariable = 10
+combine = myVariable + myOtherVariable
+console.log(combine)
+
