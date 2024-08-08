@@ -69,3 +69,9 @@ myOtherVariable = 10
 combine = myVariable + myOtherVariable
 console.log(combine)
 
+
+myVariable = "5"
+myOtherVariable = 5
+combine = myVariable + myOtherVariable
+console.log(combine)
+
