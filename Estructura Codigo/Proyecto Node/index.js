@@ -86,3 +86,14 @@ let someWord = "world"
 myVariable = `hello ${someWord}!`
 console.log(myVariable)
 
+
+// Declaraciones Logicas
+// Declaraciones if/else
+// We have set myVariable to 5
+myVariable = 5
+if(myVariable === 5) {
+console.log("The variable is 5!")
+}
+else {
+console.log("The variable is not 5.")
+}
