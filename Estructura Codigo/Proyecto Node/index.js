@@ -28,3 +28,7 @@ console.log(myVariableA)
 // Mutación de variables const
 const myArray = [ "some", "set", "of", "content" ]
 console.log(myArray)
+
+// Mutate the array
+myArray.push("new data!")
+console.log(myArray)
