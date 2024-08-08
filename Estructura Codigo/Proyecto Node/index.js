@@ -139,3 +139,4 @@ console.log(myVariable)
 myVariable = 5
 if(myVariable > 4) console.log("Hello World") // True!
 if(myVariable > 6) console.log("Hello World 2!") // False!
+
