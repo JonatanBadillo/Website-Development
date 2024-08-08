@@ -57,3 +57,10 @@ Console logs 1 (if you divide 5 by 4, the remainder is 1.
 */
 
 
+// Concatenación variable
+myVariable = "hello"
+let myOtherVariable = "world"
+let combine = myVariable + myOtherVariable // "helloworld"
+combine = myVariable + " " + myOtherVariable
+console.log(combine) 
+
