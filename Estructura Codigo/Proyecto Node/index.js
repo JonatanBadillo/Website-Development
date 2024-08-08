@@ -99,3 +99,13 @@ switch (x) {
     console.log("goodbye");
     break;
 }
+
+x = "Apples";
+switch (x) {
+  case "Apples":
+  case "Strawberries":
+    console.log("Apples and Strawberries can be red.");
+    break;
+  case "Bananas":
+    console.log("Bananas are yellow.");
+}
