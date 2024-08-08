@@ -109,3 +109,16 @@ switch (x) {
   case "Bananas":
     console.log("Bananas are yellow.");
 }
+
+// Let's set x to 5
+x = 5;
+switch (x) {
+  case 4: {
+    console.log("hello");
+    break;
+  }
+  default: {
+    console.log("goodbye");
+    break;
+  }
+}
