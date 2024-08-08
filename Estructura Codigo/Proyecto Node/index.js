@@ -75,3 +75,14 @@ myOtherVariable = 5
 combine = myVariable + myOtherVariable
 console.log(combine)
 
+// Literales de plantilla
+myVariable = `hello world
+!!
+how are you?`
+console.log(myVariable)
+
+
+let someWord = "world"
+myVariable = `hello ${someWord}!`
+console.log(myVariable)
+
