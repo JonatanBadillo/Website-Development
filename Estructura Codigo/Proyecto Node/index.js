@@ -32,3 +32,9 @@ console.log(myArray)
 // Mutate the array
 myArray.push("new data!")
 console.log(myArray)
+
+
+
+// Definición de variables sin valores
+let myVariableTwo ;
+console.log(myVariableTwo);
