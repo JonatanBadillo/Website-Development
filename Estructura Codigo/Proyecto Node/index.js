@@ -128,3 +128,14 @@ x = 5
 // Returns "Big Number"
 let y = x > 3 ? "Big Number" : "Small Number"
 console.log(y)
+
+
+// Operadores de comparación de instrucciones lógicas
+myVariable = 5
+if(myVariable === 5) // True!
+if(myVariable === "5") // False!
+console.log(myVariable)
+
+myVariable = 5
+if(myVariable > 4) console.log("Hello World") // True!
+if(myVariable > 6) console.log("Hello World 2!") // False!
