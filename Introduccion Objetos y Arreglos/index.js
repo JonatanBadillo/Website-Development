@@ -30,6 +30,25 @@ arrayLength = myArr.length
 console.log(myArr[myArr.length - 1])
 
 
+// Push y unshift
+// Cuando queremos agregar un elemento a un arreglo, push y unshift, hagamos eso al final y
+// al inicio del arreglo, respectivamente. Agregar elementos al final de un arreglo siempre es
+// más rápido. 
+
+// En el siguiente ejemplo, push se usa para agregar un elemento al final de cualquier arreglo:
+
+
+myArr = [ "banana", "apple", "squid", "cake", "pear" ]
+myArr.push("pear2")
+console.log(myArr) // [ "banana", "apple", "squid", "cake", "pear" ]
+
+
+// En el siguiente ejemplo, unshift se usa para agregar algo al principio:
+myArr = [ "banana", "apple", "squid", "cake", "pear" ]
+myArr.unshift("pear1")
+console.log(myArr) // [ "pear", "banana", "apple", "squid", "cake", pear" ]
+
+
 
 
 
