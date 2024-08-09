@@ -106,3 +106,16 @@ myArr.splice(0, 2)
 console.log(myArr)
 myArr.splice(1, 0, "strawberry", "box")
 console.log(myArr) // [ "banana", "strawberry", "box", "cake" ]
+
+
+
+
+// Objetos
+// se parecen mucho a lo que se llaman “diccionarios” en otros lenguajes
+// y consisten en pares de valor-llave definidos. Se pueden definir dentro de los {}, como se
+// muestra en el siguiente ejemplo:
+let myObject = {
+"key": "value",
+"someKey": 5,
+"anotherKey" : true
+}
