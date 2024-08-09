@@ -119,3 +119,22 @@ let myObject = {
 "someKey": 5,
 "anotherKey" : true
 }
+
+
+// Los objetos definidos sin la notación literal de los objetos
+// son más difíciles de definir, ya que necesitamos definir cada
+// llave por separado.
+let myObject2 = new Object()
+myObject2.key = "value"
+myObject2.someKey = 5
+myObject2.anotherKey = true
+ 
+// Los objetos tienen estas características comunes:
+// 1. Las llaves deben ser una cadena, número o símbolos (un identificador único especial
+//     en JavaScript).
+// 2. Los valores pueden ser de cualquier tipo y contener cualquier dato (objetos, arreglos,
+//     números, cadenas, funciones, etc.)
+// 3. Los objetos son reajustables (resizable) y pueden ser mutados (a diferencia de otros
+//     datos en JavaScript).
+    
+// Recuerda: ¡Los arreglos son objetos también! Sin embargo, los arreglos tienen métodos y propiedades adicionales que los hacen únicos.
