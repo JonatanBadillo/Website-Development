@@ -24,6 +24,11 @@ let arrayLength = myArr.length
 console.log(arrayLength) // shows 4
 
 
+// Obtener el último elemento de un arreglo
+myArr = [ "one", 2, "three", "four" ]
+arrayLength = myArr.length
+console.log(myArr[myArr.length - 1])
+
 
 
 
