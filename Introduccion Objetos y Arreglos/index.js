@@ -49,7 +49,17 @@ myArr.unshift("pear1")
 console.log(myArr) // [ "pear", "banana", "apple", "squid", "cake", pear" ]
 
 
-
+// Pop y shift
+// Si queremos eliminar el valor "pear" que agregamos al final
+// de nuestro arreglo, simplemente necesitamos ejecutar pop() en él:
+myArr = [ "banana", "apple", "squid", "cake", "pear" ]
+myArr.pop()
+console.log(myArr) // [ "banana", "apple", "squid", "cake" ]
+// Del mismo modo, si queremos eliminar el "banana" desde el comienzo del arreglo, podemos
+// usar shift():
+myArr = [ "banana", "apple", "squid", "cake" ]
+myArr.shift()
+console.log(myArr) // [ "apple", "squid", "cake" ]
 
 
 
