@@ -141,3 +141,8 @@ myObject2.anotherKey = true
 
 // Acceso a datos de los objetos
 console.log(myObject["key"])
+
+// Otra forma de acceder a los valores de los objetos es usar el punto . en lugar de []. Esto se
+// muestra en el siguiente ejemplo:
+console.log(myObject.key)
+
