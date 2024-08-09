@@ -215,3 +215,9 @@ let user1 = { "name" : "John", age: 24 }
 let user2 = { "name" : "Joe" }
 let combineUsers = { ...user1, ...user2 }
 console.log(combineUsers) // { "name" : "Joe", age: 24 }
+
+// forma simple
+// de convertir un arreglo a un objeto:
+let animals = [ "cats", "dogs"]
+let objectAnimals = { ...animals }
+console.log(objectAnimals) // {0: 'cats', 1: 'dogs'}
