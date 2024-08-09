@@ -97,3 +97,12 @@ console.log(myArr) // [ "banana", "apple" ]
 myArr = [ "banana", "apple", "squid", "cake" ]
 myArr.splice(0, 2)
 console.log(myArr) // [ "banana", "cake" ]
+
+// Cualquier argumento dado después del argumento final se agregará al arreglo en la posición
+// de inicio:
+myArr = [ "banana", "apple", "squid", "cake" ]
+console.log(myArr)
+myArr.splice(0, 2)
+console.log(myArr)
+myArr.splice(1, 0, "strawberry", "box")
+console.log(myArr) // [ "banana", "strawberry", "box", "cake" ]
