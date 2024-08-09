@@ -131,6 +131,12 @@ console.log(myObject["key"]);
 // muestra en el siguiente ejemplo:
 console.log(myObject.key);
 
+
+// Con los paréntesis cuadrados, la
+// variable keyName se usa si omitimos las comillas.
+// Sin embargo, cuando se usa el dot (punto), JavaScript buscará una llave en MyObject llamada
+// KeyName, que, por supuesto, devuelve indefinido. Por lo tanto, tanto los paréntesis
+// cuadrados como la notación de puntos tienen diferentes utilidades al acceder a objetos:
 let myObject3 = {
   key: "value3",
   someKey: 5,
