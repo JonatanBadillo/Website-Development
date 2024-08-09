@@ -63,4 +63,37 @@ console.log(myArr) // [ "apple", "squid", "cake" ]
 
 
 
+// Splice
 
+// Agregar y eliminar elementos desde el principio y el final de un arreglo es útil, pero la
+// mayoría de las veces, queremos cambiar algo en medio de un arreglo. Para hacer esto,
+// podemos usar otro método llamado splice(). A diferencia de los métodos que hemos visto
+// hasta ahora, splice() toma un par de argumentos, aunque solo se requiere uno. Dado que solo
+// se requiere un argumento, la sintaxis para el splice (‘empalme’) puede parecerse a cualquiera
+// de las siguientes variaciones:
+// someArray.splice(start)
+// someArray.splice(start, end)
+// someArray.splice(start, end, item1)
+// someArray.splice(start, end, item1, item2, item3 ... itemN)
+
+
+// • start (requerido): Esta es la posición en el arreglo en la que deseas comenzar el
+// ‘empalme’ (slice). Si es un número negativo, se contará desde el final del arreglo.
+// • end (opcional): Esto es cuántos elementos deseas eliminar. Si solo deseas insertar
+// algo, configura esto en 0. Si no colocas un número aquí, entonces todos los elementos
+// después de la posición de inicio se eliminarán.
+// • item1 ... itemN (opcional): Estos son elementos del arreglo que se insertarán después
+// de la posición de inicio. Puedes agregar tantos como quieras aquí, todas las comas
+// separadas.
+
+
+// Si solo usamos el primer argumento en empalme, cada elemento después de cierto punto en
+// el arreglo se eliminará, como se muestra en el siguiente ejemplo:
+myArr = [ "banana", "apple", "squid", "cake" ]
+myArr.splice(1)
+console.log(myArr) // [ "banana", "apple" ]
+// Si definimos un valor final, podemos eliminar elementos en medio de un arreglo. Por
+// ejemplo, eliminemos "apple" y "octopus":
+myArr = [ "banana", "apple", "squid", "cake" ]
+myArr.splice(0, 2)
+console.log(myArr) // [ "banana", "cake" ]
