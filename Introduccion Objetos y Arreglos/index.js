@@ -194,3 +194,5 @@ let myObjectA = {
 // Let's update one of the keys on myObject
 myObjectA["key"] = "NEW VALUE"
 console.log(myObjectA["key"]) // shows 'NEW VALUE'
+
+// Extendiendo la sintaxis o los “tres puntos”
