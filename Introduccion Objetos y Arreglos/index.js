@@ -182,3 +182,15 @@ console.log(z) // 5
 // variables cualquier cosa que desees:
 const [a, b ] = [1, 2]
 console.log(a) // 1
+
+
+// Mutabilidad del objeto
+
+let myObjectA = {
+"key": "value",
+"someKey": 5,
+"anotherKey" : true
+}
+// Let's update one of the keys on myObject
+myObjectA["key"] = "NEW VALUE"
+console.log(myObjectA["key"]) // shows 'NEW VALUE'
