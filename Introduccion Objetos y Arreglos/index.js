@@ -195,4 +195,14 @@ let myObjectA = {
 myObjectA["key"] = "NEW VALUE"
 console.log(myObjectA["key"]) // shows 'NEW VALUE'
 
+
 // Extendiendo la sintaxis o los “tres puntos”
+// 1. Fusionar arreglos
+// 2. Fusionar objetos
+// 3. Coaccionar arreglos en objetos
+// 4. Pasar matrices como argumentos a las funciones
+// Usando la sintaxis de propagación, puedes fusionar fácilmente dos arreglos, como se muestra
+// en el siguiente ejemplo:
+let animals1 = [ "cats", "dogs"]
+let animals2 = [ "pigeons" ]
+let allAnimals = [ ...animals1, ...animals2 ]
