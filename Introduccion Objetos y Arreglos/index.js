@@ -138,3 +138,6 @@ myObject2.anotherKey = true
 //     datos en JavaScript).
     
 // Recuerda: ¡Los arreglos son objetos también! Sin embargo, los arreglos tienen métodos y propiedades adicionales que los hacen únicos.
+
+// Acceso a datos de los objetos
+console.log(myObject["key"])
