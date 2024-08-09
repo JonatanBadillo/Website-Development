@@ -206,3 +206,12 @@ console.log(myObjectA["key"]) // shows 'NEW VALUE'
 let animals1 = [ "cats", "dogs"]
 let animals2 = [ "pigeons" ]
 let allAnimals = [ ...animals1, ...animals2 ]
+console.log(allAnimals) // [ "cats", "dogs", "pigeons" ]
+
+
+// Los objetos también se pueden fusionar de la misma manera, pero si se encuentran llaves
+// duplicadas, el segundo objeto sobrescribirá el primero:
+let user1 = { "name" : "John", age: 24 }
+let user2 = { "name" : "Joe" }
+let combineUsers = { ...user1, ...user2 }
+console.log(combineUsers) // { "name" : "Joe", age: 24 }
