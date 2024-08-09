@@ -143,5 +143,27 @@ let myObject3 = {
   anotherKey: true,
 };
 let keyName = "key";
+// Usando la notación de paréntesis cuadrado, podemos acceder al valor de cualquier
+// llave en un objeto en JavaScript.
 console.log(myObject3[keyName]); // shows "value"
 console.log(myObject3.keyName); // shows undefined
+
+// Destrucción de objetos
+// Ahora hemos cubierto las muchas formas en que puedes acceder a los datos en un objeto.
+// Otra forma útil de hacerlo es destruyendo el objeto. La destrucción de objetos funciona al
+// permitirnos dividir el objeto en un conjunto de variables, cada una de las cuales se puede usar
+// de forma independiente. Para ilustrar esto, veamos un ejemplo. Primero, creemos un objeto
+// simple:
+const myObj = {
+z: 5,
+y: 4,
+x: 3
+}
+
+// Ahora podemos acceder a partes de este objeto destruyéndolas en variables, como se muestra
+// en el siguiente ejemplo:
+
+const { x, y } = myObj
+console.log(y) // 4
+console.log(x) // 3
+console
