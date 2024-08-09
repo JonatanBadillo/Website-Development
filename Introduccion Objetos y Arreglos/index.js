@@ -167,3 +167,18 @@ const { x, y } = myObj
 console.log(y) // 4
 console.log(x) // 3
 console
+
+
+const myObj4 = {
+    z: undefined,
+    y: 4,
+    x: 3
+    }
+const { z = 10 } = myObj4
+console.log(z) // 5
+
+// Los nombres de variables que usas al destruir deben coincidir con los nombres de la
+// propiedad, a menos que estés destruyendo un arreglo. En ese caso, puedes llamar a sus
+// variables cualquier cosa que desees:
+const [a, b ] = [1, 2]
+console.log(a) // 1
