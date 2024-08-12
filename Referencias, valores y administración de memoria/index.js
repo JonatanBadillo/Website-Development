@@ -4,7 +4,7 @@
 
 
 // Pilas
-// La pila es un espacio de rastro para el hilo actual de JavaScript. Cada vez que apuntas a un
+// Cada vez que apuntas a un
 // tipo primitivo (primitivo, aquí, es decir, cualquier cosa que no sea un objeto) en JavaScript,
 // se agrega a la parte superior de la pila. En el siguiente código, definimos variables. Los datos
 // de tipo no objeto se agregan inmediatamente a la parte superior de la pila. Una representación
