@@ -12,3 +12,12 @@
 const SOME_CONSTANT = 5
 let myNumber = 10
 let myVariable = "Some Text"
+
+
+// Si intentas reasignar una variable de tipo primitivo, también se agrega a la pila, incluso si las
+// variables supuestamente apuntan al mismo valor.
+
+// Las variables no apuntarán al mismo valor
+// subyacente en la memoria, sino que aparecerán como nuevas copias de datos
+let number = 5
+let newNumber = number
