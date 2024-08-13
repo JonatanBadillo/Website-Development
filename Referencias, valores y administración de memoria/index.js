@@ -76,3 +76,8 @@ let additionalObject = newObject
 myNumber = 5
 newNumber = 5
 console.log(myNumber === newNumber) // TRUE
+
+// Del mismo modo, additionalObject y newObject se refieren a la misma referencia y también
+// probarán true para igualdad:
+console.log(newObject == additionalObject) // TRUE
+
