@@ -20,6 +20,15 @@ var multiply_fields = function () {
 
   par.textContent= "" + val1 + " * " + val2 + " = " + result;
 
+  // Create a new paragraph element
+  var newParagraph = document.createElement('p');
+
+  // Set the text for the new paragraph
+  newParagraph.textContent = 'Este es un nuevo párrafo agregado con JavaScript.';
+
+  // Add the new paragraph to the body of the document
+  document.body.appendChild(newParagraph);
+
   console.log("multiply_fields() called");
 };
 // Get the button element
