@@ -122,7 +122,6 @@ let words5 = () => {
 };
 words5(); // console logs Window { }
 
-
 // Si tu función de flecha está dentro de otra función, que no está utilizando la notación de
 // flecha, hereda el contexto de esa función principal. Esto se puede ver en el siguiente ejemplo:
 ("use strict");
@@ -140,3 +139,26 @@ contextualFunction(); // console logs undefined
 // que tal vez no deberían tener acceso a ellas.
 // Hasta ahora, mientras trabajas en modo estricto, this ha sido indefinido dentro de las
 // funciones. Para que esta palabra clave sea más valiosa, querremos darle algún tipo de valor.
+
+// Llamar a las funciones con contexto
+// Hay tres métodos heredados por todas las funciones a través de la herencia prototípica, que
+// nos permiten llamar a funciones con un contexto personalizado.
+// Estos se enumeran a continuación:
+// 1. call(), que llama a una función y le da algún contexto. Usar call() puede definir un
+// contexto para una función y también pasar las variables (separadas por comas).
+// 2. apply(), que es lo mismo que call() pero usa un arreglo para definir los argumentos
+// de una función.
+// 3. bind(), que une permanentemente algún contexto a una función, por lo que nunca
+// tienes que redefinir su contexto nuevamente.
+
+
+// call(). Supongamos que queremos definir un valor constante que esté disponible dentro de
+// una función específica. Podemos lograr esta funcionalidad agregando nuestra constante al
+// contexto de la función
+("use strict");
+words = function (word, punctuation) {
+  return this.keyword + " " + word + punctuation;
+};
+let wordContext = { keyword: "Hello" };
+let helloWorld = words.call(wordContext, "World", "!");
+console.log(helloWorld); // "Hello World!"
