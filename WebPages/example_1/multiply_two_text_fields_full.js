@@ -13,6 +13,8 @@ var multiply_fields = function() {
 	var results_span = document.getElementById("results");
 	// Display the result
 	results_span.textContent = result;
+
+	console.log("multiply_fields() called");
 };
 // Get the button element
 var btn = document.getElementById("my_button");
