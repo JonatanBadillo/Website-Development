@@ -67,7 +67,27 @@ console.log(wordFunctions.words("Hello", "World"));
 // comienza el cuerpo de la función.
 // Así es como se ve nuestra función anterior con la notación de flecha. Cuando intentas
 // llamarla, funciona igual que nuestras otras expresiones de funciones:
-let words = (word1, word2) => {
+let words2 = (word1, word2) => {
   return word1 + " " + word2;
 };
-console.log(words("Hello", "John")); // Hello John
+console.log(words2("Hello", "John")); // Hello John
+
+// Funciones y la palabra clave “this”
+// El objetivo principal de la palabra clave es
+// contener información sobre su contexto actual.
+// En el nivel superior de tu código, fuera de cualquier función, el contexto es “global”. Cuando
+// usamos la palabra clave “this” en el contexto global en los navegadores, se refiere a un objeto
+// llamado ventana. El objeto de la ventana contiene mucha información útil sobre tu contexto
+// actual. 
+// Como tal, los dos registros de consola en el siguiente ejemplo muestran lo mismo:
+console.log(this) // Console logs window object
+console.log(window) // Console logs window object
+// Dado lo que hemos dicho hasta ahora, cuando llamamos a esta palabra clave dentro de una
+// función, puedes esperar que esta palabra clave se refiera al contexto de la función, pero
+// encontrarás que todavía muestra el global this del objeto:
+console.log(this); // Window { }
+let words3 = function (word1, word2) {
+  console.log(this); // Window { }
+  return word1 + " " + word2;
+};
+console.log(words3("Hello", "John")); // Hello John
