@@ -109,4 +109,34 @@ let words4 = function (word1, word2) {
   return word1 + " " + word2;
 };
 
+// Funcionalidad de notación de flecha con this
+// Ahora que hemos analizado cómo funcionan diferentes contextos con funciones, volvamos a
+// las funciones de notación de flecha. Las funciones de flecha son un poco diferentes de otras
+// funciones en que no tienen su propio contexto.
+// Eso significa que incluso en modo estricto, lo heredan de sus padres. Esta funcionalidad solo
+// tiene sentido en modo estricto:
+("use strict");
+console.log(this); // Window { }
+let words5 = () => {
+  console.log(this);
+};
+words5(); // console logs Window { }
 
+
+// Si tu función de flecha está dentro de otra función, que no está utilizando la notación de
+// flecha, hereda el contexto de esa función principal. Esto se puede ver en el siguiente ejemplo:
+("use strict");
+
+let contextualFunction = function () {
+  let words5 = () => {
+    console.log(this); // console logs undefined
+  };
+  words5();
+};
+contextualFunction(); // console logs undefined
+
+// En general, el modo estricto es una forma más confiable de escribir código. Además de eso,
+// es una práctica bastante mala exponer variables globales, sin saberlo, a los scripts posteriores,
+// que tal vez no deberían tener acceso a ellas.
+// Hasta ahora, mientras trabajas en modo estricto, this ha sido indefinido dentro de las
+// funciones. Para que esta palabra clave sea más valiosa, querremos darle algún tipo de valor.
