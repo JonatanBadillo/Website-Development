@@ -81,3 +81,13 @@ console.log(myNumber === newNumber) // TRUE
 // probarán true para igualdad:
 console.log(newObject == additionalObject) // TRUE
 
+// La complejidad aparece cuando comparamos cloneObject y newObject. Aunque cloneObject
+// tiene el mismo valor subyacente que newobject, JavaScript comparará la igualdad de las dos
+// referencias, no el valor subyacente en sí mismo:
+newObject = { name: "John Schmidt" }
+cloneObject = { name: "John Schmidt" }
+console.log(newObject === cloneObject) // False
+// Este es un punto de confusión común para la mayoría de las personas que aprenden JavaScript
+// porque es contradictorio. Cuando entiendes heaps y pilas, comienza a tener sentido.
+// newObject y cloneObject no son iguales, ya que ambos tienen diferentes referencias en la
+// pila.
