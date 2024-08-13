@@ -151,7 +151,6 @@ contextualFunction(); // console logs undefined
 // 3. bind(), que une permanentemente algún contexto a una función, por lo que nunca
 // tienes que redefinir su contexto nuevamente.
 
-
 // call(). Supongamos que queremos definir un valor constante que esté disponible dentro de
 // una función específica. Podemos lograr esta funcionalidad agregando nuestra constante al
 // contexto de la función
@@ -168,7 +167,43 @@ console.log(helloWorld); // "Hello World!"
 // Los argumentos se definen después del contexto y se separan por comas, por lo que "World"
 // y "!" Ambos se convierten en palabra y puntuación, respectivamente.
 
-
 // Similar al ejemplo anterior, apply() funciona esencialmente de la misma manera, con la única
 // diferencia de que los argumentos se definen en un arregloz. Con apply, el código se vería así:
-helloWorld = words.apply(wordContext, [ "World", "!" ])
+helloWorld = words.apply(wordContext, ["World", "!"]);
+
+// Si llamamos a words() todo el tiempo, encontraremos que tendremos que seguir mencionando
+// nuestro contexto una y otra vez, lo cual no es ideal.
+
+// Esto se debe a que necesitamos hacer referencia a él cada vez que usamos call o apply. En el
+// siguiente ejemplo, queremos llamar a words() dos veces y usar el mismo contexto para cada
+// llamada. Esto significa que tenemos que escribir el mismo código dos veces:
+("use strict");
+words = function (word, punctuation) {
+  return this.keyword + " " + word + punctuation;
+};
+wordContext = {
+  keyword: "Hello",
+};
+helloWorld = words.call(wordContext, "World", "!");
+let goodbye = words.call(wordContext, "Goodbye", "!");
+console.log(helloWorld); // "Hello World!"
+console.log(goodbye); // "Hello Goodbye!"
+
+// Aunque no es un problema importante, comienza a convertirse en un problema en las grandes
+// bases de código. En cambio, es más eficiente usar bind(). Usando bind(), solo mencionamos
+// nuestro contexto una vez, y luego se enreda permanentemente con nuestra función. Esto se
+// puede ver en el siguiente ejemplo:
+("use strict");
+words = function (word, punctuation) {
+  return this.keyword + " " + word + punctuation;
+};
+wordContext = {
+  keyword: "Hello",
+};
+let boundWord = words.bind(wordContext);
+helloWorld = boundWord("World", "!");
+goodbye = boundWord("Goodbye", "!");
+console.log(helloWorld); // "Hello World!"
+console.log(goodbye); // "Hello Goodbye!"
+// Llamar a las funciones con el contexto se presta bien a la herencia funcional. Las funciones
+// pueden heredar ciertas variables o métodos globales a través del contexto.
