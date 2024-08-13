@@ -50,3 +50,14 @@ let wordFunctions = {
 };
 console.log(wordFunctions.words("Hello", "World"));
 // En el ejemplo anterior, llamar a wordFunctions.words() nos permitiría ejecutar esta función.
+
+// Funciones anónimas
+// Las funciones anónimas son funciones que en
+// realidad no tienen nombre y se llaman de inmediato. Para que se ejecuten de inmediato, lo
+// envolvemos en los paréntesis redondos y lo llamamos con doble () como antes:
+(function (word1, word2) {
+  return word1 + " " + word2;
+})("Hello", "World");
+// Los argumentos se colocan en el segundo conjunto de paréntesis para que puedan pasar a la
+// función. El uso de funciones anónimas está decayendo, pero a veces todavía se usan para
+// crear un alcance separado para trabajar dentro.
