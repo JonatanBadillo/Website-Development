@@ -49,8 +49,30 @@ setTimeout(function () {
 // excederán el límite de la pila.
 // Considera el siguiente objeto. Primero, definimos un nuevo objeto, y luego establecemos otra
 // variable para apuntarlo:
+// Aquí, el objeto se almacena en
+// el heap, y la pila solo se refiere a la referencia del heap.
+// En este caso, userOne y userTwo apuntan al mismo objeto en el heap. Si cambias una propiedad en userOne, también se reflejará en userTwo.
 let userOne = { name: "John Schmidt" }
 let userTwo = userOne
+// Nota sobre los tipos de objetos: Dado que las funciones y los arreglos también son de tipo
+// “objeto”, ¡ellos también se almacenan en el heap!
 
 
+// Objeto y igualdad de referencia
+// JavaScript en realidad tiene muchas dificultades
+// para comparar los valores de dos objetos diferentes, y básicamente se reduce a pilas y heaps.
+// Para entender por qué, considera el siguiente código:
+myNumber = 5
+newNumber = 5
+let newObject = { name: "John Schmidt" }
+let cloneObject = { name: "John Schmidt" }
+let additionalObject = newObject
+// Mientras que los no objetos se realizan en la pila de manera normal, un nuevo objeto
+// crea una nueva referencia. Aunque tanto cloneObject como newObject tienen el mismo
+// “valor” subyacente, sus referencias aún difieren.
 
+// Entonces, newNumber y myNumber tienen el mismo valor y nos darán un valor “verdadero”
+// si intentamos probar su igualdad con el signo de triple iguales:
+myNumber = 5
+newNumber = 5
+console.log(myNumber === newNumber) // TRUE
