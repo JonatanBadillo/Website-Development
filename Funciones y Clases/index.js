@@ -9,3 +9,11 @@ function myFunction() {
   return "Hello World";
 }
 console.log(myFunction());
+
+// Agregando argumentos a una función
+function words(word1, word2) {
+  return word1 + " " + word2;
+}
+console.log(words("Hello", "John")); // Hello John
+console.log(words("Hello", "Jake")); // Hello Jake
+console.log(words("Good bye", "Alice")); // Good bye Alice
