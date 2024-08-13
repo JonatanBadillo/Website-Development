@@ -3,8 +3,11 @@
 var my_record = {};
 // agregando al objeto my_record la propiedad name con valor Jon
 my_record.name = "Jon";
+
+
 // creando un arreglo children dentro del objeto my_record
 my_record.children = [];
+
 // creando un objeto dentro del arreglo children
 my_record.children[0] = {};
 // agregando al objeto children[0] la propiedad name con valor Jim
@@ -24,3 +27,9 @@ my_record.children[2] = {};
 my_record.children[2].name = "Joel";
 my_record.children[2].age = 7;
 my_record.children[2].favorite_color = "orange";
+
+console.log(my_record.children[1].name); // Jack
+console.log(my_record.children[2].favorite_color); // orange
+console.log(my_record.name); // Jon
+
+
