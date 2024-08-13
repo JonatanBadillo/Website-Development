@@ -78,10 +78,10 @@ console.log(words2("Hello", "John")); // Hello John
 // En el nivel superior de tu código, fuera de cualquier función, el contexto es “global”. Cuando
 // usamos la palabra clave “this” en el contexto global en los navegadores, se refiere a un objeto
 // llamado ventana. El objeto de la ventana contiene mucha información útil sobre tu contexto
-// actual. 
+// actual.
 // Como tal, los dos registros de consola en el siguiente ejemplo muestran lo mismo:
-console.log(this) // Console logs window object
-console.log(window) // Console logs window object
+console.log(this); // Console logs window object
+console.log(window); // Console logs window object
 // Dado lo que hemos dicho hasta ahora, cuando llamamos a esta palabra clave dentro de una
 // función, puedes esperar que esta palabra clave se refiera al contexto de la función, pero
 // encontrarás que todavía muestra el global this del objeto:
@@ -91,3 +91,22 @@ let words3 = function (word1, word2) {
   return word1 + " " + word2;
 };
 console.log(words3("Hello", "John")); // Hello John
+
+// Modo descuidado (sloppy)
+
+// Para salir del modo descuidado, tenemos que cambiar a algo llamado modo “estricto (strict)”.
+// El modo estricto aporta muchas ventajas a tu código, el principal está separando los contextos
+// de funciones del contexto global. Tanto los archivos como las funciones se pueden hacer
+// estrictas agregando el texto “use strict” en la parte superior. Al poner nuestro código en modo
+// estricto, podemos dar a cada función su propio contexto y, por lo tanto, la palabra clave this
+// devolverá indefinido dentro de una función. En el siguiente ejemplo, el modo estricto está
+// habilitado. Para habilitar el modo estricto, solo debes agregar "usar estricto" en la parte
+// superior de tu archivo:
+("use strict");
+console.log(this); // Window { }
+let words4 = function (word1, word2) {
+  console.log(this); // undefined
+  return word1 + " " + word2;
+};
+
+
