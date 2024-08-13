@@ -162,3 +162,13 @@ words = function (word, punctuation) {
 let wordContext = { keyword: "Hello" };
 let helloWorld = words.call(wordContext, "World", "!");
 console.log(helloWorld); // "Hello World!"
+
+// En este ejemplo, pasamos el objeto wordContext a call() para que se convierta en el contexto
+// de la función y, por lo tanto, es este valor.
+// Los argumentos se definen después del contexto y se separan por comas, por lo que "World"
+// y "!" Ambos se convierten en palabra y puntuación, respectivamente.
+
+
+// Similar al ejemplo anterior, apply() funciona esencialmente de la misma manera, con la única
+// diferencia de que los argumentos se definen en un arregloz. Con apply, el código se vería así:
+helloWorld = words.apply(wordContext, [ "World", "!" ])
