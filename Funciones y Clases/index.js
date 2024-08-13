@@ -61,3 +61,13 @@ console.log(wordFunctions.words("Hello", "World"));
 // Los argumentos se colocan en el segundo conjunto de paréntesis para que puedan pasar a la
 // función. El uso de funciones anónimas está decayendo, pero a veces todavía se usan para
 // crear un alcance separado para trabajar dentro.
+
+// Funciones con notación de flecha
+// La notación de la flecha se llama como tal porque usa => para indicar dónde
+// comienza el cuerpo de la función.
+// Así es como se ve nuestra función anterior con la notación de flecha. Cuando intentas
+// llamarla, funciona igual que nuestras otras expresiones de funciones:
+let words = (word1, word2) => {
+  return word1 + " " + word2;
+};
+console.log(words("Hello", "John")); // Hello John
