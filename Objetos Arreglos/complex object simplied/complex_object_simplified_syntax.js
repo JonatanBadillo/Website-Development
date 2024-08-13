@@ -1,5 +1,6 @@
-// crecion de objeto my_record con propiedades y arreglos
+// creacion de objeto my_record con propiedades y arreglos
 var my_record = {
+	// creacion de propiedad name
 	name: "Jon",
 	// creacion de arreglo children con objetos
 	children: [
