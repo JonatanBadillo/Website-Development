@@ -39,3 +39,18 @@ myNumber = 5;
 setTimeout(function () {
   console.log("Hello World");
 }, 1000);
+
+
+
+
+// El heap
+// Si bien los tipos no objeto se almacenan solo en la pila, los objetos se arrojan al heap, que es
+// una forma más dinámica de memoria sin límite. Esto significa que los objetos grandes nunca
+// excederán el límite de la pila.
+// Considera el siguiente objeto. Primero, definimos un nuevo objeto, y luego establecemos otra
+// variable para apuntarlo:
+let userOne = { name: "John Schmidt" }
+let userTwo = userOne
+
+
+
