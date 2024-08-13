@@ -12,6 +12,7 @@ var multiply_fields = function() {
 	// Display the result
 	results_span.textContent = result;
 
+	// Printing to the console
 	console.log("multiply_fields() called");
 };
 
