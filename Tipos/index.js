@@ -83,7 +83,10 @@ newNumber = new Number(5) // Number { 5 }
 // El comportamiento de usar estos envoltorios primitivos como constructores es bastante poco
 // confiable, por lo que generalmente se recomienda que evites esto.
 
+
+
 // El tipo número y nan
+// Not a number”.
 // NaN, también puede aparecer en tu código si intentas crear
 // un número a partir de algo que claramente no es un número. Un ejemplo de cómo lograrías
 // esto es envolviéndolo en Number(), como lo hicimos anteriormente, o utilizando un método
