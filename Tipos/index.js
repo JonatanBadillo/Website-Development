@@ -121,3 +121,18 @@ newDate.setDate("5")
 newDate.setMonth("5")
 console.log(newDate) // 5th June 1993
 
+// El tipo de símbolo
+// Los símbolos son un tipo de datos primitivo que se introdujo en ES6. Se utilizan para
+// crear identificadores únicos para objetos. Los símbolos se crean utilizando la función
+// Symbol():
+let myArray = [ "apple", "squid", "speaker" ]
+let getIterator = myArray[Symbol.iterator]()
+console.log(getIterator)
+
+
+
+let idSymbol1 = Symbol("id")
+let idSymbol2 = Symbol("id")
+let myObject = { [idSymbol1]: "some-id", [idSymbol2] : "some-other-id" }
+console.log(myObject[idSymbol1]) // "some-id"
+console.log(myObject[idSymbol2]) // "some-other-id"
