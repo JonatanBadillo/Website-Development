@@ -109,3 +109,15 @@ isNaN([5]) // false
 let x = 5 * Math.PI // 5 times Pi
 console.log(x)
 let y = 10 * Math.E // 10 times e
+
+
+// El tipo fecha (Date)
+let currentDate = new Date() // Date Object
+console.log(currentDate) // Gives current date and time
+
+let newDate = new Date()
+newDate.setFullYear("1993")
+newDate.setDate("5")
+newDate.setMonth("5")
+console.log(newDate) // 5th June 1993
+
