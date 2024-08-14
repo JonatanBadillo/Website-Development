@@ -102,3 +102,10 @@ isNaN(" ") // false
 isNaN(NaN) // true
 isNaN(false) // false
 isNaN([5]) // false
+
+// Tipo de número matemáticas
+// Estas constantes matemáticas se pueden usar en cualquier ecuación matemática, utilizando
+// notación matemática estándar. Por ejemplo:
+let x = 5 * Math.PI // 5 times Pi
+console.log(x)
+let y = 10 * Math.E // 10 times e
