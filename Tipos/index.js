@@ -76,3 +76,9 @@ newString = String(5) // "5"
 // El mismo trabajo para números, que coaccionan las cadenas numéricas en números:
 let newNumber = String("5") // 5
 console.log(typeof(newNumber)) // 5
+
+
+newString = new String("hello") // String { "hello" }
+newNumber = new Number(5) // Number { 5 }
+// El comportamiento de usar estos envoltorios primitivos como constructores es bastante poco
+// confiable, por lo que generalmente se recomienda que evites esto.
