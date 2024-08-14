@@ -59,3 +59,20 @@ Object.keys({ "hello" : "world", "goodbye" : "world" })
 // se encuentran en una función de constructor de ese envoltorio, es decir,
 // Number.constructor.MAX_SAFE_INTEGER, y deben llamarse a través del objeto
 // de envoltorio, como Object.keys() o Object.values().
+
+
+// Uso de envoltorios para crear tipos
+// Los envoltorios se pueden usar para crear nuevos datos de cierto tipo. Por ejemplo, se puede
+// crear una nueva cadena de tal manera, con el beneficio adicional de también coaccionar otros
+// tipos a las cadenas:
+newString = String("hello") // "hello"
+let objString = String({ "some" : "object" }) // "[object
+console.log(objString) // "[object Object]"
+
+newString = String(5) // "5"
+
+
+
+// El mismo trabajo para números, que coaccionan las cadenas numéricas en números:
+let newNumber = String("5") // 5
+console.log(typeof(newNumber)) // 5
