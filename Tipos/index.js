@@ -90,3 +90,12 @@ newNumber = new Number(5) // Number { 5 }
 // para obligarlo a un objeto como parseFloat() o parseInt():
 parseInt("5") // the Number 5
 parseInt({ "key" : "value" }) // NaN
+
+// Como no podemos verificar si algo es NaN haciendo
+// NaN===NaN, tenemos una función llamada isNaN para hacer el trabajo en su lugar:
+isNaN(5) // false
+isNaN(NaN) // true
+isNaN(" ") // false
+isNaN(NaN) // true
+isNaN(false) // false
+isNaN([5]) // false
