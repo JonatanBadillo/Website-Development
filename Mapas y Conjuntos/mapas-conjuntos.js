@@ -64,3 +64,15 @@ mySet.delete(4)
 console.log(mySet) // Set(1) {5}
 mySet.clear()
 console.log(mySet) // Set(0) {}
+
+
+// Comprobación de membresía del conjunto
+// se convierten en una
+// herramienta poderosa para verificar si existe un cierto valor en un conjunto específico. Los
+// conjuntos tienen un método incorporado llamado Set.has() para hacer esto:
+mySet = new Set()
+mySet.add(4)
+mySet.add(5)
+mySet.delete(4)
+let checkSet = mySet.has(4)
+console.log(checkSet) // false
