@@ -50,10 +50,28 @@ console.log(myArray);
 
 // array de frutas
 let array = ["banana", "apple", "orange"];
-// agregar elementos al arreglo
+// agregar elementos al arreglo, desde la posicion 2, no eliminar elementos, y agrega "pear" y "pineapple"
 array.splice(2, 0, "pear", "pineapple");
 console.log(array); // ["banana", "apple", "pear", "pineapple", "orange"]
-// eliminar elementos del arreglo
+// eliminar elementos del arreglo , desde la posicion 3, elimina 2 elementos
 array.splice(3, 2);
 console.log(array); // ["banana", "apple", "pear" ]
+
+
+// 5. ¿Cómo se puede simular el comportamiento de primero en entrar, primero en salir? 
+// Problema 
+// Deseas tratar tu arreglo como una pila y obtener el primer elemento del mismo. ¿Cómo se puede simular el comportamiento de último en entrar, primero en salir? 
+// Solución
+// Deseas tratar tu arreglo como una pila y obtener el último elemento de la matriz. 
+let myArray3 = [1, 2, 3, 4, 5];
+// obtener el último elemento del arreglo
+let lastElement = myArray3.pop(); // sacamos el ultimo valor del arreglo, 5
+console.log(lastElement); // 5
+// obtener el primer elemento del arreglo
+let firstElement = myArray3.shift(); // sacamos el primer valor del arreglo 
+console.log(firstElement); // 1
+console.log(myArray3); // [2, 3, 4]
+
+
+
 
