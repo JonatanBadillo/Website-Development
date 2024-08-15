@@ -76,3 +76,25 @@ mySet.add(5)
 mySet.delete(4)
 let checkSet = mySet.has(4)
 console.log(checkSet) // false
+
+// Comprobar tamaño de conjunto
+// Puedes verificar el tamaño de un conjunto utilizando el método size:
+console.log(mySet.size) // 1
+
+
+// Mezcla de conjuntos
+// Dado que los conjuntos son iterables e implementan el protocolo iterator, se pueden fusionar
+// (mezclar) utilizando el operador de tres puntos (...), como se muestra en el siguiente ejemplo.
+// Los duplicados se eliminarán automáticamente si existen. Puedes ver cómo se ve esto en la
+// figura 1.
+let mySetOne = new Set()
+mySetOne.add(4)
+mySetOne.add(5)
+
+
+
+let mySetTwo = new Set()
+mySetTwo.add(8)
+mySetTwo.add(4)
+let bigSet = new Set([...mySetOne, ...mySetTwo])
+console.log(bigSet) // Set {0:4 , 1:5 , 2:8}
