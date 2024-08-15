@@ -28,3 +28,15 @@ console.log(myArray2[0][0]);
 console.log(myArray2[1][1]);
 
 
+// 3. ¿Cómo se invierte el orden de los elementos de un arreglo?
+// Problema
+// Deseas invertir el orden de los elementos de tu arreglo.
+// Solución
+// Usa el método reverse() para combinar un arreglo con el final del otro.
+
+// definimos array con elementos del 1-5
+myArray = [1, 2, 3, 4, 5];
+// invertir el orden de los elementos del arreglo
+myArray.reverse();
+// impresion del arreglo con el orden invertido
+console.log(myArray);
