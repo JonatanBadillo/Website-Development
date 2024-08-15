@@ -112,7 +112,25 @@ myArray6.forEach((i) => {
 // Problema 
 // Deseas saber cuál es la diferencia entre crear un objeto utilizando el operador new o un objeto  literal. 
 // Solución
-// La diferencia entre un constructor de objetos y un objeto literal es que un constructor de objetos es una función que crea un objeto y un objeto literal es una lista de pares de valores clave.
+// La diferencia es que un constructor de objetos es una función que crea un objeto con el uso
+// del operador new y un objeto literal se declaran sus propiedades de manera más explícita.
+
+// creacion de un objeto con un constructor
+function Person(name, age) {
+    this.name = name;
+    this.age = age;
+}
+
+let person1 = new Person("Jony", 21);
+
+// creacion de un objeto con un objeto literal
+
+let person2 = {
+    name: "Jony",
+    age: 21
+};
+
+console.log(person1); // Person { name: 'Jony', age: 21 }
 
 
 // 8. ¿Cómo se accede a las propiedades de un objeto y se configuran? 
