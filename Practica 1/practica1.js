@@ -124,3 +124,12 @@ console.log(myObj["age"]); // 21
 myObj.name = "Jony Badillo";
 myObj.age = 100;
 console.log(myObj); // { name: 'Jony Badillo', age: 100 }
+
+
+
+// 9. ¿Cuál es la diferencia entre objetos y arreglos? 
+// Problema 
+// Quieres saber cuándo debes utilizar un objeto en lugar de un arreglo.
+// Solución
+// Los objetos son útiles cuando necesitas almacenar pares clave-valor. Los arreglos son útiles cuando necesitas almacenar una lista de elementos.
+
