@@ -73,5 +73,16 @@ console.log(firstElement); // 1
 console.log(myArray3); // [2, 3, 4]
 
 
+// 6. ¿Cómo se ejecuta una función para cada elemento en orden ascendente? 
+// Problema 
+// Deseas realizar una operación en cada elemento dentro de un arreglo, en orden ascendente. 
+// Solución 
+// El método forEach() te permite realizar una función de devolución de llamada en cada  elemento del arreglo, en orden ascendente. 
 
-
+// array de colores
+let myArray5 = ["blue", "green", "red"];
+// imprimir cada elemento del arreglo con forEach
+myArray5.forEach((i) => {
+    // impresion de cada elemento
+    console.log(i);
+});
