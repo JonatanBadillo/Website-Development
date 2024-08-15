@@ -73,6 +73,18 @@ console.log(firstElement); // 1
 console.log(myArray3); // [2, 3, 4]
 
 
+// comporamiento de una cola
+let myArray4 = [1, 2, 3, 4, 5];
+// obtener el primer elemento del arreglo
+let firstElement2 = myArray4.shift(); // sacamos el primer valor del arreglo
+console.log(firstElement2); // 1
+console.log(myArray4); // [2, 3, 4, 5]
+// agregar un elemento al final del arreglo
+myArray4.push(6);
+console.log(myArray4); // [2, 3, 4, 5, 6]
+
+
+
 // 6. ¿Cómo se ejecuta una función para cada elemento en orden ascendente? 
 // Problema 
 // Deseas realizar una operación en cada elemento dentro de un arreglo, en orden ascendente. 
