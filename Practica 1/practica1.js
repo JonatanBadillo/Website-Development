@@ -84,5 +84,12 @@ let myArray5 = ["blue", "green", "red"];
 // imprimir cada elemento del arreglo con forEach
 myArray5.forEach((i) => {
     // impresion de cada elemento
-    console.log(i);
+    console.log(i); // blue, green, red
 });
+
+
+// 7. ¿Cuál es la diferencia entre un constructor de objetos y un objeto literal? 
+// Problema 
+// Deseas saber cuál es la diferencia entre crear un objeto utilizando el operador new o un objeto  literal. 
+// Solución
+// La diferencia entre un constructor de objetos y un objeto literal es que un constructor de objetos es una función que crea un objeto y un objeto literal es una lista de pares de valores clave.
