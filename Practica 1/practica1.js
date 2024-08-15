@@ -133,3 +133,19 @@ console.log(myObj); // { name: 'Jony Badillo', age: 100 }
 // Solución
 // Los objetos son útiles cuando necesitas almacenar pares clave-valor. Los arreglos son útiles cuando necesitas almacenar una lista de elementos.
 
+// 10. ¿Qué significa asignar propiedades de un objeto con metadatos? 
+// Problema 
+// Deseas crear propiedades personalizadas de un objeto. 
+// Solución 
+// El método defineProperty de un objeto te permitirá crear propiedades personalizadas para tu  objeto.
+// creacion de un objeto
+let myObj2 = {
+    "name": "Jony",
+    "age": 21,
+    "country": "Mexico"
+};
+
+// agregando la propiedad year al objeto
+Object.defineProperty(myObj, "year", {value:"2002"})
+console.log(myObj2); // { name: 'Jony', age: 21, country: 'Mexico', year: '2002' }
+
