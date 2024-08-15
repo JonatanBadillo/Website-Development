@@ -40,3 +40,20 @@ myArray = [1, 2, 3, 4, 5];
 myArray.reverse();
 // impresion del arreglo con el orden invertido
 console.log(myArray);
+
+
+// 4. ¿Cómo se cambia el contenido de un arreglo agregando o eliminando elementos? 
+// Problema 
+// Necesitas una forma rápida de cambiar los elementos del arreglo agregando o eliminando  elementos. 
+// Solución
+// Usa el método splice() para cambiar el contenido de un arreglo. 
+
+// array de frutas
+let array = ["banana", "apple", "orange"];
+// agregar elementos al arreglo
+array.splice(2, 0, "pear", "pineapple");
+console.log(array); // ["banana", "apple", "pear", "pineapple", "orange"]
+// eliminar elementos del arreglo
+array.splice(3, 2);
+console.log(array); // ["banana", "apple", "pear" ]
+
