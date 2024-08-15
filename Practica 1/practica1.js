@@ -87,9 +87,40 @@ myArray5.forEach((i) => {
     console.log(i); // blue, green, red
 });
 
+let myArray6 = [1, 2, 3];
+// imprimir cada elemento del arreglo con forEach
+myArray6.forEach((i) => {
+    // impresion de cada elemento sumando 1 a cada elemento del arreglo
+    i++;
+    console.log(i); // 2,3,4
+});
+
 
 // 7. ¿Cuál es la diferencia entre un constructor de objetos y un objeto literal? 
 // Problema 
 // Deseas saber cuál es la diferencia entre crear un objeto utilizando el operador new o un objeto  literal. 
 // Solución
 // La diferencia entre un constructor de objetos y un objeto literal es que un constructor de objetos es una función que crea un objeto y un objeto literal es una lista de pares de valores clave.
+
+
+// 8. ¿Cómo se accede a las propiedades de un objeto y se configuran? 
+// Problema 
+// Deseas saber cómo acceder a las propiedades de un objeto. 
+// Solución
+
+// Puedes acceder a las propiedades de un objeto utilizando la notación de puntos o la notación de corchetes.
+
+// creacion de un objeto
+let myObj = {
+    "name": "Jony",
+    "age": 21
+};
+
+console.log(myObj); // { name: 'Jony', age: 21 }
+console.log(myObj.name); // Jony
+// accediento a la propiedad de edad con notación de corchetes
+console.log(myObj["age"]); // 21
+// cambiar el valor de la propiedad name
+myObj.name = "Jony Badillo";
+myObj.age = 100;
+console.log(myObj); // { name: 'Jony Badillo', age: 100 }
