@@ -118,3 +118,13 @@ console.log(mySet[2]); // undefined
 mySet.forEach((x) => {
     console.log(x) // 4, 5, 6
 })
+
+mySet = new Set()
+mySet.add(4)
+mySet.add(5)
+mySet.add(6)
+
+
+// puedes convertir fácilmente un conjunto en un arreglo en su lugar utilizando
+// Array.from(). Esto es útil si necesitas trabajar con un conjunto como un arreglo:
+let arrayFromSet = Array.from(mySet) // [ 4, 5, 6 ]
