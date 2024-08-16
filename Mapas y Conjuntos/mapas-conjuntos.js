@@ -138,3 +138,17 @@ mySet = new Set()
 mySet.add(5)
 mySet.add(10)
 let getKeys = mySet.keys() // SetIterator{5, 10}
+
+
+// Los SetIterators son diferentes de los conjuntos, y solo tienen un método, que es el método
+// next(). El método next() te permite iterar a través de los conjuntos de un elemento a la vez.
+// Cada vez que lo haces, se devuelve un objeto que consiste en el valor del elemento
+// establecido y si la iteración está completa.
+// Puedes ver cómo se ve eso en el siguiente ejemplo:
+mySet = new Set()
+mySet.add(5)
+mySet.add(10)
+getKeys = mySet.keys() // SetIterator{5, 10}
+console.log(getKeys.next()) // { value: 5, done: false }
+console.log(getKeys.next()) // { value: 10, done: false }
+console.log(getKeys.next()) // { value: undefined, done: false }
