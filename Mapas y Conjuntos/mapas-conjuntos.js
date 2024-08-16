@@ -209,3 +209,13 @@ myMap.delete("key")
 console.log(myMap) // Map(1) {'secondKey' => 'value'}
 myMap.clear()
 console.log(myMap) // Map(0) {}
+
+// los mapas parecen ser capaces de tener elementos establecidos
+// utilizando la notación de paréntesis cuadrado, pero esta no es la forma correcta de establecer
+// nuevas entradas del mapa. De hecho, establecer una propiedad en un mapa utilizando
+// paréntesis cuadrados da como resultado que la propiedad se define en el objeto del mapa, y
+// no en el mapa en sí:
+myMap = new Map()
+myMap.set("hello", "world")
+myMap[0] = "hello"
+console.log(myMap)
