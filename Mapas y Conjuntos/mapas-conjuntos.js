@@ -152,3 +152,16 @@ getKeys = mySet.keys() // SetIterator{5, 10}
 console.log(getKeys.next()) // { value: 5, done: false }
 console.log(getKeys.next()) // { value: 10, done: false }
 console.log(getKeys.next()) // { value: undefined, done: false }
+
+
+
+// Mientras que keys() y values() proporcionan una forma abreviada de generar SetIterators,
+// también se pueden crear refiriéndose a la propiedad del iterador sets para lograr el mismo
+// resultado:
+mySet = new Set()
+mySet.add(5)
+mySet.add(10)
+getKeys = mySet[Symbol.iterator]() // SetIterator{5, 10}
+console.log(getKeys.next()) // { value: 5, done: false }
+console.log(getKeys.next()) // { value: 10, done: false }
+console.log(getKeys.next()) // { value: undefined, done: false }
