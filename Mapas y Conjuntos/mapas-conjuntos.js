@@ -219,3 +219,11 @@ myMap = new Map()
 myMap.set("hello", "world")
 myMap[0] = "hello"
 console.log(myMap)
+
+
+// Mientras que los objetos solo permiten cadenas, números o símbolos para que se establezcan
+// como llaves, los mapas permiten que las llaves sean de cualquier tipo. Como tal, una llave de
+// función es posible en los mapas, mientras que es imposible en los objetos:
+myMap = new Map()
+myMap.set(() => { return true }, "value")
+console.log(myMap) // Map(1) {{ƒ => 'value'}}
