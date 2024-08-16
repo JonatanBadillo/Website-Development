@@ -113,55 +113,64 @@ for (let x in mySet) {
 
 console.log(mySet[2]); // undefined
 
-
 // con metodo for each
 mySet.forEach((x) => {
-    console.log(x) // 4, 5, 6
-})
+  console.log(x); // 4, 5, 6
+});
 
-mySet = new Set()
-mySet.add(4)
-mySet.add(5)
-mySet.add(6)
-
+mySet = new Set();
+mySet.add(4);
+mySet.add(5);
+mySet.add(6);
 
 // puedes convertir fácilmente un conjunto en un arreglo en su lugar utilizando
 // Array.from(). Esto es útil si necesitas trabajar con un conjunto como un arreglo:
-let arrayFromSet = Array.from(mySet) // [ 4, 5, 6 ]
-
+let arrayFromSet = Array.from(mySet); // [ 4, 5, 6 ]
 
 // Llaves de conjuntos y valores
 // Al igual que los objetos, los conjuntos heredan los métodos keys(), values() y entries(). En
 // conjuntos, tanto keys() como los values() hacen lo mismo y simplemente devolverán una lista
 // de todos los miembros en el conjunto como un objeto especial conocido como setIterator:
-mySet = new Set()
-mySet.add(5)
-mySet.add(10)
-let getKeys = mySet.keys() // SetIterator{5, 10}
-
+mySet = new Set();
+mySet.add(5);
+mySet.add(10);
+let getKeys = mySet.keys(); // SetIterator{5, 10}
 
 // Los SetIterators son diferentes de los conjuntos, y solo tienen un método, que es el método
 // next(). El método next() te permite iterar a través de los conjuntos de un elemento a la vez.
 // Cada vez que lo haces, se devuelve un objeto que consiste en el valor del elemento
 // establecido y si la iteración está completa.
 // Puedes ver cómo se ve eso en el siguiente ejemplo:
-mySet = new Set()
-mySet.add(5)
-mySet.add(10)
-getKeys = mySet.keys() // SetIterator{5, 10}
-console.log(getKeys.next()) // { value: 5, done: false }
-console.log(getKeys.next()) // { value: 10, done: false }
-console.log(getKeys.next()) // { value: undefined, done: false }
-
-
+mySet = new Set();
+mySet.add(5);
+mySet.add(10);
+getKeys = mySet.keys(); // SetIterator{5, 10}
+console.log(getKeys.next()); // { value: 5, done: false }
+console.log(getKeys.next()); // { value: 10, done: false }
+console.log(getKeys.next()); // { value: undefined, done: false }
 
 // Mientras que keys() y values() proporcionan una forma abreviada de generar SetIterators,
 // también se pueden crear refiriéndose a la propiedad del iterador sets para lograr el mismo
 // resultado:
-mySet = new Set()
-mySet.add(5)
-mySet.add(10)
-getKeys = mySet[Symbol.iterator]() // SetIterator{5, 10}
-console.log(getKeys.next()) // { value: 5, done: false }
-console.log(getKeys.next()) // { value: 10, done: false }
-console.log(getKeys.next()) // { value: undefined, done: false }
+mySet = new Set();
+mySet.add(5);
+mySet.add(10);
+getKeys = mySet[Symbol.iterator](); // SetIterator{5, 10}
+console.log(getKeys.next()); // { value: 5, done: false }
+console.log(getKeys.next()); // { value: 10, done: false }
+console.log(getKeys.next()); // { value: undefined, done: false }
+
+// El método entries() también está disponible para todos los conjuntos. En los objetos, el
+// método de entradas devuelve arreglos en la forma [llave, valor]. Dado que los conjuntos no
+// tienen llaves, el valor se devuelve como la llave y el valor.
+// La razón principal por la cual este método está disponible en conjuntos es garantizar la
+// consistencia con los mapas, que tienen llaves y valores. Set.entries() todavía devuelve un
+// setIterator, al igual que keys() y values():
+mySet = new Set();
+mySet.add(5);
+mySet.add(10);
+let setEntries = mySet.entries();
+for (let x of setEntries) {
+  console.log(x);
+  // Returns [ 5, 5 ], [ 10, 10 ]
+}
