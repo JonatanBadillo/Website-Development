@@ -128,3 +128,13 @@ mySet.add(6)
 // puedes convertir fácilmente un conjunto en un arreglo en su lugar utilizando
 // Array.from(). Esto es útil si necesitas trabajar con un conjunto como un arreglo:
 let arrayFromSet = Array.from(mySet) // [ 4, 5, 6 ]
+
+
+// Llaves de conjuntos y valores
+// Al igual que los objetos, los conjuntos heredan los métodos keys(), values() y entries(). En
+// conjuntos, tanto keys() como los values() hacen lo mismo y simplemente devolverán una lista
+// de todos los miembros en el conjunto como un objeto especial conocido como setIterator:
+mySet = new Set()
+mySet.add(5)
+mySet.add(10)
+let getKeys = mySet.keys() // SetIterator{5, 10}
