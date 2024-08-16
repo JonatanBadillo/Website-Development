@@ -174,3 +174,38 @@ for (let x of setEntries) {
   console.log(x);
   // Returns [ 5, 5 ], [ 10, 10 ]
 }
+
+
+// Mapas
+// Si bien los conjuntos son estructuras similares al arreglo que también proporcionan la
+// eliminación duplicada automática, los mapas son estructuras similares a objetos con algunas
+// mejoras adicionales. 
+
+
+// • Los mapas no tienen un prototipo: Los mapas no buscan en el
+// prototipo, lo que significa que sabemos que los mapas solo tendrán lo que les
+// ponemos explícitamente en ellos y no heredará otras propiedades.
+
+// • Los mapas garantizan orden por cronología:  el orden de las entradas corresponde cronológicamente a cuando se usó set().
+
+// • Los mapas permiten que cualquier cosa se confiera como llave: Las llaves de un mapa
+// pueden ser cualquier cosa, incluida una función o incluso un objeto. En los objetos,
+// debe ser una cadena o símbolo.
+
+// • Los mapas tienen beneficios de rendimiento: Tienen un mejor rendimiento que los
+// objetos en tareas que requieren eliminación/adición rápida o frecuente de datos.
+
+// • Los mapas son iterables de forma predeterminada, a diferencia de los objetos.
+
+// Y al igual que los conjuntos, los mapas vienen con métodos add(), delete() y clear(). La
+// diferencia clave aquí es que, para agregar elementos de mapa, debes especificar una llave y
+// un valor y eliminar un elemento de mapa, debes especificar el nombre de llave que deseas
+// eliminar.
+
+let myMap = new Map()
+myMap.set("key", "value")
+myMap.set("secondKey", "value")
+myMap.delete("key")
+console.log(myMap) // Map(1) {'secondKey' => 'value'}
+myMap.clear()
+console.log(myMap) // Map(0) {}
