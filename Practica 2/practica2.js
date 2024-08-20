@@ -31,3 +31,14 @@ set.delete(3);
 console.log(set); // Set { 0: 1, 1: 2, 2: 4 }
 
 
+// 3. ¿Cómo se eliminan todos los elementos de un conjunto? 
+// Problema 
+// Debes eliminar todos los elementos de un objeto de conjunto. 
+// Solución 
+// El método clear elimina todos los elementos de un conjunto, mientras que delete solo  eliminará uno. 
+
+// imprimiendo mi conjunto actual
+console.log(set) // Set { 0: 1, 1: 2, 2: 4 }
+// usando metodo clear() para eliminar todos los elementos de mi conjunto
+set.clear();
+console.log(set); // Set {}
