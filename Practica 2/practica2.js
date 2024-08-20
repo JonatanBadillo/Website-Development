@@ -149,3 +149,20 @@ console.log(mapa1.has('clave4')); // false
 for (const i of llaves) {
   console.log(i); // clave1, 5, clave3
 }
+
+// 10. ¿Cómo se obtiene acceso al valor de cada llave mediante el método Values? 
+// Problema 
+// Deseas utilizar el método values del objeto Map. 
+// Solución 
+// El método values funciona igual que el método keys. La única diferencia es que se devuelven  los valores de cada elemento y no la llave.
+
+
+console.log(mapa1)// Map { 'clave1' => 'valor1', 5 => 'valor2', 'clave3' => 'valor3' }
+// obteniendo todos los valores de un mapa
+const valores_mapa = mapa1.values();
+// este método devuelve un iterador que contiene los valores del Map en el orden de inserción.
+for (const i of valores_mapa) {
+  console.log(i); // valor1, valor2, valor3
+}
+
+
