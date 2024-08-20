@@ -101,3 +101,20 @@ console.log(mapa.get('clave1')); // valor1
 console.log(mapa.get(5)); // valor2
 console.log(mapa.get('clave3')); // valor3
 
+
+// 7. ¿Cómo se agregan y eliminan elementos de un mapa? 
+// Problema 
+// Debes administrar elementos de un mapa. 
+// Solución 
+// Los mapas utilizan el método set para establecer llaves y valores. De manera similar al objeto  set, utiliza el método delete para eliminar una llave. 
+
+let map = new Map();
+// agregando elementos al mapa
+map.set('clave1', 8);
+map.set(10, 'valor2');
+map.set(11, 'valor3');
+map.set(12, 20);
+// eliminando elementos del mapa
+map.delete(10);
+console.log(map); // Map { 'clave1' => 8, 11 => 'valor3', 12 => 20 }
+
