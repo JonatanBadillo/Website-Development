@@ -133,3 +133,19 @@ mapa1.set('clave3', 'valor3');
 console.log(mapa1.has('clave1')); // true
 console.log(mapa1.has(5)); // true
 console.log(mapa1.has('clave4')); // false
+
+// 9. ¿Cómo se obtienen todas las llaves de un objeto de mapa? 
+// Problema 
+// Deseas acceder a todos los elementos de un objeto de mapa. 
+// Solución 
+// El método keys devolverá un objeto MapIterator, que se puede utilizar para acceder a todos  los elementos del objeto de mapa. 
+
+// obteniendo todas las llaves de un mapa
+ console.log(mapa1)// Map { 'clave1' => 'valor1', 5 => 'valor2', 'clave3' => 'valor3' }
+
+//  este método devuelve un iterador que contiene las claves del Map en el orden de inserción.
+ const llaves = mapa1.keys();
+
+for (const i of llaves) {
+  console.log(i); // clave1, 5, clave3
+}
