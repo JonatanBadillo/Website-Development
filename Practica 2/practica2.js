@@ -64,3 +64,40 @@ const objeto = {
   
   const valores = Object.values(objeto);
   console.log(valores); // ['valor1', 'valor2', 'valor3']
+
+
+
+  // 5. ¿Cómo funciona un método forEach con un objeto de conjunto? 
+// Problema 
+// Debes saber si existe alguna diferencia al utilizar un método forEach en un conjunto en  comparación con un arreglo. 
+// Solución 
+// El método forEach funciona de la misma manera cuando se utiliza un conjunto que cuando  se utiliza un arreglo. El método se llama para cada valor del conjunto. 
+
+// El método forEach se utiliza para iterar sobre los elementos de un objeto , 
+// La función de devolución recibe como argumento cada elemento del conjunto y puede realizar alguna operación en él.
+const miSet = new Set([1, 2, 3, 4, 5]);
+
+miSet.forEach((elemento) => {
+    // La función de devolución de llamada en este caso simplemente imprime cada elemento en la consola.
+  console.log(elemento);
+});
+
+
+// 6. ¿Cuáles son las ventajas de utilizar un mapa en lugar de un objeto? 
+// Problema 
+// ¿Cuándo es mejor utilizar un mapa en lugar de un objeto? 
+// Solución 
+// Si bien existen similitudes entre los mapas y los objetos, los mapas pueden contener tanto  objetos primitivos como llaves o valores. 
+// Solución
+
+// la ventaja de usar mapa en lugar de un objeto es que los mapas pueden contener cualquier tipo de dato como calve y valor, mientras que los objetos solo pueden tener cadenas como claves.
+const mapa = new Map();
+// agregando elementos al mapa
+mapa.set('clave1', 'valor1');
+mapa.set(5, 'valor2');
+mapa.set('clave3', 'valor3');
+// obtener elementos del mapa
+console.log(mapa.get('clave1')); // valor1
+console.log(mapa.get(5)); // valor2
+console.log(mapa.get('clave3')); // valor3
+
