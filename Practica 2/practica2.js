@@ -42,3 +42,25 @@ console.log(set) // Set { 0: 1, 1: 2, 2: 4 }
 // usando metodo clear() para eliminar todos los elementos de mi conjunto
 set.clear();
 console.log(set); // Set {}
+
+// 4. ¿Cuál es la diferencia entre los métodos de llaves y valores? 
+// Problema 
+// Debes saber cuándo utilizar el método de llaves en lugar del método de valores.
+
+// Solución 
+// Ambos métodos devuelven un objeto iterador que contiene valores para cada elemento. El  método de llaves es un alias del método de valores. 
+
+// Ejemplo
+// El método keys() devuelve un array con todas las claves de un objeto. Por otro lado, el método values() devuelve un array con todos los valores de un objeto.'
+
+const objeto = {
+    clave1: 'valor1',
+    clave2: 'valor2',
+    clave3: 'valor3'
+  };
+  
+  const claves = Object.keys(objeto);
+  console.log(claves); // ['clave1', 'clave2', 'clave3']
+  
+  const valores = Object.values(objeto);
+  console.log(valores); // ['valor1', 'valor2', 'valor3']
