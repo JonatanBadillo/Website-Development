@@ -118,3 +118,18 @@ map.set(12, 20);
 map.delete(10);
 console.log(map); // Map { 'clave1' => 8, 11 => 'valor3', 12 => 20 }
 
+
+// 8. ¿Cómo se determina si existe una llave en un mapa? 
+// Problema 
+// Debes encontrar una llave en el objeto Mapa.
+// Solución 
+// Usa la llave has para comprobar la existencia de una llave en el objeto Mapa. 
+let mapa1 = new Map();
+// agregando elementos al mapa
+mapa1.set('clave1', 'valor1');
+mapa1.set(5, 'valor2');
+mapa1.set('clave3', 'valor3');
+// determinando si una clave existe en el mapa
+console.log(mapa1.has('clave1')); // true
+console.log(mapa1.has(5)); // true
+console.log(mapa1.has('clave4')); // false
