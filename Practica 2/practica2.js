@@ -29,3 +29,5 @@ set.add(4)
 // eliminando elementos de mi conjunto
 set.delete(3);
 console.log(set); // Set { 0: 1, 1: 2, 2: 4 }
+
+
