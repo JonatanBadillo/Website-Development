@@ -11,3 +11,21 @@ mySet.add(3);
 mySet.add(3);
 mySet.add(4);
 console.log(mySet);
+
+
+// 2. ¿Cómo se agregan y eliminan elementos de un conjunto? 
+// Problema 
+// Debes administrar los elementos de un conjunto. 
+// Solución 
+// Un arreglo utiliza el método push para agregar elementos, mientras que los conjuntos utilizan  el método add. Para eliminar elementos, utiliza el método delete. 
+
+// creando conjunto
+let set = new Set();
+// agregar elementos al conjunto
+set.add(1)
+set.add(2)
+set.add(3)
+set.add(4)
+// eliminando elementos de mi conjunto
+set.delete(3);
+console.log(set); // Set { 0: 1, 1: 2, 2: 4 }
