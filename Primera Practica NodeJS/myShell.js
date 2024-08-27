@@ -1,15 +1,8 @@
-console.log("Hello");
-
-
-function greet(name) {console.log(`Hello $(name)`); }; greet('World');
-
-
-
-console.log('Hello World!');
-console.log("Hello");
-
-function greet(name) {console.log(`Hello $(name)`); }; greet('World');
-const sayHello = 'Hello World';
-console.log(sayHello);
-function greet(){}
-console.log('Hello World!');
+import { createServer } from "http";
+const server = createServer();
+server.listen(8080, () => {
+  console.log(
+    `Server is listening to
+http://localhost:${server.address().port}`
+  );
+});
