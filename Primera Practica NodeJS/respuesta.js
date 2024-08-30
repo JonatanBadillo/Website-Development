@@ -11,7 +11,7 @@ const server = createServer((request, response) => {
 <title>Node.js Demo</title>
 </head>
 <body>
-<h1 style="color:green">Hello ${url.searchParams.get("name")}
+<h1 style="color:green">Hello: ${url.searchParams.get("name")}
 </h1>
 </body>
 </html>`;
