@@ -1,4 +1,4 @@
-const { createServer } = require("http");
+import { createServer } from "http";
 
 const server = createServer((request, response) => {
     response.writeHead(200, { "content-type": "text/html; charset=utf-8" });
