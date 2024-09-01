@@ -1,64 +1,146 @@
 <?php
-// mostrar errores
+// mostrar errores en pantalla
 ini_set('display_errors', 1); // mostrar errores en pantalla
 ini_set('display_startup_errors', 1); // mostrar errores de inicio
-error_reporting(E_ALL);     // mostrar todos los errores
+error_reporting(E_ALL); // mostrar todos los errores
 
 // configuración de la base de datos
 $servername = "127.0.0.1";
 $username = "root";
 $password = "";
 $dbname = "my_db";
+// crear conexión
+$connection = new mysqli($servername, $username, $password, $dbname);
 
-// crando conexión
-$conection = new mysqli($servername, $username, $password, $dbname);
-
-// verificando la conexión
-if ($conection->connect_error) {
-    die("Conexión fallida: " . $conection->connect_error);
+// verificar la conexión
+if ($connection->connect_error) {
+    die("Conexión fallida: " . $connection->connect_error);
 }
-echo "¡Conexión exitosa a la base de datos!<br>";
 
 
 
-
-// para insertar datos
-// obtener datos del formulario
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nombre = $_POST['nombre']; 
-    $edad = $_POST['edad'];
-    $dorsal = $_POST['dorsal'];
-    $posicion = $_POST['posicion'];
-    $equipo = $_POST['equipo'];
+// manejo para agregar jugadores
+// Verificar si se envió el formulario y si los campos no están vacíos
+if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['nombre']) && !empty($_POST['edad']) && !empty($_POST['dorsal']) && !empty($_POST['posicion']) && !empty($_POST['equipo'])) {
+    $nombre = $connection->real_escape_string($_POST['nombre']); 
+    $edad = $connection->real_escape_string($_POST['edad']);
+    $dorsal = $connection->real_escape_string($_POST['dorsal']);
+    $posicion = $connection->real_escape_string($_POST['posicion']);
+    $equipo = $connection->real_escape_string($_POST['equipo']);
 
     // insertar datos en la base de datos 
     $sql = "INSERT INTO jugadores (nombre, edad, dorsal, posicion, equipo)
             VALUES ('$nombre', $edad, $dorsal, '$posicion', '$equipo')";
 
     // verificar si se insertaron los datos
-    if ($conection->query($sql) === TRUE) {
-        echo "Nuevo jugador agregado con éxito<br>";
+    if ($connection->query($sql) === TRUE) {
+        echo "<p class='success'>Nuevo jugador agregado con éxito</p>";
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        echo "<p class='error'>Error: " . $sql . "<br>" . $connection->error . "</p>";
     }
+
+    // redirigir para evitar reenvío del formulario
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit();
 }
 
 // obtener datos de la base de datos
 $sql = "SELECT * FROM jugadores";
-$result = $conection->query($sql);
-
-
+$result = $connection->query($sql);
 ?>
 
-
-
-<!-- formulario HTML -->
+<!-- Formulario HTML -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Jugadores</title>
+    <style>
+        /* Estilos CSS */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+        /* Estilos del formulario */
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0 20px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[type="submit"] {
+            background-color: #28a745;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #218838;
+        }
+
+        /* Estilos de la tabla */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .success {
+            color: #28a745;
+            font-weight: bold;
+        }
+        /*  Estilos de error */
+        .error {
+            color: #dc3545;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
     <!-- formulario para agregar jugadores -->
@@ -79,13 +161,12 @@ $result = $conection->query($sql);
         <label for="equipo">Equipo:</label><br>
         <input type="text" id="equipo" name="equipo" required><br><br>
 
-
         <input type="submit" value="Agregar Jugador">
     </form>
 
-    <!-- tabla para mostrar los jugadores registrados en la db -->
+    <!-- tabla para mostrar los jugadores registrados en la DB -->
     <h2>Jugadores Registrados</h2>
-    <table border="1">
+    <table>
         <tr>
             <th>ID</th>
             <th>Nombre</th>
@@ -97,9 +178,8 @@ $result = $conection->query($sql);
         <?php
         // verificar si hay jugadores registrados
         if ($result->num_rows > 0) {
-            // mostrar los jugadores en cada fila
+            // mostrar los jugadores en cada fila , mientras haya jugadores
             while($row = $result->fetch_assoc()) {
-                // mostrar los datos de cada jugador
                 echo "<tr>";
                 echo "<td>" . $row["id"] . "</td>"; 
                 echo "<td>" . $row["nombre"] . "</td>"; 
@@ -117,8 +197,8 @@ $result = $conection->query($sql);
     </table>
 
     <?php
-    /// Cerrar la conexión
-    $conection->close();
+    // cerrar la conexión
+    $connection->close();
     ?>
 </body>
 </html>
