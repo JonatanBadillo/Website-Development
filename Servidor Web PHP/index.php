@@ -1,8 +1,8 @@
 <?php
 // mostrar errores en pantalla
-ini_set('display_errors', 1); // mostrar errores en pantalla
-ini_set('display_startup_errors', 1); // mostrar errores de inicio
-error_reporting(E_ALL); // mostrar todos los errores
+ini_set('display_errors', 1); 
+ini_set('display_startup_errors', 1); 
+error_reporting(E_ALL); 
 
 // configuración de la base de datos
 $servername = "127.0.0.1";
@@ -17,10 +17,25 @@ if ($connection->connect_error) {
     die("Conexión fallida: " . $connection->connect_error);
 }
 
+// Manejo de eliminación de jugadores
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['eliminar_id'])) {
+    $eliminar_id = $connection->real_escape_string($_POST['eliminar_id']);
 
+    // Eliminar el jugador de la base de datos
+    $sql = "DELETE FROM jugadores WHERE id = $eliminar_id";
+
+    if ($connection->query($sql) === TRUE) {
+        echo "<p class='success'>Jugador eliminado con éxito</p>";
+    } else {
+        echo "<p class='error'>Error al eliminar jugador: " . $connection->error . "</p>";
+    }
+
+    // Redirigir para evitar reenvío del formulario
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit();
+}
 
 // manejo para agregar jugadores
-// Verificar si se envió el formulario y si los campos no están vacíos
 if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['nombre']) && !empty($_POST['edad']) && !empty($_POST['dorsal']) && !empty($_POST['posicion']) && !empty($_POST['equipo'])) {
     $nombre = $connection->real_escape_string($_POST['nombre']); 
     $edad = $connection->real_escape_string($_POST['edad']);
@@ -28,23 +43,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['nombre']) && !empty($
     $posicion = $connection->real_escape_string($_POST['posicion']);
     $equipo = $connection->real_escape_string($_POST['equipo']);
 
-    // insertar datos en la base de datos 
     $sql = "INSERT INTO jugadores (nombre, edad, dorsal, posicion, equipo)
             VALUES ('$nombre', $edad, $dorsal, '$posicion', '$equipo')";
 
-    // verificar si se insertaron los datos
     if ($connection->query($sql) === TRUE) {
         echo "<p class='success'>Nuevo jugador agregado con éxito</p>";
     } else {
         echo "<p class='error'>Error: " . $sql . "<br>" . $connection->error . "</p>";
     }
 
-    // redirigir para evitar reenvío del formulario
     header("Location: " . $_SERVER['PHP_SELF']);
     exit();
 }
 
-// obtener datos de la base de datos
 $sql = "SELECT * FROM jugadores";
 $result = $connection->query($sql);
 ?>
@@ -143,7 +154,6 @@ $result = $connection->query($sql);
     </style>
 </head>
 <body>
-    <!-- formulario para agregar jugadores -->
     <h1>Gestión de Jugadores</h1>
     <form method="post" action="">
         <label for="nombre">Nombre:</label><br>
@@ -164,7 +174,6 @@ $result = $connection->query($sql);
         <input type="submit" value="Agregar Jugador">
     </form>
 
-    <!-- tabla para mostrar los jugadores registrados en la DB -->
     <h2>Jugadores Registrados</h2>
     <table>
         <tr>
@@ -174,11 +183,10 @@ $result = $connection->query($sql);
             <th>Dorsal</th>
             <th>Posición</th>
             <th>Equipo</th>
+            <th>Acciones</th>
         </tr>
         <?php
-        // verificar si hay jugadores registrados
         if ($result->num_rows > 0) {
-            // mostrar los jugadores en cada fila , mientras haya jugadores
             while($row = $result->fetch_assoc()) {
                 echo "<tr>";
                 echo "<td>" . $row["id"] . "</td>"; 
@@ -187,17 +195,21 @@ $result = $connection->query($sql);
                 echo "<td>" . $row["dorsal"] . "</td>";
                 echo "<td>" . $row["posicion"] . "</td>";
                 echo "<td>" . $row["equipo"] . "</td>";
+                echo "<td>
+                        <form method='post' action='' onsubmit='return confirm(\"¿Estás seguro de que deseas eliminar este jugador?\");'>
+                            <input type='hidden' name='eliminar_id' value='" . $row["id"] . "'>
+                            <input type='submit' value='Eliminar' style='background-color: #dc3545; color: white; border: none; padding: 5px 10px; cursor: pointer;'>
+                        </form>
+                      </td>";
                 echo "</tr>";
             }
         } else {
-            // mostrar mensaje si no hay jugadores registrados
-            echo "<tr><td colspan='6'>No hay jugadores registrados</td></tr>";
+            echo "<tr><td colspan='7'>No hay jugadores registrados</td></tr>";
         }
         ?>
     </table>
 
     <?php
-    // cerrar la conexión
     $connection->close();
     ?>
 </body>
