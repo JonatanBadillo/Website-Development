@@ -1,43 +1,49 @@
 <?php
-// Mostrar errores
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+// mostrar errores
+ini_set('display_errors', 1); // mostrar errores en pantalla
+ini_set('display_startup_errors', 1); // mostrar errores de inicio
+error_reporting(E_ALL);     // mostrar todos los errores
 
-// Configuración de la base de datos
+// configuración de la base de datos
 $servername = "127.0.0.1";
 $username = "root";
 $password = "";
 $dbname = "my_db";
 
-// Crear conexión
+// crando conexión
 $conection = new mysqli($servername, $username, $password, $dbname);
 
-// Verificar la conexión
+// verificando la conexión
 if ($conection->connect_error) {
     die("Conexión fallida: " . $conection->connect_error);
 }
 echo "¡Conexión exitosa a la base de datos!<br>";
 
-// Manejar la inserción de datos
+
+
+
+// para insertar datos
+// obtener datos del formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nombre = $_POST['nombre'];
+    $nombre = $_POST['nombre']; 
     $edad = $_POST['edad'];
     $dorsal = $_POST['dorsal'];
     $posicion = $_POST['posicion'];
     $equipo = $_POST['equipo'];
 
-    $sql = "INSERT INTO jugadores (nombre, edad, dorsal, posicion, equipo, nacionalidad) 
-            VALUES ('$nombre', $edad, $dorsal, '$posicion', '$equipo', '$nacionalidad')";
+    // insertar datos en la base de datos 
+    $sql = "INSERT INTO jugadores (nombre, edad, dorsal, posicion, equipo)
+            VALUES ('$nombre', $edad, $dorsal, '$posicion', '$equipo')";
 
-    if ($conn->query($sql) === TRUE) {
+    // verificar si se insertaron los datos
+    if ($conection->query($sql) === TRUE) {
         echo "Nuevo jugador agregado con éxito<br>";
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
 }
 
-// Mostrar los datos almacenados
+// obtener datos de la base de datos
 $sql = "SELECT * FROM jugadores";
 $result = $conection->query($sql);
 
@@ -46,7 +52,7 @@ $result = $conection->query($sql);
 
 
 
-
+<!-- formulario HTML -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -55,7 +61,8 @@ $result = $conection->query($sql);
     <title>Gestión de Jugadores</title>
 </head>
 <body>
-    <h1>Agregar Nuevo Jugador</h1>
+    <!-- formulario para agregar jugadores -->
+    <h1>Gestión de Jugadores</h1>
     <form method="post" action="">
         <label for="nombre">Nombre:</label><br>
         <input type="text" id="nombre" name="nombre" required><br><br>
@@ -72,12 +79,11 @@ $result = $conection->query($sql);
         <label for="equipo">Equipo:</label><br>
         <input type="text" id="equipo" name="equipo" required><br><br>
 
-        <label for="nacionalidad">Nacionalidad:</label><br>
-        <input type="text" id="nacionalidad" name="nacionalidad" required><br><br>
 
         <input type="submit" value="Agregar Jugador">
     </form>
 
+    <!-- tabla para mostrar los jugadores registrados en la db -->
     <h2>Jugadores Registrados</h2>
     <table border="1">
         <tr>
@@ -87,15 +93,16 @@ $result = $conection->query($sql);
             <th>Dorsal</th>
             <th>Posición</th>
             <th>Equipo</th>
-
         </tr>
         <?php
+        // verificar si hay jugadores registrados
         if ($result->num_rows > 0) {
-            // Salida de los datos de cada fila
+            // mostrar los jugadores en cada fila
             while($row = $result->fetch_assoc()) {
+                // mostrar los datos de cada jugador
                 echo "<tr>";
-                echo "<td>" . $row["id"] . "</td>";
-                echo "<td>" . $row["nombre"] . "</td>";
+                echo "<td>" . $row["id"] . "</td>"; 
+                echo "<td>" . $row["nombre"] . "</td>"; 
                 echo "<td>" . $row["edad"] . "</td>";
                 echo "<td>" . $row["dorsal"] . "</td>";
                 echo "<td>" . $row["posicion"] . "</td>";
@@ -103,7 +110,8 @@ $result = $conection->query($sql);
                 echo "</tr>";
             }
         } else {
-            echo "<tr><td colspan='7'>No hay jugadores registrados</td></tr>";
+            // mostrar mensaje si no hay jugadores registrados
+            echo "<tr><td colspan='6'>No hay jugadores registrados</td></tr>";
         }
         ?>
     </table>
