@@ -86,17 +86,20 @@ $result = $connection->query($sql);
         }
 
         /* estilos del formulario */
-        form {
-            
-            padding: 10px;
+        .formulario {
+            background-color: #fff;
+            padding: 50px;
             border-radius: 5px;
-            
-            max-width: 600px;
-            margin-bottom: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin:auto;
+
         }
+        
 
         label {
             font-weight: bold;
+            padding: auto;
         }
 
         input[type="text"],
@@ -166,10 +169,10 @@ $result = $connection->query($sql);
 </head>
 
 <body>
-    <h1>Gestión de Jugadores</h1>
+    <h1 >Gestión de Jugadores:</h1>
 
     <!-- formulario para agregar jugadores -->
-    <form method="post" action="">
+    <form method="post" action="" class="formulario">
         <label for="nombre">Nombre:</label><br>
         <input type="text" id="nombre" name="nombre" required><br><br>
 
