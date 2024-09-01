@@ -11,38 +11,36 @@ $password = "";
 $dbname = "my_db";
 
 // Crear conexión
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conection = new mysqli($servername, $username, $password, $dbname);
 
 // Verificar la conexión
-if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
+if ($conection->connect_error) {
+    die("Conexión fallida: " . $conection->connect_error);
 }
 echo "¡Conexión exitosa a la base de datos!<br>";
 
-// Datos a insertar
-$nombre = "Lionel Messi";
-$edad = 36;
-$dorsal = 10;
-$posicion = "Delantero";
-$equipo = "Inter Miami";
-$nacionalidad = "Argentina";
+// Manejar la inserción de datos
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $nombre = $_POST['nombre'];
+    $edad = $_POST['edad'];
+    $dorsal = $_POST['dorsal'];
+    $posicion = $_POST['posicion'];
+    $equipo = $_POST['equipo'];
+    $nacionalidad = $_POST['nacionalidad'];
 
-// Consulta SQL para insertar datos en la tabla
-$sql = "INSERT INTO jugadores (nombre, edad, dorsal, posicion, equipo, nacionalidad) 
-        VALUES ('$nombre', $edad, $dorsal, '$posicion', '$equipo', '$nacionalidad')";
+    $sql = "INSERT INTO jugadores (nombre, edad, dorsal, posicion, equipo, nacionalidad) 
+            VALUES ('$nombre', $edad, $dorsal, '$posicion', '$equipo', '$nacionalidad')";
 
-if ($conn->query($sql) === TRUE) {
-    echo "Nuevo registro creado con éxito<br>";
-} else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
+    if ($conn->query($sql) === TRUE) {
+        echo "Nuevo jugador agregado con éxito<br>";
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
 }
 
-if ($conn->query($sql) === TRUE) {
-    echo "Campos agregados a la tabla `jugadores` con éxito<br>";
-} else {
-    echo "Error al agregar campos: " . $conn->error . "<br>";
-}
-
+// Mostrar los datos almacenados
+$sql = "SELECT * FROM jugadores";
+$result = $conection->query($sql);
 // Cerrar la conexión
-$conn->close();
+$conection->close();
 ?>
