@@ -1,8 +1,8 @@
 <?php
 // mostrar errores en pantalla
-ini_set('display_errors', 1); 
-ini_set('display_startup_errors', 1); 
-error_reporting(E_ALL); 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 // configuración de la base de datos
 $servername = "127.0.0.1";
@@ -17,35 +17,39 @@ if ($connection->connect_error) {
     die("Conexión fallida: " . $connection->connect_error);
 }
 
-// Manejo de eliminación de jugadores
+
+
+// manejo de eliminación de jugadores
+// verificar si se ha enviado el formulario de eliminación y si se ha enviado el ID del jugador a eliminar
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['eliminar_id'])) {
     $eliminar_id = $connection->real_escape_string($_POST['eliminar_id']);
-
-    // Eliminar el jugador de la base de datos
+    // eliminar el jugador de la base de datos
     $sql = "DELETE FROM jugadores WHERE id = $eliminar_id";
-
     if ($connection->query($sql) === TRUE) {
         echo "<p class='success'>Jugador eliminado con éxito</p>";
     } else {
         echo "<p class='error'>Error al eliminar jugador: " . $connection->error . "</p>";
     }
 
-    // Redirigir para evitar reenvío del formulario
+    // redirigir a la misma página para evitar el reenvío del formulario
     header("Location: " . $_SERVER['PHP_SELF']);
     exit();
 }
 
 // manejo para agregar jugadores
+// verificar si se ha enviado el formulario de agregar jugadores y si los campos no están vacíos
 if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['nombre']) && !empty($_POST['edad']) && !empty($_POST['dorsal']) && !empty($_POST['posicion']) && !empty($_POST['equipo'])) {
-    $nombre = $connection->real_escape_string($_POST['nombre']); 
+    $nombre = $connection->real_escape_string($_POST['nombre']);
     $edad = $connection->real_escape_string($_POST['edad']);
     $dorsal = $connection->real_escape_string($_POST['dorsal']);
     $posicion = $connection->real_escape_string($_POST['posicion']);
     $equipo = $connection->real_escape_string($_POST['equipo']);
 
+    // insertar el nuevo jugador en la base de datos
     $sql = "INSERT INTO jugadores (nombre, edad, dorsal, posicion, equipo)
             VALUES ('$nombre', $edad, $dorsal, '$posicion', '$equipo')";
 
+    // verificar si la consulta se ha ejecutado correctamente
     if ($connection->query($sql) === TRUE) {
         echo "<p class='success'>Nuevo jugador agregado con éxito</p>";
     } else {
@@ -56,34 +60,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['nombre']) && !empty($
     exit();
 }
 
+// obtener todos los jugadores de la base de datos
 $sql = "SELECT * FROM jugadores";
 $result = $connection->query($sql);
 ?>
 
-<!-- Formulario HTML -->
+<!-- formulario HTML -->
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Jugadores</title>
     <style>
-        /* Estilos CSS */
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
             background-color: #f4f4f4;
         }
 
-        h1, h2 {
+        h1,
+        h2 {
             color: #333;
         }
-        /* Estilos del formulario */
+
+        /* estilos del formulario */
         form {
-            background-color: #fff;
-            padding: 20px;
+            
+            padding: 10px;
             border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            
             max-width: 600px;
             margin-bottom: 20px;
         }
@@ -114,18 +121,21 @@ $result = $connection->query($sql);
             background-color: #218838;
         }
 
-        /* Estilos de la tabla */
+        /* estilos de la tabla */
         table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
         }
 
-        table, th, td {
+        table,
+        th,
+        td {
             border: 1px solid #ddd;
         }
 
-        th, td {
+        th,
+        td {
             padding: 10px;
             text-align: left;
         }
@@ -146,15 +156,19 @@ $result = $connection->query($sql);
             color: #28a745;
             font-weight: bold;
         }
-        /*  Estilos de error */
+
+        /*  estilos de error */
         .error {
             color: #dc3545;
             font-weight: bold;
         }
     </style>
 </head>
+
 <body>
     <h1>Gestión de Jugadores</h1>
+
+    <!-- formulario para agregar jugadores -->
     <form method="post" action="">
         <label for="nombre">Nombre:</label><br>
         <input type="text" id="nombre" name="nombre" required><br><br>
@@ -174,6 +188,7 @@ $result = $connection->query($sql);
         <input type="submit" value="Agregar Jugador">
     </form>
 
+    <!-- tabla para mostrar jugadores registrados -->
     <h2>Jugadores Registrados</h2>
     <table>
         <tr>
@@ -183,34 +198,42 @@ $result = $connection->query($sql);
             <th>Dorsal</th>
             <th>Posición</th>
             <th>Equipo</th>
-            <th>Acciones</th>
+            <th>Eliminar?</th>
         </tr>
+
         <?php
+        // mostrar jugadores en la tabla
+        // verificar si hay jugadores registrados
         if ($result->num_rows > 0) {
-            while($row = $result->fetch_assoc()) {
+            // mostrar jugadores en la tabla ,si hay jugadores registrados
+            while ($row = $result->fetch_assoc()) {
                 echo "<tr>";
-                echo "<td>" . $row["id"] . "</td>"; 
-                echo "<td>" . $row["nombre"] . "</td>"; 
+                echo "<td>" . $row["id"] . "</td>";
+                echo "<td>" . $row["nombre"] . "</td>";
                 echo "<td>" . $row["edad"] . "</td>";
                 echo "<td>" . $row["dorsal"] . "</td>";
                 echo "<td>" . $row["posicion"] . "</td>";
                 echo "<td>" . $row["equipo"] . "</td>";
-                echo "<td>
-                        <form method='post' action='' onsubmit='return confirm(\"¿Estás seguro de que deseas eliminar este jugador?\");'>
+                // botón para eliminar jugador
+                echo "<td> 
+                        <form method='post' action='' onsubmit='return confirm(\"¿Estás seguro de que deseas eliminar este jugador?\");'> 
                             <input type='hidden' name='eliminar_id' value='" . $row["id"] . "'>
-                            <input type='submit' value='Eliminar' style='background-color: #dc3545; color: white; border: none; padding: 5px 10px; cursor: pointer;'>
+                            <input type='submit' value='Eliminar' style='background-color: #dc3545;  border: none;  cursor: pointer;'>
                         </form>
                       </td>";
                 echo "</tr>";
             }
         } else {
+            // no hay jugadores en nuestra db
             echo "<tr><td colspan='7'>No hay jugadores registrados</td></tr>";
         }
         ?>
     </table>
 
     <?php
+    // cerramos conexion
     $connection->close();
     ?>
 </body>
+
 </html>
