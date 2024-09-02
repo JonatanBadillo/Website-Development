@@ -112,31 +112,33 @@
                 </tr>
             </thead>
             <tbody>
-                <?php
-                while ($datos = $sql->fetch_object()) {
-                    ?>
-                    <tr>
-                        <th scope="row"><?php echo $datos->id; ?></th>
-                        <td><img src="ruta_a_tu_directorio_de_imagenes/<?php echo $datos->foto; ?>" alt="Foto" width="50">
-                        </td>
-                        <td><?php echo $datos->nombre; ?></td>
-                        <td><?php echo $datos->apellido; ?></td>
-                        <td><?php echo $datos->direccion; ?></td>
-                        <td><?php echo $datos->cp; ?></td>
-                        <td><?php echo $datos->telefono; ?></td>
-                        <td><?php echo $datos->ciudad; ?></td>
-                        <td><?php echo $datos->pais; ?></td>
-                        <td><?php echo $datos->email; ?></td>
-                        <td><?php echo $datos->fecha; ?></td>
-                        <td>
-                            <a href="#" class="btn btn-warning">Editar</a>
-                            <a href="#" class="btn btn-danger">Eliminar</a>
-                        </td>
-                    </tr>
-                    <?php
-                }
-                ?>
-            </tbody>
+    <?php
+    while ($datos = $sql->fetch_object()) {
+        ?>
+        <tr>
+            <th scope="row"><?php echo $datos->id; ?></th>
+            <td>
+                <img src="<?php echo $datos->foto; ?>" alt="Imagen" width="50">
+            </td>
+            <td><?php echo $datos->nombre; ?></td>
+            <td><?php echo $datos->apellido; ?></td>
+            <td><?php echo $datos->direccion; ?></td>
+            <td><?php echo $datos->cp; ?></td>
+            <td><?php echo $datos->telefono; ?></td>
+            <td><?php echo $datos->ciudad; ?></td>
+            <td><?php echo $datos->pais; ?></td>
+            <td><?php echo $datos->email; ?></td>
+            <td><?php echo $datos->fecha; ?></td>
+            <td>
+                <a href="#" class="btn btn-warning">Editar</a>
+                <a href="#" class="btn btn-danger">Eliminar</a>
+            </td>
+        </tr>
+        <?php
+    }
+    ?>
+</tbody>
+
 
         </table>
     </div>
