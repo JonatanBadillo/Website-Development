@@ -132,13 +132,14 @@
                         <td><?php echo $datos->email; ?></td>
                         <td><?php echo $datos->fecha; ?></td>
                         <td>
-                            <a href="#" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModalEditar<?= $datos->id ?>">Editar</a>
+                            <a href="#" class="btn btn-warning" data-bs-toggle="modal"
+                                data-bs-target="#exampleModalEditar<?= $datos->id ?>">Editar</a>
                             <a href="#" class="btn btn-danger">Eliminar</a>
                         </td>
                     </tr>
                     <!-- Modal -->
-                    <div class="modal fade" id="exampleModalEditar<?= $datos->id ?>" tabindex="-1" aria-labelledby="exampleModalLabel"
-                        aria-hidden="true">
+                    <div class="modal fade" id="exampleModalEditar<?= $datos->id ?>" tabindex="-1"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -148,10 +149,7 @@
                                 </div>
                                 <div class="modal-body">
                                     <form action="" enctype="multipart/form-data" method="post">
-                                    <div class="mb-3">
-                                            <label for="id" class="form-label">ID</label>
-                                            <input type="text" value="<?= $datos->id ?>">
-                                        </div>
+                                            <input type="hidden" value="<?= $datos->id ?>" name="id">
                                         <div class="mb-3">
                                             <label for="nombre" class="form-label">Nombre</label>
                                             <input type="text" class="form-control" id="nombre" name="nombre"
@@ -201,8 +199,9 @@
                                             <label for="photo" class="form-label">Foto</label>
                                             <input type="file" class="form-control" name="imagen">
                                         </div>
-                                        <input type="submit" class="form-control btn btn-success mb-12" value="Registrar"
-                                            name="btnregistrar">
+                                            <input type="hidden" value="<?= $datos->foto ?>" name="nombre_foto">
+                                        <input type="submit" class="form-control btn btn-success mb-12" value="Modificar"
+                                            name="btneditar">
                                     </form>
 
                                 </div>
