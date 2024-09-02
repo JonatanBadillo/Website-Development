@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <h1 class="text-center text-secondary font-weight-bold p-4">Agenda</h1>
+    <h1 class="text-center text-secondary font-weight-bold p-4">Agenda Web</h1>
 
 
 
@@ -26,11 +26,11 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Nuevo Registro</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <form action="" enctype="multipart/form-data">
                             <div class="mb-3">
                                 <label for="nombre" class="form-label">Nombre</label>
                                 <input type="text" class="form-control" id="nombre" placeholder="Ingrese su nombre">
@@ -70,6 +70,12 @@
                                 <label for="fecha_nacimiento" class="form-label">Fecha de Nacimiento</label>
                                 <input type="date" class="form-control" id="fecha_nacimiento">
                             </div>
+                            <div class="mb-3">
+                                <label for="photo" class="form-label">Foto</label>
+                                <input type="file" class="form-control" name="imagen">
+
+                            </div>
+                            <input type="submit" class="form-control btn btn-success" value="Registrar" name="btnregistrar">
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -81,6 +87,9 @@
         </div>
 
         <table class="table table-hover table-striped">
+            <?php
+                
+            ?>
             <thead class="table-dark">
                 <tr>
                     <th scope="col">#</th>
@@ -110,7 +119,10 @@
                     <td>do</td>
                     <td>mark.otto@example.com</td>
                     <td>01/01/1990</td>
-                    <td></td>
+                    <td>
+                        <a href="#" class="btn btn-warning">Editar</a>
+                        <a href="#" class="btn btn-danger">Eliminar</a>
+                    </td>
                 </tr>
             </tbody>
         </table>
