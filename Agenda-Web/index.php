@@ -11,6 +11,11 @@
 
 <body>
     <h1 class="text-center text-secondary font-weight-bold p-4">Agenda Web</h1>
+    <?php
+    require "conexion.php";
+    require "registrar.php";
+    $sql = $conexion->query("SELECT * FROM contactos");
+    ?>
 
     <div class="p-3 table-responsive">
 
@@ -77,17 +82,14 @@
                                 name="btnregistrar">
                         </form>
                     </div>
-                    
+
                 </div>
             </div>
         </div>
 
         <!-- Tabla de contactos -->
         <table class="table table-hover table-striped">
-            <?php
-            require "conexion.php";
-            $sql = $conexion->query("SELECT * FROM contactos");
-            ?>
+
             <thead class="table-dark">
                 <tr>
                     <th scope="col">#</th>
@@ -126,7 +128,7 @@
                             <a href="#" class="btn btn-danger">Eliminar</a>
                         </td>
                     </tr>
-                <?php
+                    <?php
                 }
                 ?>
             </tbody>
