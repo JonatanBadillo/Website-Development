@@ -118,7 +118,8 @@
         <tr>
             <th scope="row"><?php echo $datos->id; ?></th>
             <td>
-                <img  width="70" height="70"src="<?php echo $datos->foto; ?>" alt="Imagen" width="50">
+                <img width="70" height="70" border="1" style="border-radius: 50%;" src="<?php echo $datos->foto; ?>" alt="Imagen">
+            </td>
             </td>
             <td><?php echo $datos->nombre; ?></td>
             <td><?php echo $datos->apellido; ?></td>
