@@ -118,7 +118,7 @@
         <tr>
             <th scope="row"><?php echo $datos->id; ?></th>
             <td>
-                <img src="<?php echo $datos->foto; ?>" alt="Imagen" width="50">
+                <img  width="70" height="70"src="<?php echo $datos->foto; ?>" alt="Imagen" width="50">
             </td>
             <td><?php echo $datos->nombre; ?></td>
             <td><?php echo $datos->apellido; ?></td>
