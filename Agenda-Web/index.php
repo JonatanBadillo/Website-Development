@@ -36,51 +36,56 @@
                         <form action="" enctype="multipart/form-data" method="post">
                             <div class="mb-3">
                                 <label for="nombre" class="form-label">Nombre</label>
-                                <input type="text" class="form-control" id="nombre" placeholder="Ingrese su nombre">
+                                <input type="text" class="form-control" id="nombre" name="nombre"
+                                    placeholder="Ingrese su nombre">
                             </div>
                             <div class="mb-3">
                                 <label for="apellido" class="form-label">Apellido</label>
-                                <input type="text" class="form-control" id="apellido" placeholder="Ingrese su apellido">
+                                <input type="text" class="form-control" id="apellido" name="apellido"
+                                    placeholder="Ingrese su apellido">
                             </div>
                             <div class="mb-3">
                                 <label for="direccion" class="form-label">Dirección</label>
-                                <input type="text" class="form-control" id="direccion"
+                                <input type="text" class="form-control" id="direccion" name="direccion"
                                     placeholder="Ingrese su dirección">
                             </div>
                             <div class="mb-3">
                                 <label for="cp" class="form-label">CP</label>
-                                <input type="text" class="form-control" id="cp" placeholder="Ingrese su código postal">
+                                <input type="text" class="form-control" id="cp" name="cp"
+                                    placeholder="Ingrese su código postal">
                             </div>
                             <div class="mb-3">
                                 <label for="telefono" class="form-label">Teléfono</label>
-                                <input type="text" class="form-control" id="telefono"
+                                <input type="text" class="form-control" id="telefono" name="telefono"
                                     placeholder="Ingrese su número de teléfono">
                             </div>
                             <div class="mb-3">
                                 <label for="ciudad" class="form-label">Ciudad</label>
-                                <input type="text" class="form-control" id="ciudad" placeholder="Ingrese su ciudad">
+                                <input type="text" class="form-control" id="ciudad" name="ciudad"
+                                    placeholder="Ingrese su ciudad">
                             </div>
                             <div class="mb-3">
                                 <label for="pais" class="form-label">País</label>
-                                <input type="text" class="form-control" id="pais" placeholder="Ingrese su país">
+                                <input type="text" class="form-control" id="pais" name="pais"
+                                    placeholder="Ingrese su país">
                             </div>
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email"
+                                <input type="email" class="form-control" id="email" name="email"
                                     placeholder="Ingrese su correo electrónico">
                             </div>
                             <div class="mb-3">
                                 <label for="fecha_nacimiento" class="form-label">Fecha de Nacimiento</label>
-                                <input type="date" class="form-control" id="fecha_nacimiento">
+                                <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento">
                             </div>
                             <div class="mb-3">
                                 <label for="photo" class="form-label">Foto</label>
                                 <input type="file" class="form-control" name="imagen">
-
                             </div>
                             <input type="submit" class="form-control btn btn-success mb-12" value="Registrar"
                                 name="btnregistrar">
                         </form>
+
                     </div>
 
                 </div>
