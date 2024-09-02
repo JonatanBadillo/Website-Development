@@ -14,6 +14,7 @@
     <?php
     require "conexion.php";
     require "registrar.php";
+    require "editar.php";
     $sql = $conexion->query("SELECT * FROM contactos");
     ?>
 
@@ -137,7 +138,7 @@
                             <a href="#" class="btn btn-danger">Eliminar</a>
                         </td>
                     </tr>
-                    <!-- Modal -->
+                    <!-- Modal Editar-->
                     <div class="modal fade" id="exampleModalEditar<?= $datos->id ?>" tabindex="-1"
                         aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
@@ -153,51 +154,51 @@
                                         <div class="mb-3">
                                             <label for="nombre" class="form-label">Nombre</label>
                                             <input type="text" class="form-control" id="nombre" name="nombre"
-                                                placeholder="Ingrese su nombre">
+                                                placeholder="Ingrese su nombre"  value="<?= $datos->nombre?>">
                                         </div>
                                         <div class="mb-3">
                                             <label for="apellido" class="form-label">Apellido</label>
                                             <input type="text" class="form-control" id="apellido" name="apellido"
-                                                placeholder="Ingrese su apellido">
+                                                placeholder="Ingrese su apellido"  value="<?= $datos->apellido ?>">
                                         </div>
                                         <div class="mb-3">
                                             <label for="direccion" class="form-label">Dirección</label>
                                             <input type="text" class="form-control" id="direccion" name="direccion"
-                                                placeholder="Ingrese su dirección">
+                                                placeholder="Ingrese su dirección"  value="<?= $datos->direccion ?>">
                                         </div>
                                         <div class="mb-3">
                                             <label for="cp" class="form-label">CP</label>
                                             <input type="text" class="form-control" id="cp" name="cp"
-                                                placeholder="Ingrese su código postal">
+                                                placeholder="Ingrese su código postal"  value="<?= $datos->cp ?>">
                                         </div>
                                         <div class="mb-3">
                                             <label for="telefono" class="form-label">Teléfono</label>
                                             <input type="text" class="form-control" id="telefono" name="telefono"
-                                                placeholder="Ingrese su número de teléfono">
+                                                placeholder="Ingrese su número de teléfono"  value="<?= $datos->telefono ?>"> 
                                         </div>
                                         <div class="mb-3">
                                             <label for="ciudad" class="form-label">Ciudad</label>
                                             <input type="text" class="form-control" id="ciudad" name="ciudad"
-                                                placeholder="Ingrese su ciudad">
+                                                placeholder="Ingrese su ciudad"  value="<?= $datos->ciudad ?>">
                                         </div>
                                         <div class="mb-3">
                                             <label for="pais" class="form-label">País</label>
                                             <input type="text" class="form-control" id="pais" name="pais"
-                                                placeholder="Ingrese su país">
+                                                placeholder="Ingrese su país"  value="<?= $datos->pais ?>">
                                         </div>
                                         <div class="mb-3">
                                             <label for="email" class="form-label">Email</label>
                                             <input type="email" class="form-control" id="email" name="email"
-                                                placeholder="Ingrese su correo electrónico">
+                                                placeholder="Ingrese su correo electrónico"  value="<?= $datos->email ?>">
                                         </div>
                                         <div class="mb-3">
                                             <label for="fecha_nacimiento" class="form-label">Fecha de Nacimiento</label>
                                             <input type="date" class="form-control" id="fecha_nacimiento"
-                                                name="fecha_nacimiento">
+                                                name="fecha_nacimiento"  value="<?= $datos->fecha ?>">
                                         </div>
                                         <div class="mb-3">
                                             <label for="photo" class="form-label">Foto</label>
-                                            <input type="file" class="form-control" name="imagen">
+                                            <input type="file" class="form-control" name="imagen" value="<?= $datos->foto ?>">
                                         </div>
                                             <input type="hidden" value="<?= $datos->foto ?>" name="nombre_foto">
                                         <input type="submit" class="form-control btn btn-success mb-12" value="Modificar"
