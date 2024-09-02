@@ -12,8 +12,6 @@
 <body>
     <h1 class="text-center text-secondary font-weight-bold p-4">Agenda Web</h1>
 
-
-
     <div class="p-3 table-responsive">
 
         <!-- Button trigger modal -->
@@ -75,7 +73,8 @@
                                 <input type="file" class="form-control" name="imagen">
 
                             </div>
-                            <input type="submit" class="form-control btn btn-success" value="Registrar" name="btnregistrar">
+                            <input type="submit" class="form-control btn btn-success" value="Registrar"
+                                name="btnregistrar">
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -88,12 +87,13 @@
 
         <table class="table table-hover table-striped">
             <?php
-                
+            require "conexion.php";
+            $sql = $conexion->query("SELECT * FROM contactos");
             ?>
             <thead class="table-dark">
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col"></th>
+                    <th scope="col">Foto</th>
                     <th scope="col">Nombre</th>
                     <th scope="col">Apellido</th>
                     <th scope="col">Direccion</th>
@@ -107,24 +107,32 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>do</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>mdo</td>
-                    <td>Otto</td>
-                    <td>do</td>
-                    <td>mark.otto@example.com</td>
-                    <td>01/01/1990</td>
-                    <td>
-                        <a href="#" class="btn btn-warning">Editar</a>
-                        <a href="#" class="btn btn-danger">Eliminar</a>
-                    </td>
-                </tr>
+                <?php
+                while ($datos = $sql->fetch_object()) {
+                    ?>
+                    <tr>
+                        <th scope="row"><?php echo $datos->id; ?></th>
+                        <td><img src="ruta_a_tu_directorio_de_imagenes/<?php echo $datos->foto; ?>" alt="Foto" width="50">
+                        </td>
+                        <td><?php echo $datos->nombre; ?></td>
+                        <td><?php echo $datos->apellido; ?></td>
+                        <td><?php echo $datos->direccion; ?></td>
+                        <td><?php echo $datos->cp; ?></td>
+                        <td><?php echo $datos->telefono; ?></td>
+                        <td><?php echo $datos->ciudad; ?></td>
+                        <td><?php echo $datos->pais; ?></td>
+                        <td><?php echo $datos->email; ?></td>
+                        <td><?php echo $datos->fecha; ?></td>
+                        <td>
+                            <a href="#" class="btn btn-warning">Editar</a>
+                            <a href="#" class="btn btn-danger">Eliminar</a>
+                        </td>
+                    </tr>
+                <?php
+                }
+                ?>
             </tbody>
+
         </table>
     </div>
 
