@@ -12,7 +12,8 @@ if(!empty($_POST["btnregistrar"])){
     $email = isset($_POST["email"]) ? $_POST["email"] : null;
     $fecha_nacimiento = isset($_POST["fecha_nacimiento"]) ? $_POST["fecha_nacimiento"] : null;
 
-    if ($nombre && $apellido && $direccion && $cp && $telefono && $ciudad && $pais && $email && $fecha_nacimiento) {
+    // Validar que CP es un número
+    if ($nombre && $apellido && $direccion && is_numeric($cp) && $telefono && $ciudad && $pais && $email && $fecha_nacimiento) {
         $imagen = $_FILES["imagen"]["tmp_name"];
         $nombreImagen = $_FILES["imagen"]["name"];
         $tipoImagen = strtolower(pathinfo($nombreImagen, PATHINFO_EXTENSION));
@@ -23,7 +24,6 @@ if(!empty($_POST["btnregistrar"])){
             // Inserta los demás datos antes de la imagen
             $registro = $conexion->query("INSERT INTO contactos (nombre, apellido, direccion, cp, telefono, ciudad, pais, email, fecha, foto) VALUES ('$nombre', '$apellido', '$direccion', '$cp', '$telefono', '$ciudad', '$pais', '$email', '$fecha_nacimiento', '')");
 
-            
             // Verifica que la inserción haya sido exitosa antes de proceder
             if($registro){
                 $idRegistro = $conexion->insert_id;
@@ -36,7 +36,9 @@ if(!empty($_POST["btnregistrar"])){
                     $actualizarImagen = $conexion->query("UPDATE contactos SET foto='$ruta' WHERE id=$idRegistro");
 
                     if($actualizarImagen){
-                        echo "<div class='alert alert-success'>Registro guardado correctamente.</div>";
+                        // Redirige a la misma página para evitar reenvío del formulario
+                        header("Location: " . $_SERVER['PHP_SELF']);
+                        exit();
                     } else {
                         echo "<div class='alert alert-danger'>Error al guardar la imagen.</div>";
                     }
@@ -50,7 +52,7 @@ if(!empty($_POST["btnregistrar"])){
             echo "<div class='alert alert-danger'>Formato de imagen no válido</div>";
         }
     } else {
-        echo "<div class='alert alert-danger'>Por favor, completa todos los campos obligatorios.</div>";
+        echo "<div class='alert alert-danger'>Por favor, completa todos los campos obligatorios correctamente.</div>";
     }
 }
 ?>
