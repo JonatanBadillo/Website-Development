@@ -28,7 +28,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="" enctype="multipart/form-data">
+                        <form action="" enctype="multipart/form-data" method="post">
                             <div class="mb-3">
                                 <label for="nombre" class="form-label">Nombre</label>
                                 <input type="text" class="form-control" id="nombre" placeholder="Ingrese su nombre">
@@ -73,18 +73,16 @@
                                 <input type="file" class="form-control" name="imagen">
 
                             </div>
-                            <input type="submit" class="form-control btn btn-success" value="Registrar"
+                            <input type="submit" class="form-control btn btn-success mb-12" value="Registrar"
                                 name="btnregistrar">
                         </form>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary">Guardar</button>
-                    </div>
+                    
                 </div>
             </div>
         </div>
 
+        <!-- Tabla de contactos -->
         <table class="table table-hover table-striped">
             <?php
             require "conexion.php";
