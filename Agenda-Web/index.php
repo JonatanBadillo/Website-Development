@@ -15,6 +15,7 @@
     require "conexion.php";
     require "registrar.php";
     require "editar.php";
+    require "eliminar.php";
     $sql = $conexion->query("SELECT * FROM contactos");
     ?>
 
@@ -133,9 +134,9 @@
                         <td><?php echo $datos->email; ?></td>
                         <td><?php echo $datos->fecha; ?></td>
                         <td>
-                            <a href="#" class="btn btn-warning" data-bs-toggle="modal"
+                            <a class="btn btn-warning" data-bs-toggle="modal"
                                 data-bs-target="#exampleModalEditar<?= $datos->id ?>">Editar</a>
-                            <a href="#" class="btn btn-danger">Eliminar</a>
+                            <a href="index.php?id=<?= $datos->id?>&nombre=<?=$datos->foto?>" class="btn btn-danger">Eliminar</a>
                         </td>
                     </tr>
                     <!-- Modal Editar-->
