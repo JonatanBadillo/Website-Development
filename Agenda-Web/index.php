@@ -19,6 +19,17 @@
     $sql = $conexion->query("SELECT * FROM contactos");
     ?>
 
+    <script>
+        function eliminar() {
+            var respuesta = confirm("¿Estás seguro de eliminar este registro?");
+            if (respuesta) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    </script>
+
     <div class="p-3 table-responsive">
 
         <!-- Button trigger modal -->
@@ -136,7 +147,7 @@
                         <td>
                             <a class="btn btn-warning" data-bs-toggle="modal"
                                 data-bs-target="#exampleModalEditar<?= $datos->id ?>">Editar</a>
-                            <a href="index.php?id=<?= $datos->id?>&nombre=<?=$datos->foto?>" class="btn btn-danger">Eliminar</a>
+                            <a href="index.php?id=<?= $datos->id?>&nombre=<?=$datos->foto?>" class="btn btn-danger" onclick="return eliminar()">Eliminar</a>
                         </td>
                     </tr>
                     <!-- Modal Editar-->
