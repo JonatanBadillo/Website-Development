@@ -7,6 +7,65 @@
     <title>Agenda</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <style>
+        body {
+            background-color: #f8f9fa; /* Fondo gris claro */
+        }
+
+        .table-responsive {
+            background-color: white;
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+            font-size: 1.25rem;
+            padding: 10px 20px;
+            border-radius: 30%;
+            text-size-adjust: 100%;
+            font-size: 1.2rem;
+        }
+
+
+        .modal-content {
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .form-label {
+            font-weight: 600;
+        }
+
+        .table img {
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .table th, .table td {
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        /* Ajustes para pantallas pequeñas */
+        @media (max-width: 576px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .btn-primary, .btn-success {
+                font-size: 1rem;
+                padding: 8px 16px;
+            }
+        }
+    </style>
 </head>
 
 <body>
