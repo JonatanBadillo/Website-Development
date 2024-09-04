@@ -7,9 +7,10 @@
     <title>Agenda</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-        <style>
+    <style>
         body {
-            background-color: #f8f9fa; /* Fondo gris claro */
+            background-color: #f8f9fa;
+            /* Fondo gris claro */
         }
 
         .table-responsive {
@@ -49,7 +50,8 @@
             object-fit: cover;
         }
 
-        .table th, .table td {
+        .table th,
+        .table td {
             vertical-align: middle;
             text-align: center;
         }
@@ -60,7 +62,8 @@
                 font-size: 2rem;
             }
 
-            .btn-primary, .btn-success {
+            .btn-primary,
+            .btn-success {
                 font-size: 1rem;
                 padding: 8px 16px;
             }
@@ -185,10 +188,14 @@
             </thead>
             <tbody>
                 <?php
+                $i = 0;
                 while ($datos = $sql->fetch_object()) {
+                    $i++;
                     ?>
                     <tr>
-                        <th scope="row"><?php echo $datos->id; ?></th>
+
+                        <th scope="row"><?php echo $i; ?></th>
+                        
                         <td>
                             <img width="70" height="70" border="1" style="border-radius: 50%;"
                                 src="<?php echo $datos->foto; ?>" alt="Imagen">
@@ -206,7 +213,8 @@
                         <td>
                             <a class="btn btn-warning" data-bs-toggle="modal"
                                 data-bs-target="#exampleModalEditar<?= $datos->id ?>">Editar</a>
-                            <a href="index.php?id=<?= $datos->id?>&nombre=<?=$datos->foto?>" class="btn btn-danger" onclick="return eliminar()">Eliminar</a>
+                            <a href="index.php?id=<?= $datos->id ?>&nombre=<?= $datos->foto ?>" class="btn btn-danger"
+                                onclick="return eliminar()">Eliminar</a>
                         </td>
                     </tr>
                     <!-- Modal Editar-->
@@ -221,57 +229,58 @@
                                 </div>
                                 <div class="modal-body">
                                     <form action="" enctype="multipart/form-data" method="post">
-                                            <input type="hidden" value="<?= $datos->id ?>" name="id">
+                                        <input type="hidden" value="<?= $datos->id ?>" name="id">
                                         <div class="mb-3">
                                             <label for="nombre" class="form-label">Nombre</label>
                                             <input type="text" class="form-control" id="nombre" name="nombre"
-                                                placeholder="Ingrese su nombre"  value="<?= $datos->nombre?>">
+                                                placeholder="Ingrese su nombre" value="<?= $datos->nombre ?>">
                                         </div>
                                         <div class="mb-3">
                                             <label for="apellido" class="form-label">Apellido</label>
                                             <input type="text" class="form-control" id="apellido" name="apellido"
-                                                placeholder="Ingrese su apellido"  value="<?= $datos->apellido ?>">
+                                                placeholder="Ingrese su apellido" value="<?= $datos->apellido ?>">
                                         </div>
                                         <div class="mb-3">
                                             <label for="direccion" class="form-label">Dirección</label>
                                             <input type="text" class="form-control" id="direccion" name="direccion"
-                                                placeholder="Ingrese su dirección"  value="<?= $datos->direccion ?>">
+                                                placeholder="Ingrese su dirección" value="<?= $datos->direccion ?>">
                                         </div>
                                         <div class="mb-3">
                                             <label for="cp" class="form-label">CP</label>
                                             <input type="text" class="form-control" id="cp" name="cp"
-                                                placeholder="Ingrese su código postal"  value="<?= $datos->cp ?>">
+                                                placeholder="Ingrese su código postal" value="<?= $datos->cp ?>">
                                         </div>
                                         <div class="mb-3">
                                             <label for="telefono" class="form-label">Teléfono</label>
                                             <input type="text" class="form-control" id="telefono" name="telefono"
-                                                placeholder="Ingrese su número de teléfono"  value="<?= $datos->telefono ?>"> 
+                                                placeholder="Ingrese su número de teléfono" value="<?= $datos->telefono ?>">
                                         </div>
                                         <div class="mb-3">
                                             <label for="ciudad" class="form-label">Ciudad</label>
                                             <input type="text" class="form-control" id="ciudad" name="ciudad"
-                                                placeholder="Ingrese su ciudad"  value="<?= $datos->ciudad ?>">
+                                                placeholder="Ingrese su ciudad" value="<?= $datos->ciudad ?>">
                                         </div>
                                         <div class="mb-3">
                                             <label for="pais" class="form-label">País</label>
                                             <input type="text" class="form-control" id="pais" name="pais"
-                                                placeholder="Ingrese su país"  value="<?= $datos->pais ?>">
+                                                placeholder="Ingrese su país" value="<?= $datos->pais ?>">
                                         </div>
                                         <div class="mb-3">
                                             <label for="email" class="form-label">Email</label>
                                             <input type="email" class="form-control" id="email" name="email"
-                                                placeholder="Ingrese su correo electrónico"  value="<?= $datos->email ?>">
+                                                placeholder="Ingrese su correo electrónico" value="<?= $datos->email ?>">
                                         </div>
                                         <div class="mb-3">
                                             <label for="fecha_nacimiento" class="form-label">Fecha de Nacimiento</label>
                                             <input type="date" class="form-control" id="fecha_nacimiento"
-                                                name="fecha_nacimiento"  value="<?= $datos->fecha ?>">
+                                                name="fecha_nacimiento" value="<?= $datos->fecha ?>">
                                         </div>
                                         <div class="mb-3">
                                             <label for="photo" class="form-label">Foto</label>
-                                            <input type="file" class="form-control" name="imagen" value="<?= $datos->foto ?>">
+                                            <input type="file" class="form-control" name="imagen"
+                                                value="<?= $datos->foto ?>">
                                         </div>
-                                            <input type="hidden" value="<?= $datos->foto ?>" name="nombre_foto">
+                                        <input type="hidden" value="<?= $datos->foto ?>" name="nombre_foto">
                                         <input type="submit" class="form-control btn btn-success mb-12" value="Modificar"
                                             name="btneditar">
                                     </form>

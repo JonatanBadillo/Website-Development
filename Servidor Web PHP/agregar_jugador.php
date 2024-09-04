@@ -1,7 +1,7 @@
 <?php
 // verificar si la solicitud es de tipo POST y si los campos  no están vacíos
 if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['nombre']) && !empty($_POST['edad']) && !empty($_POST['dorsal']) && !empty($_POST['posicion']) && !empty($_POST['equipo'])) {
-    // Escapa los valores de los campos para evitar inyección de SQL
+    // recuper los atributo
     $nombre = $connection->real_escape_string($_POST['nombre']);
     $edad = $connection->real_escape_string($_POST['edad']);
     $dorsal = $connection->real_escape_string($_POST['dorsal']);
