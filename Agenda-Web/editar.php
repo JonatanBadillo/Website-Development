@@ -1,6 +1,7 @@
 <?php
+// verificar si se envió el formulario 
 if (!empty($_POST["btneditar"])) {
-
+    // verificar que los campos existen y no están vacíos
     $id = $_POST["id"];
     $nombre = isset($_POST["nombre"]) ? $_POST["nombre"] : null;
     $apellido = isset($_POST["apellido"]) ? $_POST["apellido"] : null;
@@ -18,32 +19,34 @@ if (!empty($_POST["btneditar"])) {
         echo "<div class='alert alert-danger'>Por favor, complete todos los campos.</div>";
         exit();
     }
-
-    $imagen = $_FILES["imagen"]["tmp_name"];
-    $nombreImagen = $_FILES["imagen"]["name"];
-    $tipoImagen = strtolower(pathinfo($nombreImagen, PATHINFO_EXTENSION));
-    $directorio = "archivos/";
+    
+    
+    $imagen = $_FILES["imagen"]["tmp_name"]; // imagen nueva seleccionada
+    $nombreImagen = $_FILES["imagen"]["name"]; // nombre de la imagen nueva
+    $tipoImagen = strtolower(pathinfo($nombreImagen, PATHINFO_EXTENSION)); // extensión de la imagen nueva
+    $directorio = "archivos/"; // directorio donde se guardan las imágenes
 
     if (!empty($nombreImagen)) {
-        // Si se seleccionó una nueva imagen
+        // si se seleccionó una nueva imagen
         $ruta = $directorio . $id . "." . $tipoImagen;
+        // verificar que la imagen sea jpg, jpeg o png
         if ($tipoImagen == "jpg" || $tipoImagen == "jpeg" || $tipoImagen == "png") {
             if (move_uploaded_file($imagen, $ruta)) {
-                $foto = $ruta; // Nueva foto
+                $foto = $ruta; // nueva foto
             } else {
                 echo "<div class='alert alert-danger'>Error al subir la nueva imagen.</div>";
-                $foto = $foto_actual; // Mantener la foto actual si hay error
+                $foto = $foto_actual; // mantener la foto actual si hay error
             }
         } else {
             echo "<div class='alert alert-danger'>Formato de imagen no válido.</div>";
-            $foto = $foto_actual; // Mantener la foto actual si el formato es incorrecto
+            $foto = $foto_actual; // mantener la foto actual si el formato es incorrecto
         }
     } else {
-        // Si no se seleccionó una nueva imagen, mantener la foto actual
+        // si no se seleccionó una nueva imagen, mantener la foto actual
         $foto = $foto_actual;
     }
 
-    // Actualización en la base de datos
+    // actualización en la base de datos
     $sql = "UPDATE contactos SET nombre='$nombre', apellido='$apellido', direccion='$direccion', cp='$cp', telefono='$telefono', ciudad='$ciudad', pais='$pais', email='$email', fecha='$fecha_nacimiento', foto='$foto' WHERE id=$id";
 
     if ($conexion->query($sql) === TRUE) {
@@ -53,3 +56,4 @@ if (!empty($_POST["btneditar"])) {
         echo "<div class='alert alert-danger'>Error al actualizar el contacto: " . $conexion->error . "</div>";
     }
 }
+
