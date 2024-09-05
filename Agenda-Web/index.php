@@ -5,9 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agenda</title>
+    <!-- archivo CSS de Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
+        /* Estilos personalizados */
         body {
             background-color: #f8f9fa;
             /* Fondo gris claro */
@@ -34,7 +36,6 @@
             text-size-adjust: 100%;
             font-size: 1.2rem;
         }
-
 
         .modal-content {
             border-radius: 15px;
@@ -73,15 +74,20 @@
 
 <body>
     <h1 class="text-center text-secondary font-weight-bold p-4">Agenda Web</h1>
+
     <?php
+    //  archivos de conexión y las operaciones de registro, edición y eliminación
     require "conexion.php";
     require "registrar.php";
     require "editar.php";
     require "eliminar.php";
+
+    // consulta a la base de datos para obtener los contactos
     $sql = $conexion->query("SELECT * FROM contactos");
     ?>
 
     <script>
+        // función para confirmar la eliminación de un registro
         function eliminar() {
             var respuesta = confirm("¿Estás seguro de eliminar este registro?");
             if (respuesta) {
@@ -94,12 +100,12 @@
 
     <div class="p-3 table-responsive">
 
-        <!-- Button trigger modal -->
+        <!-- botón para abrir el modal de registro -->
         <button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
             +
         </button>
 
-        <!-- Modal -->
+        <!-- modal de registro -->
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -108,6 +114,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+                        <!-- formulario de registro -->
                         <form action="" enctype="multipart/form-data" method="post">
                             <div class="mb-3">
                                 <label for="nombre" class="form-label">Nombre</label>
@@ -167,7 +174,7 @@
             </div>
         </div>
 
-        <!-- Tabla de contactos -->
+        <!-- tabla de contactos -->
         <table class="table table-hover table-striped">
 
             <thead class="table-dark">
@@ -193,13 +200,10 @@
                     $i++;
                     ?>
                     <tr>
-
                         <th scope="row"><?php echo $i; ?></th>
-                        
                         <td>
                             <img width="70" height="70" border="1" style="border-radius: 50%;"
                                 src="<?php echo $datos->foto; ?>" alt="Imagen">
-                        </td>
                         </td>
                         <td><?php echo $datos->nombre; ?></td>
                         <td><?php echo $datos->apellido; ?></td>
@@ -211,13 +215,14 @@
                         <td><?php echo $datos->email; ?></td>
                         <td><?php echo $datos->fecha; ?></td>
                         <td>
+                            <!-- botones de editar y eliminar -->
                             <a class="btn btn-warning" data-bs-toggle="modal"
                                 data-bs-target="#exampleModalEditar<?= $datos->id ?>">Editar</a>
                             <a href="index.php?id=<?= $datos->id ?>&nombre=<?= $datos->foto ?>" class="btn btn-danger"
                                 onclick="return eliminar()">Eliminar</a>
                         </td>
                     </tr>
-                    <!-- Modal Editar-->
+                    <!-- modal de edición -->
                     <div class="modal fade" id="exampleModalEditar<?= $datos->id ?>" tabindex="-1"
                         aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
@@ -228,6 +233,7 @@
                                         aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
+                                    <!-- formulario de edición -->
                                     <form action="" enctype="multipart/form-data" method="post">
                                         <input type="hidden" value="<?= $datos->id ?>" name="id">
                                         <div class="mb-3">
@@ -300,6 +306,7 @@
         </table>
     </div>
 
+    <!-- archivo JavaScript de Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
