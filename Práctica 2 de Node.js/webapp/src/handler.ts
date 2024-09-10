@@ -1,3 +1,4 @@
+
 // import { handler } from './handler';
 // import { IncomingMessage, ServerResponse } from "http";
 
@@ -26,15 +27,21 @@
 //     });
 // };
 
+
 import { IncomingMessage, ServerResponse } from "http";
-//import { readFile } from "fs";
 import { readFile } from "fs/promises";
+// Definición de la función handler
 export const handler = (req: IncomingMessage, res: ServerResponse) => {
-  const p: Promise<Buffer> = readFile("data.json");
-  p.then((data: Buffer) => res.end(data, () => console.log("File sent")));
-  p.catch((err: Error) => {
-    console.log(`Error: ${err.message}`);
-    res.statusCode = 500;
-    res.end();
-  });
+    // Lee el archivo "data.json" usando fs/promises
+    const p: Promise<Buffer> = readFile("data.json");
+
+    // Maneja la promesa para enviar los datos del archivo como respuesta
+    p.then((data: Buffer) => res.end(data, () => console.log("Archivo enviado")));
+
+    // Maneja el error en caso de que ocurra
+    p.catch((err: Error) => {
+        console.log(`Error: ${err.message}`);
+        res.statusCode = 500;
+        res.end();
+    });
 };
