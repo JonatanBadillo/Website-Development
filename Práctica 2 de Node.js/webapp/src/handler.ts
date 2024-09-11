@@ -73,18 +73,42 @@
 // };
 
 // Uso de las palabras clave async y await en el archivo handler.ts en la carpeta src.
-import { IncomingMessage, ServerResponse } from "http";
-import { readFile } from "fs/promises";
+// import { IncomingMessage, ServerResponse } from "http";
+// import { readFile } from "fs/promises";
 
 // Definición de la función handler
 // Las API de promesa y devolución de llamada se pueden mezclar sin problemas, pero el
 // resultado puede ser un código extraño.
+// export const handler = async (req: IncomingMessage, res: ServerResponse) => {
+//     try {
+//         // Lee el archivo "data.json" usando fs/promises
+//         const data: Buffer = await readFile("data.json"); // devuelve una promesa, por lo que se usa await
+//         // Envía los datos del archivo como respuesta
+//         res.end(data, () => console.log("File sent")); // utiliza callback para mostrar mensaje en consola
+//     } catch (err: any) {
+//         // En caso de error, muestra el mensaje de error y establece el código de estado 500
+//         console.log(`Error: ${err?.message ?? err}`);
+//         res.statusCode = 500;
+//         res.end();
+//     }
+// };
+
+
+// Uso de una promesa
+// Importa los módulos necesarios
+import { IncomingMessage, ServerResponse } from "http";
+import { readFile } from "fs/promises";
+import { endPromise } from "./promises";
+
+
+// Definición de la función handler
 export const handler = async (req: IncomingMessage, res: ServerResponse) => {
     try {
         // Lee el archivo "data.json" usando fs/promises
-        const data: Buffer = await readFile("data.json"); // devuelve una promesa, por lo que se usa await
-        // Envía los datos del archivo como respuesta
-        res.end(data, () => console.log("File sent")); // utiliza callback para mostrar mensaje en consola
+        const data: Buffer = await readFile("data.json");
+        // Utiliza la función endPromise para enviar los datos del archivo como respuesta
+        await endPromise.bind(res)(data);
+        console.log("Archivo enviado");
     } catch (err: any) {
         // En caso de error, muestra el mensaje de error y establece el código de estado 500
         console.log(`Error: ${err?.message ?? err}`);
