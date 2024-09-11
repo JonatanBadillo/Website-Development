@@ -151,42 +151,92 @@
 //     await endPromise.bind(res)("Done");
 // };
 
-// Uso de la función setImmediate en el archivo handler.ts en la carpeta src.
+
+// // Uso de la función setImmediate en el archivo handler.ts en la carpeta src.
+// import { IncomingMessage, ServerResponse } from "http";
+// import { endPromise, writePromise } from "./promises";
+// // Declaración de variables
+// const total = 2_000_000_000;
+// const iterations = 5;
+// let shared_counter = 0;
+
+// // Definición de la función handler
+// export const handler = async (req: IncomingMessage, res: ServerResponse) => {
+//     // Incrementa el contador compartido
+//     const request = shared_counter++;
+
+//     // Función recursiva para iterar
+//     const iterate = async (iter: number = 0) => {
+//         // Bucle interno para contar hasta el total
+//         for (let count = 0; count < total; count++) {
+//             count++;
+//         }
+
+//         // Mensaje a imprimir en cada iteración
+//         const msg = `Request: ${request}, Iteration: ${(iter)}`;
+//         console.log(msg);
+
+//         // Escribir el mensaje en la respuesta, mientras se espera a que se complete la operación
+//         await writePromise.bind(res)(msg + "\n");
+
+//         // Verificar si es la última iteración
+//         if (iter == iterations - 1) {
+//             await endPromise.bind(res)("Done");
+//         } else {
+//             // Llamar a la función iterate de forma asíncrona en la siguiente iteración
+//             setImmediate(() => iterate(++iter)); // setImmediate se utiliza para ejecutar una función después de que se haya completado la ejecución actual
+//         }
+//     };
+
+//     // Llamar a la función iterate para iniciar las iteraciones
+//     iterate();
+// };
+
+
 import { IncomingMessage, ServerResponse } from "http";
 import { endPromise, writePromise } from "./promises";
-// Declaración de variables
+import { Worker } from "worker_threads";
 const total = 2_000_000_000;
 const iterations = 5;
 let shared_counter = 0;
 
 // Definición de la función handler
 export const handler = async (req: IncomingMessage, res: ServerResponse) => {
-    // Incrementa el contador compartido
     const request = shared_counter++;
 
-    // Función recursiva para iterar
-    const iterate = async (iter: number = 0) => {
-        // Bucle interno para contar hasta el total
-        for (let count = 0; count < total; count++) {
-            count++;
+    // Crear un nuevo worker para ejecutar el código en un hilo separado
+    // se crean subprocesos de trabajo
+    const worker = new Worker(__dirname + "/count_worker.js", {
+        workerData: {
+            iterations,
+            total,
+            request
         }
+    });
 
-        // Mensaje a imprimir en cada iteración
+    // Manejar el evento "message" del worker
+    worker.on("message", async (iter: number) => {
         const msg = `Request: ${request}, Iteration: ${(iter)}`;
         console.log(msg);
-
-        // Escribir el mensaje en la respuesta, mientras se espera a que se complete la operación
         await writePromise.bind(res)(msg + "\n");
+    });
 
-        // Verificar si es la última iteración
-        if (iter == iterations - 1) {
+    // Manejar el evento "exit" del worker
+    worker.on("exit", async (code: number) => {
+        if (code == 0) {
             await endPromise.bind(res)("Done");
         } else {
-            // Llamar a la función iterate de forma asíncrona en la siguiente iteración
-            setImmediate(() => iterate(++iter)); // setImmediate se utiliza para ejecutar una función después de que se haya completado la ejecución actual
+            // En caso de error, establecer el código de estado 500 y finalizar la respuesta
+            res.statusCode = 500;
+            await res.end();
         }
-    };
+    });
 
-    // Llamar a la función iterate para iniciar las iteraciones
-    iterate();
+    // Manejar el evento "error" del worker
+    worker.on("error", async (err) => {
+        console.log(err);
+        // En caso de error, establecer el código de estado 500 y finalizar la respuesta
+        res.statusCode = 500;
+        await res.end();
+    });
 };

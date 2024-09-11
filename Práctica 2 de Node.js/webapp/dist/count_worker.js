@@ -9,6 +9,6 @@ for (let iter = 0; iter < worker_threads_1.workerData.iterations; iter++) {
         count++;
     }
     // Envía un mensaje al hilo principal indicando el número de iteración actual
-    worker_threads_1.parentPort?.postMessage(iter);
+    worker_threads_1.parentPort?.postMessage(iter); // se encarga de transferir el valor del argumento desde el subproceso de trabajo al  subproceso principal.
 }
 console.log(`Worker thread ${worker_threads_1.workerData.request} finished`);
