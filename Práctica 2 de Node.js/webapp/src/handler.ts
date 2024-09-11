@@ -117,9 +117,42 @@
 //     }
 // };
 
-// Una operación de bloqueo en el archivo handler.ts 
+
+// // Una operación de bloqueo en el archivo handler.ts 
+// import { IncomingMessage, ServerResponse } from "http";
+// //import { readFile } from "fs/promises";
+// import { endPromise, writePromise } from "./promises";
+// // Declaración de variables
+// const total = 2_000_000_000;
+// const iterations = 5;
+// let shared_counter = 0;
+
+// // Definición de la función handler
+// export const handler = async (req: IncomingMessage, res: ServerResponse) => {
+//     // Incrementa el contador compartido
+//     const request = shared_counter++;
+
+//     // Bucle externo para las iteraciones
+//     for (let iter = 0; iter < iterations; iter++) {
+//         // Bucle interno para contar hasta el total
+//         for (let count = 0; count < total; count++) {
+//             count++;
+//         }
+
+//         // Mensaje a imprimir en cada iteración
+//         const msg = `Request: ${request}, Iteration: ${(iter)}`;
+//         console.log(msg);
+
+//         // Escribir el mensaje en la respuesta , mientras se espera a que se complete la operación
+//         await writePromise.bind(res)(msg + "\n");
+//     }
+
+//     // Finalizar la respuesta
+//     await endPromise.bind(res)("Done");
+// };
+
+// Uso de la función setImmediate en el archivo handler.ts en la carpeta src.
 import { IncomingMessage, ServerResponse } from "http";
-//import { readFile } from "fs/promises";
 import { endPromise, writePromise } from "./promises";
 // Declaración de variables
 const total = 2_000_000_000;
@@ -131,8 +164,8 @@ export const handler = async (req: IncomingMessage, res: ServerResponse) => {
     // Incrementa el contador compartido
     const request = shared_counter++;
 
-    // Bucle externo para las iteraciones
-    for (let iter = 0; iter < iterations; iter++) {
+    // Función recursiva para iterar
+    const iterate = async (iter: number = 0) => {
         // Bucle interno para contar hasta el total
         for (let count = 0; count < total; count++) {
             count++;
@@ -142,10 +175,18 @@ export const handler = async (req: IncomingMessage, res: ServerResponse) => {
         const msg = `Request: ${request}, Iteration: ${(iter)}`;
         console.log(msg);
 
-        // Escribir el mensaje en la respuesta
+        // Escribir el mensaje en la respuesta, mientras se espera a que se complete la operación
         await writePromise.bind(res)(msg + "\n");
-    }
 
-    // Finalizar la respuesta
-    await endPromise.bind(res)("Done");
+        // Verificar si es la última iteración
+        if (iter == iterations - 1) {
+            await endPromise.bind(res)("Done");
+        } else {
+            // Llamar a la función iterate de forma asíncrona en la siguiente iteración
+            setImmediate(() => iterate(++iter));
+        }
+    };
+
+    // Llamar a la función iterate para iniciar las iteraciones
+    iterate();
 };
