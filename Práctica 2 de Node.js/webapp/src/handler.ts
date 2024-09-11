@@ -107,7 +107,7 @@ export const handler = async (req: IncomingMessage, res: ServerResponse) => {
         // Lee el archivo "data.json" usando fs/promises
         const data: Buffer = await readFile("data.json");
         // Utiliza la función endPromise para enviar los datos del archivo como respuesta
-        await endPromise.bind(res)(data);
+        await endPromise.bind(res)(data); // Tenemos que usar el método bind cuando usamos la palabra clave await en la función que promisify crea 
         console.log("Archivo enviado");
     } catch (err: any) {
         // En caso de error, muestra el mensaje de error y establece el código de estado 500

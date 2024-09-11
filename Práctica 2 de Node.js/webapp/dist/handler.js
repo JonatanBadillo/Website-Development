@@ -11,7 +11,7 @@ const handler = async (req, res) => {
         // Lee el archivo "data.json" usando fs/promises
         const data = await (0, promises_1.readFile)("data.json");
         // Utiliza la función endPromise para enviar los datos del archivo como respuesta
-        await promises_2.endPromise.bind(res)(data);
+        await promises_2.endPromise.bind(res)(data); // Tenemos que usar el método bind cuando usamos la palabra clave await en la función que promisify crea 
         console.log("Archivo enviado");
     }
     catch (err) {
