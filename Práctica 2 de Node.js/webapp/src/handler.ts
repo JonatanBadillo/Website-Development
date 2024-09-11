@@ -96,23 +96,55 @@
 
 // Uso de una promesa
 // Importa los módulos necesarios
-import { IncomingMessage, ServerResponse } from "http";
-import { readFile } from "fs/promises";
-import { endPromise } from "./promises";
+// import { IncomingMessage, ServerResponse } from "http";
+// import { readFile } from "fs/promises";
+// import { endPromise } from "./promises";
 
+
+// // Definición de la función handler
+// export const handler = async (req: IncomingMessage, res: ServerResponse) => {
+//     try {
+//         // Lee el archivo "data.json" usando fs/promises
+//         const data: Buffer = await readFile("data.json");
+//         // Utiliza la función endPromise para enviar los datos del archivo como respuesta
+//         await endPromise.bind(res)(data); // Tenemos que usar el método bind cuando usamos la palabra clave await en la función que promisify crea 
+//         console.log("Archivo enviado");
+//     } catch (err: any) {
+//         // En caso de error, muestra el mensaje de error y establece el código de estado 500
+//         console.log(`Error: ${err?.message ?? err}`);
+//         res.statusCode = 500;
+//         res.end();
+//     }
+// };
+
+// Una operación de bloqueo en el archivo handler.ts 
+import { IncomingMessage, ServerResponse } from "http";
+//import { readFile } from "fs/promises";
+import { endPromise, writePromise } from "./promises";
+// Declaración de variables
+const total = 2_000_000_000;
+const iterations = 5;
+let shared_counter = 0;
 
 // Definición de la función handler
 export const handler = async (req: IncomingMessage, res: ServerResponse) => {
-    try {
-        // Lee el archivo "data.json" usando fs/promises
-        const data: Buffer = await readFile("data.json");
-        // Utiliza la función endPromise para enviar los datos del archivo como respuesta
-        await endPromise.bind(res)(data); // Tenemos que usar el método bind cuando usamos la palabra clave await en la función que promisify crea 
-        console.log("Archivo enviado");
-    } catch (err: any) {
-        // En caso de error, muestra el mensaje de error y establece el código de estado 500
-        console.log(`Error: ${err?.message ?? err}`);
-        res.statusCode = 500;
-        res.end();
+    const request = shared_counter++;
+
+    // Bucle externo para las iteraciones
+    for (let iter = 0; iter < iterations; iter++) {
+        // Bucle interno para contar hasta el total
+        for (let count = 0; count < total; count++) {
+            count++;
+        }
+
+        // Mensaje a imprimir en cada iteración
+        const msg = `Request: ${request}, Iteration: ${(iter)}`;
+        console.log(msg);
+
+        // Escribir el mensaje en la respuesta
+        await writePromise.bind(res)(msg + "\n");
     }
+
+    // Finalizar la respuesta
+    await endPromise.bind(res)("Done");
 };

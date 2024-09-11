@@ -3,22 +3,28 @@
 // import { IncomingMessage, ServerResponse } from "http";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.handler = void 0;
-const promises_1 = require("fs/promises");
-const promises_2 = require("./promises");
+//import { readFile } from "fs/promises";
+const promises_1 = require("./promises");
+// Declaración de variables
+const total = 2000000000;
+const iterations = 5;
+let shared_counter = 0;
 // Definición de la función handler
 const handler = async (req, res) => {
-    try {
-        // Lee el archivo "data.json" usando fs/promises
-        const data = await (0, promises_1.readFile)("data.json");
-        // Utiliza la función endPromise para enviar los datos del archivo como respuesta
-        await promises_2.endPromise.bind(res)(data); // Tenemos que usar el método bind cuando usamos la palabra clave await en la función que promisify crea 
-        console.log("Archivo enviado");
+    const request = shared_counter++;
+    // Bucle externo para las iteraciones
+    for (let iter = 0; iter < iterations; iter++) {
+        // Bucle interno para contar hasta el total
+        for (let count = 0; count < total; count++) {
+            count++;
+        }
+        // Mensaje a imprimir en cada iteración
+        const msg = `Request: ${request}, Iteration: ${(iter)}`;
+        console.log(msg);
+        // Escribir el mensaje en la respuesta
+        await promises_1.writePromise.bind(res)(msg + "\n");
     }
-    catch (err) {
-        // En caso de error, muestra el mensaje de error y establece el código de estado 500
-        console.log(`Error: ${err?.message ?? err}`);
-        res.statusCode = 500;
-        res.end();
-    }
+    // Finalizar la respuesta
+    await promises_1.endPromise.bind(res)("Done");
 };
 exports.handler = handler;
