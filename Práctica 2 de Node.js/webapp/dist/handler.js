@@ -13,6 +13,8 @@ const handler = (req, res) => {
     // El método then se utiliza para registrar la función que se invocará si se resuelve la promesa
     p.then((data) => res.end(data, () => console.log("Archivo enviado")));
     // Maneja el error en caso de que ocurra
+    // Una promesa rechazada es aquella en la que se ha producido un error. El método catch se
+    // utiliza para registrar una función que maneja el error producido por una promesa rechazada
     p.catch((err) => {
         console.log(`Error: ${err.message}`);
         res.statusCode = 500;
