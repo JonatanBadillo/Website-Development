@@ -5,7 +5,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.handler = void 0;
 const promises_1 = require("fs/promises");
 // Definición de la función handler
-// Definición de la función handler
 const handler = async (req, res) => {
     try {
         // Lee el archivo "data.json" usando fs/promises

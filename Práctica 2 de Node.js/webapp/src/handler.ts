@@ -77,7 +77,6 @@ import { IncomingMessage, ServerResponse } from "http";
 import { readFile } from "fs/promises";
 
 // Definición de la función handler
-// Definición de la función handler
 export const handler = async (req: IncomingMessage, res: ServerResponse) => {
     try {
         // Lee el archivo "data.json" usando fs/promises
