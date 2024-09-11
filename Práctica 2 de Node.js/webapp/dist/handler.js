@@ -29,7 +29,7 @@ const handler = async (req, res) => {
         }
         else {
             // Llamar a la función iterate de forma asíncrona en la siguiente iteración
-            setImmediate(() => iterate(++iter));
+            setImmediate(() => iterate(++iter)); // setImmediate se utiliza para ejecutar una función después de que se haya completado la ejecución actual
         }
     };
     // Llamar a la función iterate para iniciar las iteraciones

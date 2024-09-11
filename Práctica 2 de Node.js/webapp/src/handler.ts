@@ -183,7 +183,7 @@ export const handler = async (req: IncomingMessage, res: ServerResponse) => {
             await endPromise.bind(res)("Done");
         } else {
             // Llamar a la función iterate de forma asíncrona en la siguiente iteración
-            setImmediate(() => iterate(++iter));
+            setImmediate(() => iterate(++iter)); // setImmediate se utiliza para ejecutar una función después de que se haya completado la ejecución actual
         }
     };
 
