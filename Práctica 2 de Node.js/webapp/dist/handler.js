@@ -11,6 +11,7 @@ const iterations = 5;
 let shared_counter = 0;
 // Definición de la función handler
 const handler = async (req, res) => {
+    // Incrementa el contador compartido
     const request = shared_counter++;
     // Bucle externo para las iteraciones
     for (let iter = 0; iter < iterations; iter++) {

@@ -128,6 +128,7 @@ let shared_counter = 0;
 
 // Definición de la función handler
 export const handler = async (req: IncomingMessage, res: ServerResponse) => {
+    // Incrementa el contador compartido
     const request = shared_counter++;
 
     // Bucle externo para las iteraciones
