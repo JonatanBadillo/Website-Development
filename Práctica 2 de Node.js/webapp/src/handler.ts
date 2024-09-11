@@ -33,9 +33,11 @@ import { readFile } from "fs/promises";
 // Definición de la función handler
 export const handler = (req: IncomingMessage, res: ServerResponse) => {
     // Lee el archivo "data.json" usando fs/promises
+    // promesa que producirá un objeto Buffer cuando se complete su operación asíncrona.
     const p: Promise<Buffer> = readFile("data.json");
 
     // Maneja la promesa para enviar los datos del archivo como respuesta
+    // El método then se utiliza para registrar la función que se invocará si se resuelve la promesa
     p.then((data: Buffer) => res.end(data, () => console.log("Archivo enviado")));
 
     // Maneja el error en caso de que ocurra
