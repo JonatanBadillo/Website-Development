@@ -77,11 +77,17 @@ import { IncomingMessage, ServerResponse } from "http";
 import { readFile } from "fs/promises";
 
 // Definición de la función handler
+// Definición de la función handler
 export const handler = async (req: IncomingMessage, res: ServerResponse) => {
-    // Lee el archivo "data.json" usando fs/promises
-    // promesa que producirá un objeto Buffer cuando se complete su operación asíncrona.
-    const data: Buffer = await readFile("data.json");
-
-    // Envía los datos del archivo como respuesta
-    res.end(data, () => console.log("Archivo enviado"));
+    try {
+        // Lee el archivo "data.json" usando fs/promises
+        const data: Buffer = await readFile("data.json");
+        // Envía los datos del archivo como respuesta
+        res.end(data, () => console.log("File sent"));
+    } catch (err: any) {
+        // En caso de error, muestra el mensaje de error y establece el código de estado 500
+        console.log(`Error: ${err?.message ?? err}`);
+        res.statusCode = 500;
+        res.end();
+    }
 };
