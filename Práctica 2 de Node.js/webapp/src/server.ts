@@ -15,10 +15,31 @@
 
 import { createServer } from "http";
 import { handler } from "./handler";
+
+
+// Define el puerto en el que se va a ejecutar el servidor
 const port = 5000;
+
+// Crea el servidor HTTP
 const server = createServer();
-server.on("request", handler);
+
+// Maneja las solicitudes entrantes
+server.on("request", (req, res) => {
+    // Verifica si la solicitud es para el archivo favicon.ico
+    if (req.url?.endsWith("favicon.ico")) {
+        // Si es así, responde con un código de estado 404 y finaliza la respuesta
+        res.statusCode = 404;
+        res.end();
+    } else {
+        // Si no es para el archivo favicon.ico, pasa la solicitud al manejador
+        handler(req, res);
+    }
+});
+
+// Inicia el servidor y lo pone a escuchar en el puerto especificado
 server.listen(port);
+
+// Muestra un mensaje en la consola cuando el servidor comienza a escuchar
 server.on("listening", () => {
-  console.log(`(Event) Server listening on port ${port}`);
+    console.log(`(Event) Server listening on port ${port}`);
 });
