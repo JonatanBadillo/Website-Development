@@ -247,10 +247,54 @@
 
 
 
+// import { IncomingMessage, ServerResponse } from "http";
+// import { endPromise, writePromise } from "./promises";
+// //import { Worker } from "worker_threads";
+// import { Count } from "./counter_cb";
+// // Declaración de variables
+// const total = 2_000_000_000;
+// const iterations = 5;
+// let shared_counter = 0;
+
+// // Definición de la función handler
+// export const handler = async (req: IncomingMessage, res: ServerResponse) => {
+//     // Incrementa el contador compartido
+//     const request = shared_counter++;
+
+//     // Llama a la función Count para realizar el trabajo de las solicitudes
+//     Count(request, iterations, total, async (err, update) => {
+//         if (err !== null) {
+//             // En caso de error, muestra el mensaje de error, establece el código de estado 500 y finaliza la respuesta
+//             console.log(err);
+//             res.statusCode = 500;
+//             await res.end();
+//         } else if (update !== true) {
+//             // Si no hay error y no es la última iteración, muestra el mensaje en la consola y escribe el mensaje en la respuesta
+//             const msg = `Request: ${request}, Iteration: ${(update)}`;
+//             console.log(msg);
+//             await writePromise.bind(res)(msg + "\n");
+//         } else {
+//             // Si no hay error y es la última iteración, finaliza la respuesta
+//             await endPromise.bind(res)("Done");
+//         }
+//     });
+// };
+
+
+
+
+
+
+
+
+// La diferencia importante con los ejemplos anteriores es que el trabajo para las solicitudes se
+// realiza en paralelo, en lugar de que todo el trabajo se realice en un solo hilo. Esto se logra al crear un nuevo subproceso de trabajo para cada solicitud.
 import { IncomingMessage, ServerResponse } from "http";
 import { endPromise, writePromise } from "./promises";
-//import { Worker } from "worker_threads";
-import { Count } from "./counter_cb";
+//import { Count } from "./counter_cb";
+import { Count } from "./count_promise";
+//import { Count } from "./counter_cb";
+
 // Declaración de variables
 const total = 2_000_000_000;
 const iterations = 5;
@@ -261,21 +305,22 @@ export const handler = async (req: IncomingMessage, res: ServerResponse) => {
     // Incrementa el contador compartido
     const request = shared_counter++;
 
-    // Llama a la función Count para realizar el trabajo de las solicitudes
-    Count(request, iterations, total, async (err, update) => {
-        if (err !== null) {
-            // En caso de error, muestra el mensaje de error, establece el código de estado 500 y finaliza la respuesta
-            console.log(err);
-            res.statusCode = 500;
-            await res.end();
-        } else if (update !== true) {
-            // Si no hay error y no es la última iteración, muestra el mensaje en la consola y escribe el mensaje en la respuesta
-            const msg = `Request: ${request}, Iteration: ${(update)}`;
-            console.log(msg);
-            await writePromise.bind(res)(msg + "\n");
-        } else {
-            // Si no hay error y es la última iteración, finaliza la respuesta
-            await endPromise.bind(res)("Done");
-        }
-    });
+    try {
+        // Llama a la función Count para realizar el trabajo de las solicitudes
+        await Count(request, iterations, total);
+
+        // Mensaje a imprimir en cada iteración
+        const msg = `Request: ${request}, Iterations: ${(iterations)}`;
+
+        // Escribe el mensaje en la respuesta
+        await writePromise.bind(res)(msg + "\n");
+
+        // Finaliza la respuesta
+        await endPromise.bind(res)("Done");
+    } catch (err: any) {
+        // En caso de error, muestra el mensaje de error, establece el código de estado 500 y finaliza la respuesta
+        console.log(err);
+        res.statusCode = 500;
+        res.end();
+    }
 };
