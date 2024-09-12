@@ -204,7 +204,7 @@ let shared_counter = 0;
 export const handler = async (req: IncomingMessage, res: ServerResponse) => {
     const request = shared_counter++;
 
-    // Crear un nuevo worker para ejecutar el código en un hilo separado
+    // Crear un nuevo worker para ejecutar el código en un hilo separado de trabajo
     // se crean subprocesos de trabajo
     const worker = new Worker(__dirname + "/count_worker.js", {
         workerData: {

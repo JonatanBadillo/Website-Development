@@ -11,7 +11,7 @@ let shared_counter = 0;
 // Definición de la función handler
 const handler = async (req, res) => {
     const request = shared_counter++;
-    // Crear un nuevo worker para ejecutar el código en un hilo separado
+    // Crear un nuevo worker para ejecutar el código en un hilo separado de trabajo
     // se crean subprocesos de trabajo
     const worker = new worker_threads_1.Worker(__dirname + "/count_worker.js", {
         workerData: {
