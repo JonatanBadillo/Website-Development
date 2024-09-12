@@ -107,7 +107,7 @@
 //         // Lee el archivo "data.json" usando fs/promises
 //         const data: Buffer = await readFile("data.json");
 //         // Utiliza la función endPromise para enviar los datos del archivo como respuesta
-//         await endPromise.bind(res)(data); // Tenemos que usar el método bind cuando usamos la palabra clave await en la función que promisify crea 
+//         await endPromise.bind(res)(data); // Tenemos que usar el método bind cuando usamos la palabra clave await en la función que promisify crea
 //         console.log("Archivo enviado");
 //     } catch (err: any) {
 //         // En caso de error, muestra el mensaje de error y establece el código de estado 500
@@ -118,7 +118,7 @@
 // };
 
 
-// // Una operación de bloqueo en el archivo handler.ts 
+// // Una operación de bloqueo en el archivo handler.ts
 // import { IncomingMessage, ServerResponse } from "http";
 // //import { readFile } from "fs/promises";
 // import { endPromise, writePromise } from "./promises";
@@ -193,6 +193,10 @@
 // };
 
 
+
+
+// La diferencia importante con los ejemplos anteriores es que el trabajo para las solicitudes se
+// realiza en paralelo, en lugar de que todo el trabajo se realice en un solo hilo. Esto se logra al crear un nuevo subproceso de trabajo para cada solicitud.
 import { IncomingMessage, ServerResponse } from "http";
 import { endPromise, writePromise } from "./promises";
 import { Worker } from "worker_threads";
