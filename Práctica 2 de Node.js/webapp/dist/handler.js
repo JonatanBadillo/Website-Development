@@ -9,6 +9,7 @@ const handler = async (req, resp) => {
     console.log(`host: ${req.headers.host}`);
     console.log(`accept: ${req.headers.accept}`);
     console.log(`user-agent: ${req.headers["user-agent"]}`);
+    // La creación de un objeto URL para analizar una URL
     // Parsea la URL de la solicitud y muestra sus componentes en la consola
     const parsedURL = new URL(req.url ?? "", `http://${req.headers.host}`); // URL es una clase global que se puede utilizar para analizar y construir URL
     console.log(`protocolo: ${parsedURL.protocol}`);
