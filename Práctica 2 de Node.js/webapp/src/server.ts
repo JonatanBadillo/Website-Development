@@ -16,7 +16,6 @@
 // import { createServer } from "http";
 // import { handler } from "./handler";
 
-
 // // Define el puerto en el que se va a ejecutar el servidor
 // const port = 5000;
 
@@ -44,8 +43,6 @@
 //     console.log(`(Event) Server listening on port ${port}`);
 // });
 
-
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // import { createServer } from "http";
 // import { handler } from "./handler";
@@ -57,20 +54,46 @@
 // console.log(`(Event) Server listening on port ${port}`);
 // });
 
+// import { createServer } from "http";
+// import { handler } from "./handler";
+// // Define el puerto en el que se va a ejecutar el servidor
+// const port = 5000;
+// // Crea el servidor HTTP
+// const server = createServer(handler);
 
+// //server.on("request", handler);
 
+// // Inicia el servidor y lo pone a escuchar en el puerto especificado
+// server.listen(port, () => console.log(`(Event) Server listening on port: ${port}`));
+
+// //server.on("listening", () => {
+// // console.log(`(Event) Server listening on port ${port}`);
+// //});
+
+// Manejo de solicitudes HTTPS en el archivo server.ts en la carpeta src.
 import { createServer } from "http";
 import { handler } from "./handler";
-// Define el puerto en el que se va a ejecutar el servidor
+import { createServer as createHttpsServer } from "https";
+import { readFileSync } from "fs";
+// Define el puerto en el que se va a ejecutar el servidor HTTP
 const port = 5000;
-// Crea el servidor HTTP
+// Define el puerto en el que se va a ejecutar el servidor HTTPS
+const https_port = 5500;
+
+// Crea el servidor HTTP y asigna el manejador de solicitudes
 const server = createServer(handler);
+server.listen(port, () =>
+    console.log(`(Event) Server listening on port ${port}`)
+);
 
-//server.on("request", handler);
+// Configuración para el servidor HTTPS
+const httpsConfig = {
+    key: readFileSync("key.pem"), // Lee el archivo de clave privada
+    cert: readFileSync("cert.pem"), // Lee el archivo de certificado
+};
 
-// Inicia el servidor y lo pone a escuchar en el puerto especificado
-server.listen(port, () => console.log(`(Event) Server listening on port: ${port}`));
-
-//server.on("listening", () => {
-// console.log(`(Event) Server listening on port ${port}`);
-//});
+// Crea el servidor HTTPS y asigna el manejador de solicitudes y la configuración
+const httpsServer = createHttpsServer(httpsConfig, handler);
+httpsServer.listen(https_port, () =>
+    console.log(`HTTPS Server listening on port ${https_port}`)
+);
