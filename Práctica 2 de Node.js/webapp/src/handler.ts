@@ -26,7 +26,6 @@
 //     });
 // };
 
-
 // import { IncomingMessage, ServerResponse } from "http";
 // import { readFile } from "fs/promises";
 // // Definición de la función handler
@@ -93,13 +92,11 @@
 //     }
 // };
 
-
 // Uso de una promesa
 // Importa los módulos necesarios
 // import { IncomingMessage, ServerResponse } from "http";
 // import { readFile } from "fs/promises";
 // import { endPromise } from "./promises";
-
 
 // // Definición de la función handler
 // export const handler = async (req: IncomingMessage, res: ServerResponse) => {
@@ -116,7 +113,6 @@
 //         res.end();
 //     }
 // };
-
 
 // // Una operación de bloqueo en el archivo handler.ts
 // import { IncomingMessage, ServerResponse } from "http";
@@ -150,7 +146,6 @@
 //     // Finalizar la respuesta
 //     await endPromise.bind(res)("Done");
 // };
-
 
 // // Uso de la función setImmediate en el archivo handler.ts en la carpeta src.
 // import { IncomingMessage, ServerResponse } from "http";
@@ -191,9 +186,6 @@
 //     // Llamar a la función iterate para iniciar las iteraciones
 //     iterate();
 // };
-
-
-
 
 // // La diferencia importante con los ejemplos anteriores es que el trabajo para las solicitudes se
 // // realiza en paralelo, en lugar de que todo el trabajo se realice en un solo hilo. Esto se logra al crear un nuevo subproceso de trabajo para cada solicitud.
@@ -245,8 +237,6 @@
 //     });
 // };
 
-
-
 // import { IncomingMessage, ServerResponse } from "http";
 // import { endPromise, writePromise } from "./promises";
 // //import { Worker } from "worker_threads";
@@ -279,9 +269,6 @@
 //         }
 //     });
 // };
-
-
-
 
 // // La diferencia importante con los ejemplos anteriores es que el trabajo para las solicitudes se
 // // realiza en paralelo, en lugar de que todo el trabajo se realice en un solo hilo. Esto se logra al crear un nuevo subproceso de trabajo para cada solicitud.
@@ -321,11 +308,20 @@
 //     }
 // };
 
-
-
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-import { IncomingMessage, ServerResponse } from "http";
+// import { IncomingMessage, ServerResponse } from "http";
+// export const handler = async (req: IncomingMessage, resp: ServerResponse) => {
+//   resp.end("Hello, World");
+// };
+// El objeto de configuración se puede omitir si se requieren los valores predeterminados. La
+// función de controlador (handler) se invoca cuando se ha recibido una solicitud HTTP y sus
+// parámetros son objetos cuyos tipos son los especificados por las propiedades
+// IncomingMessage y ServerResponse, o los tipos predeterminados si no se ha modificado la
+// configuración.
+
+
+// El código del listado 4 omite el objeto de configuración, lo que significa que se utilizarán los
+// tipos predeterminados para representar la solicitud y la respuesta HTTP
 export const handler = async (req: IncomingMessage, resp: ServerResponse) => {
-resp.end("Hello, World");
-};
+    resp.end("Hello, World");
+    };
