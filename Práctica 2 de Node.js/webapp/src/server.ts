@@ -70,9 +70,38 @@
 // // console.log(`(Event) Server listening on port ${port}`);
 // //});
 
-// Manejo de solicitudes HTTPS en el archivo server.ts en la carpeta src.
+// // Manejo de solicitudes HTTPS en el archivo server.ts en la carpeta src.
+// import { createServer } from "http";
+// import { handler } from "./handler";
+// import { createServer as createHttpsServer } from "https";
+// import { readFileSync } from "fs";
+// // Define el puerto en el que se va a ejecutar el servidor HTTP
+// const port = 5000;
+// // Define el puerto en el que se va a ejecutar el servidor HTTPS
+// const https_port = 5500;
+
+// // Crea el servidor HTTP y asigna el manejador de solicitudes
+// const server = createServer(handler);
+// server.listen(port, () =>
+//     console.log(`(Event) Server listening on port ${port}`)
+// );
+
+// // Configuración para el servidor HTTPS
+// const httpsConfig = {
+//     key: readFileSync("key.pem"), // Lee el archivo de clave privada
+//     cert: readFileSync("cert.pem"), // Lee el archivo de certificado
+// };
+
+// // Crea el servidor HTTPS y asigna el manejador de solicitudes y la configuración
+// const httpsServer = createHttpsServer(httpsConfig, handler);
+// httpsServer.listen(https_port, () =>
+//     console.log(`HTTPS Server listening on port ${https_port}`)
+// );
+
+
+// Aplicación de un controlador en el archivo server.ts en la carpeta src.
 import { createServer } from "http";
-import { handler } from "./handler";
+import { handler, redirectionHandler } from "./handler";
 import { createServer as createHttpsServer } from "https";
 import { readFileSync } from "fs";
 // Define el puerto en el que se va a ejecutar el servidor HTTP
@@ -80,8 +109,8 @@ const port = 5000;
 // Define el puerto en el que se va a ejecutar el servidor HTTPS
 const https_port = 5500;
 
-// Crea el servidor HTTP y asigna el manejador de solicitudes
-const server = createServer(handler);
+// Crea el servidor HTTP y asigna el manejador de redirección de solicitudes
+const server = createServer(redirectionHandler);
 server.listen(port, () =>
     console.log(`(Event) Server listening on port ${port}`)
 );

@@ -352,6 +352,10 @@
 //   resp.end("Hello, World");
 // };
 
+
+
+
+
 // // Generación de respuestas HTTP en el archivo handler.ts en la carpeta src.
 // import { IncomingMessage, ServerResponse } from "http";
 // import { URL } from "url";
@@ -385,14 +389,75 @@
 //     }
 // };
 
-// Detección de solicitudes HTTPS en el archivo handler.ts en la carpeta src.
+
+
+
+// // Detección de solicitudes HTTPS en el archivo handler.ts en la carpeta src.
+// import { IncomingMessage, ServerResponse } from "http";
+// import { TLSSocket } from "tls";
+// import { URL } from "url";
+// // Función para verificar si la solicitud es HTTPS
+// export const isHttps = (req: IncomingMessage): boolean => {
+//     return req.socket instanceof TLSSocket && req.socket.encrypted;
+// };
+
+// // Función de controlador para manejar la solicitud
+// export const handler = (req: IncomingMessage, resp: ServerResponse) => {
+//     // Verificar el protocolo de la solicitud (HTTP o HTTPS)
+//     const protocol = isHttps(req) ? "https" : "http";
+
+//     // Parsear la URL de la solicitud
+//     const parsedURL = new URL(req.url ?? "", `${protocol}://${req.headers.host}`);
+
+//     // Verificar si la solicitud no es GET o si la ruta es "/favicon.ico"
+//     if (req.method !== "GET" || parsedURL.pathname == "/favicon.ico") {
+//         // Responder con un código 404 y terminar la respuesta
+//         resp.writeHead(404, "Not Found");
+//         resp.end();
+//         return;
+//     } else {
+//         // Responder con un código 200 y continuar con la generación de la respuesta
+//         resp.writeHead(200, "OK");
+
+//         // Verificar si la URL de la solicitud tiene el parámetro "keyword"
+//         if (!parsedURL.searchParams.has("keyword")) {
+//             // Si no tiene el parámetro "keyword", escribir "Hello, HTTP" en la respuesta
+//             resp.write(`Hello, ${protocol.toUpperCase()}`);
+//         } else {
+//             // Si tiene el parámetro "keyword", escribir "Hello, " seguido del valor del parámetro en la respuesta
+//             resp.write(`Hello, ${parsedURL.searchParams.get("keyword")}`);
+//         }
+
+//         // Terminar la respuesta
+//         resp.end();
+//         return;
+//     }
+// };
+
+
+
+// Redireccionamiento de solicitudes HTTP en el archivo handler.ts en la carpeta
+// src.
+// Función para verificar si la solicitud es HTTPS
 import { IncomingMessage, ServerResponse } from "http";
 import { TLSSocket } from "tls";
 import { URL } from "url";
+
 // Función para verificar si la solicitud es HTTPS
 export const isHttps = (req: IncomingMessage): boolean => {
     return req.socket instanceof TLSSocket && req.socket.encrypted;
-};
+}
+
+// Función de redireccionamiento para redirigir las solicitudes HTTP a HTTPS
+export const redirectionHandler = (req: IncomingMessage, resp: ServerResponse) => {
+    // Establecer el código de estado 302 para redireccionamiento temporal
+    resp.writeHead(302, {
+        "Location": "https://localhost:5500" // Redirigir a la URL HTTPS
+    });
+
+    // Finalizar la respuesta
+    resp.end();
+}
 
 // Función de controlador para manejar la solicitud
 export const handler = (req: IncomingMessage, resp: ServerResponse) => {

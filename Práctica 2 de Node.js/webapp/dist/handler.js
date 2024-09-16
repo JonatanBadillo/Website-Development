@@ -2,7 +2,7 @@
 // import { handler } from './handler';
 // import { IncomingMessage, ServerResponse } from "http";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.handler = exports.isHttps = void 0;
+exports.handler = exports.redirectionHandler = exports.isHttps = void 0;
 const tls_1 = require("tls");
 const url_1 = require("url");
 // Función para verificar si la solicitud es HTTPS
@@ -10,6 +10,16 @@ const isHttps = (req) => {
     return req.socket instanceof tls_1.TLSSocket && req.socket.encrypted;
 };
 exports.isHttps = isHttps;
+// Función de redireccionamiento para redirigir las solicitudes HTTP a HTTPS
+const redirectionHandler = (req, resp) => {
+    // Establecer el código de estado 302 para redireccionamiento temporal
+    resp.writeHead(302, {
+        "Location": "https://localhost:5500" // Redirigir a la URL HTTPS
+    });
+    // Finalizar la respuesta
+    resp.end();
+};
+exports.redirectionHandler = redirectionHandler;
 // Función de controlador para manejar la solicitud
 const handler = (req, resp) => {
     // Verificar el protocolo de la solicitud (HTTP o HTTPS)
