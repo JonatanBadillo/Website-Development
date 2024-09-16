@@ -320,10 +320,9 @@
 // IncomingMessage y ServerResponse, o los tipos predeterminados si no se ha modificado la
 // configuración.
 
-
 // El código del listado 4 omite el objeto de configuración, lo que significa que se utilizarán los
 // tipos predeterminados para representar la solicitud y la respuesta HTTP
 import { IncomingMessage, ServerResponse } from "http";
 export const handler = async (req: IncomingMessage, resp: ServerResponse) => {
-    resp.end("Hello, World");
-    };
+  resp.end("Hello, World");
+};
