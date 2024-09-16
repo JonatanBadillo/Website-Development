@@ -322,7 +322,22 @@
 
 // El código del listado 4 omite el objeto de configuración, lo que significa que se utilizarán los
 // tipos predeterminados para representar la solicitud y la respuesta HTTP
+// import { IncomingMessage, ServerResponse } from "http";
+// export const handler = async (req: IncomingMessage, resp: ServerResponse) => {
+//   resp.end("Hello, World");
+// };
+
+
+
+// Registro de detalles de la solicitud en el archivo handler.ts en la carpeta src.
 import { IncomingMessage, ServerResponse } from "http";
 export const handler = async (req: IncomingMessage, resp: ServerResponse) => {
-  resp.end("Hello, World");
+    // Imprime los detalles de la solicitud en la consola
+    console.log(`---- Método HTTP: ${req.method}, URL: ${req.url}`);
+    console.log(`host: ${req.headers.host}`);
+    console.log(`accept: ${req.headers.accept}`);
+    console.log(`user-agent: ${req.headers["user-agent"]}`);
+
+    // Envía la respuesta "Hello, World"
+    resp.end("Hello, World");
 };
