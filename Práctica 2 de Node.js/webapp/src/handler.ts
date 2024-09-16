@@ -327,17 +327,26 @@
 //   resp.end("Hello, World");
 // };
 
-
-
 // Registro de detalles de la solicitud en el archivo handler.ts en la carpeta src.
 import { IncomingMessage, ServerResponse } from "http";
 export const handler = async (req: IncomingMessage, resp: ServerResponse) => {
-    // Imprime los detalles de la solicitud en la consola
-    console.log(`---- Método HTTP: ${req.method}, URL: ${req.url}`);
-    console.log(`host: ${req.headers.host}`);
-    console.log(`accept: ${req.headers.accept}`);
-    console.log(`user-agent: ${req.headers["user-agent"]}`);
+  // Imprime los detalles de la solicitud en la consola
+  console.log(`---- Método HTTP: ${req.method}, URL: ${req.url}`);
+  console.log(`host: ${req.headers.host}`);
+  console.log(`accept: ${req.headers.accept}`);
+  console.log(`user-agent: ${req.headers["user-agent"]}`);
 
-    // Envía la respuesta "Hello, World"
-    resp.end("Hello, World");
+  // Parsea la URL de la solicitud y muestra sus componentes en la consola
+  const parsedURL = new URL(req.url ?? "", `http://${req.headers.host}`); // URL es una clase global que se puede utilizar para analizar y construir URL
+  console.log(`protocolo: ${parsedURL.protocol}`);
+
+  console.log(`hostname: ${parsedURL.hostname}`);
+  console.log(`puerto: ${parsedURL.port}`);
+  console.log(`ruta: ${parsedURL.pathname}`);
+  parsedURL.searchParams.forEach((val, key) => {
+    console.log(`Parámetro de búsqueda: ${key}: ${val}`);
+  });
+
+  // Envía la respuesta "Hello, World"
+  resp.end("Hello, World");
 };
