@@ -313,6 +313,7 @@
 // export const handler = async (req: IncomingMessage, resp: ServerResponse) => {
 //   resp.end("Hello, World");
 // };
+
 // El objeto de configuración se puede omitir si se requieren los valores predeterminados. La
 // función de controlador (handler) se invoca cuando se ha recibido una solicitud HTTP y sus
 // parámetros son objetos cuyos tipos son los especificados por las propiedades
@@ -322,6 +323,7 @@
 
 // El código del listado 4 omite el objeto de configuración, lo que significa que se utilizarán los
 // tipos predeterminados para representar la solicitud y la respuesta HTTP
+import { IncomingMessage, ServerResponse } from "http";
 export const handler = async (req: IncomingMessage, resp: ServerResponse) => {
     resp.end("Hello, World");
     };
