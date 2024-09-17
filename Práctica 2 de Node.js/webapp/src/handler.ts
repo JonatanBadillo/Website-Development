@@ -539,50 +539,94 @@
 //     }
 // };
 
-// Admisión de una nueva URL en el archivo handler.ts en la carpeta src.
-import { IncomingMessage, ServerResponse } from "http";
-import { TLSSocket } from "tls";
-import { URL } from "url";
+// // Admisión de una nueva URL en el archivo handler.ts en la carpeta src.
+// import { IncomingMessage, ServerResponse } from "http";
+// import { TLSSocket } from "tls";
+// import { URL } from "url";
 
-// Función para verificar si la solicitud es HTTPS
-export const isHttps = (req: IncomingMessage): boolean => {
-  return req.socket instanceof TLSSocket && req.socket.encrypted;
-};
+// // Función para verificar si la solicitud es HTTPS
+// export const isHttps = (req: IncomingMessage): boolean => {
+//   return req.socket instanceof TLSSocket && req.socket.encrypted;
+// };
+// // Función de redireccionamiento para redirigir las solicitudes HTTP a HTTPS
+// export const redirectionHandler = (
+//   req: IncomingMessage,
+//   resp: ServerResponse
+// ) => {
+//   resp.writeHead(302, {
+//     // Establecer el código de estado 302 para redireccionamiento temporal
+//     // Redirigir a la URL HTTPS
+//     Location: "https://localhost:5500",
+//   });
+//   resp.end();
+// };
+
+// // Función de controlador para manejar solicitudes no encontradas
+// export const notFoundHandler = (req: IncomingMessage, resp: ServerResponse) => {
+//     resp.writeHead(404, "Not Found");
+//     resp.end();
+// };
+
+// // Función de controlador para manejar la solicitud de una nueva URL
+// export const newUrlHandler = (req: IncomingMessage, resp: ServerResponse) => {
+//     resp.writeHead(200, "OK");
+//     resp.write("Hello, New URL");
+//     resp.end();
+// };
+
+// // Función de controlador predeterminada para manejar otras solicitudes
+// export const defaultHandler = (req: IncomingMessage, resp: ServerResponse) => {
+//     resp.writeHead(200, "OK");
+//     const protocol = isHttps(req) ? "https" : "http";
+//     const parsedURL = new URL(req.url ?? "", `${protocol}://${req.headers.host}`);
+//     if (!parsedURL.searchParams.has("keyword")) {
+//         resp.write(`Hello, ${protocol.toUpperCase()}`);
+//     } else {
+//         resp.write(`Hello, ${parsedURL.searchParams.get("keyword")}`);
+//     }
+//     resp.end();
+// };
+
+
+
+
+
+
+import { IncomingMessage, ServerResponse } from "http";
+//import { TLSSocket } from "tls";
+//import { URL } from "url";
+import { Request, Response } from "express";
+//export const isHttps = (req: IncomingMessage) : boolean => {
+// return req.socket instanceof TLSSocket && req.socket.encrypted;
+//}
+
+
 // Función de redireccionamiento para redirigir las solicitudes HTTP a HTTPS
 export const redirectionHandler = (
-  req: IncomingMessage,
-  resp: ServerResponse
+    req: IncomingMessage,
+    resp: ServerResponse
 ) => {
-  resp.writeHead(302, {
-    // Establecer el código de estado 302 para redireccionamiento temporal
-    // Redirigir a la URL HTTPS
-    Location: "https://localhost:5500",
-  });
-  resp.end();
+    resp.writeHead(302, {
+        Location: "https://localhost:5500", // Redirige a la URL HTTPS
+    });
+    resp.end();
 };
 
 // Función de controlador para manejar solicitudes no encontradas
-export const notFoundHandler = (req: IncomingMessage, resp: ServerResponse) => {
-    resp.writeHead(404, "Not Found");
-    resp.end();
+export const notFoundHandler = (req: Request, resp: Response) => {
+    resp.sendStatus(404); // Envía un código de estado 404 (Not Found)
 };
 
 // Función de controlador para manejar la solicitud de una nueva URL
-export const newUrlHandler = (req: IncomingMessage, resp: ServerResponse) => {
-    resp.writeHead(200, "OK");
-    resp.write("Hello, New URL");
-    resp.end();
+export const newUrlHandler = (req: Request, resp: Response) => {
+    resp.send("Hello, New URL"); // Envía la respuesta "Hello, New URL"
 };
 
 // Función de controlador predeterminada para manejar otras solicitudes
-export const defaultHandler = (req: IncomingMessage, resp: ServerResponse) => {
-    resp.writeHead(200, "OK");
-    const protocol = isHttps(req) ? "https" : "http";
-    const parsedURL = new URL(req.url ?? "", `${protocol}://${req.headers.host}`);
-    if (!parsedURL.searchParams.has("keyword")) {
-        resp.write(`Hello, ${protocol.toUpperCase()}`);
+export const defaultHandler = (req: Request, resp: Response) => {
+    if (req.query.keyword) {
+        resp.send(`Hello, ${req.query.keyword}`); // Si hay un parámetro "keyword" en la solicitud, envía la respuesta "Hello, {keyword}"
     } else {
-        resp.write(`Hello, ${parsedURL.searchParams.get("keyword")}`);
+        resp.send(`Hello, ${req.protocol.toUpperCase()}`); // Si no hay un parámetro "keyword" en la solicitud, envía la respuesta "Hello, {protocol}"
     }
-    resp.end();
 };
