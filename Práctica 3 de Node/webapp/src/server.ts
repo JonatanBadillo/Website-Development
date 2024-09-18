@@ -20,7 +20,7 @@ const httpsConfig = {
 const httpsApp: Express = express();
 
 // Manejar favicon antes de la ruta wildcard
-httpsApp.get("/favicon.ico", notFoundHandler);
+httpsApp.get("/error", notFoundHandler);
 
 // Manejar todas las rutas en el servidor HTTPS
 httpsApp.get("/:name?", defaultHandler); // Maneja rutas con un parámetro opcional
