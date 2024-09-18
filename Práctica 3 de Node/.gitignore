@@ -1,0 +1,41 @@
+# para proyecto de Node.js y debería cubrir los archivos y directorios más comunes que normalmente no se quieren rastrear en un repositorio de Git.
+
+# Dependencias de Node.js
+node_modules/
+
+# Archivos de registro
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Directorio para librerías instrumentadas generadas por jscoverage/JSCover
+lib-cov/
+
+# Directorio de cobertura usado por herramientas como istanbul
+coverage/
+
+# Cache opcional de npm
+.npm/
+
+# Historial opcional del REPL de Node.js
+.node_repl_history
+
+# Salida del comando 'npm pack'
+*.tgz
+
+# Archivo de integridad de Yarn
+.yarn-integrity
+
+# Archivos de variables de entorno (dotenv)
+.env
+
+# Cache de parcel-bundler (https://parceljs.org/)
+.cache/
+
+# Archivos específicos del proyecto
+.DS_Store
+Thumbs.db
+*.swp
