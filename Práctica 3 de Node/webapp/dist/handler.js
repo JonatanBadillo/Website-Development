@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.notFoundHandler = exports.defaultHandler = exports.redirectionHandler = void 0;
+exports.faviconHandler = exports.notFoundHandler = exports.defaultHandler = exports.redirectionHandler = void 0;
 const redirectionHandler = (req, res) => {
     const fullUrl = `https://localhost:5500${req.originalUrl}`; // Redirigir a la misma ruta en HTTPS
     res.redirect(302, fullUrl); // Redirigir con un código de estado 302 (Found)
@@ -17,6 +17,7 @@ const defaultHandler = (req, res) => {
     // Construye el saludo completo con información adicional
     const fullGreeting = `${greeting} 
     You are connected via: ${protocol} on port: ${port}.`;
+    console.log(` Message: ${fullGreeting}`); // Imprime el saludo en la consola
     res.status(200).send(fullGreeting); // Enviar una respuesta con un código de estado 200 (OK)
 };
 exports.defaultHandler = defaultHandler;
@@ -25,3 +26,7 @@ const notFoundHandler = (req, resp) => {
     resp.sendStatus(404); // Envía un código de estado 404 (Not Found)
 };
 exports.notFoundHandler = notFoundHandler;
+const faviconHandler = (req, res) => {
+    res.sendStatus(204); // Enviar un código de estado 204 (No Content) para favicon
+};
+exports.faviconHandler = faviconHandler;

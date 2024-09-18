@@ -19,6 +19,7 @@ export const defaultHandler = (req: Request, res: Response) => {
     // Construye el saludo completo con información adicional
     const fullGreeting = `${greeting} 
     You are connected via: ${protocol} on port: ${port}.`;
+    console.log(` Message: ${fullGreeting}`); // Imprime el saludo en la consola
     
     res.status(200).send(fullGreeting); // Enviar una respuesta con un código de estado 200 (OK)
 
@@ -28,3 +29,7 @@ export const defaultHandler = (req: Request, res: Response) => {
 export const notFoundHandler = (req: Request, resp: Response) => {
     resp.sendStatus(404); // Envía un código de estado 404 (Not Found)
 };
+
+export const faviconHandler = (req: Request, res: Response) => {  
+    res.sendStatus(204); // Enviar un código de estado 204 (No Content) para favicon
+}
