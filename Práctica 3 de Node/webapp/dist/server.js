@@ -19,7 +19,7 @@ const httpsConfig = {
 };
 // Crear servidor HTTPS utilizando Express
 const httpsApp = (0, express_1.default)();
-// Manejar favicon antes de la ruta wildcard
+// Manejar el error 404 en el servidor HTTPS
 httpsApp.get("/error", handler_1.notFoundHandler);
 // Manejar todas las rutas en el servidor HTTPS
 httpsApp.get("/:name?", handler_1.defaultHandler); // Maneja rutas con un parámetro opcional
