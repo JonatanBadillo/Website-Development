@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.defaultHandler = exports.redirectionHandler = void 0;
+exports.notFoundHandler = exports.defaultHandler = exports.redirectionHandler = void 0;
 const redirectionHandler = (req, res) => {
     const fullUrl = `https://localhost:5500${req.originalUrl}`; // Redirigir a la misma ruta en HTTPS
     res.redirect(302, fullUrl);
@@ -12,3 +12,8 @@ const defaultHandler = (req, res) => {
     res.status(200).send(greeting);
 };
 exports.defaultHandler = defaultHandler;
+// Función de controlador para manejar solicitudes no encontradas
+const notFoundHandler = (req, resp) => {
+    resp.sendStatus(404); // Envía un código de estado 404 (Not Found)
+};
+exports.notFoundHandler = notFoundHandler;

@@ -11,3 +11,8 @@ export const defaultHandler = (req: Request, res: Response) => {
     
     res.status(200).send(greeting);  
 };
+
+// Función de controlador para manejar solicitudes no encontradas
+export const notFoundHandler = (req: Request, resp: Response) => {
+    resp.sendStatus(404); // Envía un código de estado 404 (Not Found)
+};

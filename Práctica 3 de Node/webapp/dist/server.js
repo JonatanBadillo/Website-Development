@@ -19,9 +19,11 @@ const httpsConfig = {
 };
 // Crear servidor HTTPS utilizando Express
 const httpsApp = (0, express_1.default)();
+// Manejar favicon antes de la ruta wildcard
+httpsApp.get("/favicon.ico", handler_1.notFoundHandler);
 // Manejar todas las rutas en el servidor HTTPS
-httpsApp.get("/:name?", handler_1.defaultHandler); // Ahora maneja rutas con un parámetro opcional
+httpsApp.get("/:name?", handler_1.defaultHandler); // Maneja rutas con un parámetro opcional
 const httpsServer = (0, https_1.createServer)(httpsConfig, httpsApp);
 httpsServer.listen(https_port, () => console.log(`HTTPS Server listening on port ${https_port}`));
 // Iniciar el servidor HTTP  
-app.listen(port, () => console.log(`(Event) Server listening on port ${port}`));
+app.listen(port, () => console.log(`HTTP Server listening on port ${port}`));
