@@ -6,10 +6,15 @@ export const redirectionHandler = (req: Request, res: Response) => {
 };  
 
 export const defaultHandler = (req: Request, res: Response) => {  
-    const name = req.params.name; // Obtiene el parámetro de ruta si existe  
+    const name = req.params.name; // Obtiene el parámetro de ruta 
     const greeting = name ? `Hello, ${name}!` : "Hello, stranger!";  
+    const port = req.socket.localPort;
+    const protocol = req.protocol;
+    const fullGreeting = `${greeting} 
+    You are connected via: ${protocol} on port: ${port}.`;
     
-    res.status(200).send(greeting);  
+    res.status(200).send(fullGreeting); 
+
 };
 
 // Función de controlador para manejar solicitudes no encontradas
