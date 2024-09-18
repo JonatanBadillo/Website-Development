@@ -6,10 +6,17 @@ export const redirectionHandler = (req: Request, res: Response) => {
 };  
 
 export const defaultHandler = (req: Request, res: Response) => {  
-    const name = req.params.name; // Obtiene el parámetro de ruta 
-    const greeting = name ? `Hello, ${name}!` : "Hello, stranger!";  
+    // Obtiene el parámetro de ruta "name" si se proporciona
+    const name = req.params.name;
+    
+    // Construye el saludo en base a si proporcionaron un nombre o no
+    const greeting = name ? `Hello, ${name}!` : "Hello, stranger!";
+    
+    // Obtiene el puerto y el protocolo de la solicitud
     const port = req.socket.localPort;
     const protocol = req.protocol;
+    
+    // Construye el saludo completo con información adicional
     const fullGreeting = `${greeting} 
     You are connected via: ${protocol} on port: ${port}.`;
     

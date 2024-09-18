@@ -8,9 +8,10 @@ const port = 5000;
 const https_port = 5500;  
 
 // Manejo de redirección para HTTP  
-app.get("*", redirectionHandler);  
+app.get("*", redirectionHandler);  // Redirigir todas las solicitudes a HTTPS
 
 // Configuración para el servidor HTTPS  
+// Lee los archivos de clave y certificado para HTTPS
 const httpsConfig = {  
     key: readFileSync("key.pem"),  
     cert: readFileSync("cert.pem")  
@@ -26,8 +27,11 @@ httpsApp.get("/error", notFoundHandler);
 httpsApp.get("/:name?", defaultHandler); // Maneja rutas con un parámetro opcional
 
 
+// Iniciar el servidor HTTP  
+app.listen(port, () => console.log(`HTTP Server listening on port ${port}`))
+
+// Iniciar el servidor HTTPS
 const httpsServer = createHttpsServer(httpsConfig, httpsApp);  
 httpsServer.listen(https_port, () => console.log(`HTTPS Server listening on port ${https_port}`));  
 
-// Iniciar el servidor HTTP  
-app.listen(port, () => console.log(`HTTP Server listening on port ${port}`));
+;
