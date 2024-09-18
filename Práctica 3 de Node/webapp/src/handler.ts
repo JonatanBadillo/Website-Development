@@ -1,12 +1,13 @@
 import { Request, Response } from "express";  
 
 export const redirectionHandler = (req: Request, res: Response) => {  
-    res.redirect(302, "https://localhost:5500");  
-}  
+    const fullUrl = `https://localhost:5500${req.originalUrl}`; // Redirigir a la misma ruta en HTTPS
+    res.redirect(302, fullUrl);  
+};  
 
-export const greetHandler = (req: Request, res: Response) => {  
-    const name = req.params.name; // Obtiene el parámetro de ruta  
+export const defaultHandler = (req: Request, res: Response) => {  
+    const name = req.params.name; // Obtiene el parámetro de ruta si existe  
     const greeting = name ? `Hello, ${name}!` : "Hello, stranger!";  
     
     res.status(200).send(greeting);  
-}
+};

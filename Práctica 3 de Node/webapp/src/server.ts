@@ -1,28 +1,28 @@
 import express, { Express } from "express";  
-import { redirectionHandler, greetHandler } from "./handler";  
 import { createServer as createHttpsServer } from "https";  
 import { readFileSync } from "fs";  
+import { redirectionHandler, defaultHandler } from "./handler";  
 
 const app: Express = express();  
 const port = 5000;  
 const https_port = 5500;  
 
-
 // Manejo de redirección para HTTP  
 app.get("*", redirectionHandler);  
 
-// Crear servidor HTTPS  
+// Configuración para el servidor HTTPS  
 const httpsConfig = {  
     key: readFileSync("key.pem"),  
     cert: readFileSync("cert.pem")  
 };  
 
+// Crear servidor HTTPS utilizando Express
 const httpsApp: Express = express();
-httpsApp.get("/", (req, res) => {
-    res.send("Welcome to the secure server!");
-});
-httpsApp.get("/greet/:name?", greetHandler); // Ruta con parámetro opcional
-// Ruta con parámetro opcional  
+
+
+// Manejar todas las rutas en el servidor HTTPS
+httpsApp.get("/:name?", defaultHandler); // Ahora maneja rutas con un parámetro opcional
+
 
 const httpsServer = createHttpsServer(httpsConfig, httpsApp);  
 httpsServer.listen(https_port, () => console.log(`HTTPS Server listening on port ${https_port}`));  
