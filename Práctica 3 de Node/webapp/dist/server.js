@@ -18,7 +18,11 @@ const httpsConfig = {
     cert: (0, fs_1.readFileSync)("cert.pem")
 };
 const httpsApp = (0, express_1.default)();
-httpsApp.get("/greet/:name?", handler_1.greetHandler); // Ruta con parámetro opcional  
+httpsApp.get("/", (req, res) => {
+    res.send("Welcome to the secure server!");
+});
+httpsApp.get("/greet/:name?", handler_1.greetHandler); // Ruta con parámetro opcional
+// Ruta con parámetro opcional  
 const httpsServer = (0, https_1.createServer)(httpsConfig, httpsApp);
 httpsServer.listen(https_port, () => console.log(`HTTPS Server listening on port ${https_port}`));
 // Iniciar el servidor HTTP  

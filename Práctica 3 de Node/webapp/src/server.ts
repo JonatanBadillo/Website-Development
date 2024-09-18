@@ -7,6 +7,7 @@ const app: Express = express();
 const port = 5000;  
 const https_port = 5500;  
 
+
 // Manejo de redirección para HTTP  
 app.get("*", redirectionHandler);  
 
@@ -16,8 +17,12 @@ const httpsConfig = {
     cert: readFileSync("cert.pem")  
 };  
 
-const httpsApp: Express = express();  
-httpsApp.get("/greet/:name?", greetHandler); // Ruta con parámetro opcional  
+const httpsApp: Express = express();
+httpsApp.get("/", (req, res) => {
+    res.send("Welcome to the secure server!");
+});
+httpsApp.get("/greet/:name?", greetHandler); // Ruta con parámetro opcional
+// Ruta con parámetro opcional  
 
 const httpsServer = createHttpsServer(httpsConfig, httpsApp);  
 httpsServer.listen(https_port, () => console.log(`HTTPS Server listening on port ${https_port}`));  
