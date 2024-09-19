@@ -44,6 +44,8 @@
 // });
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // import { createServer } from "http";
 // import { handler } from "./handler";
 // const port = 5000;
@@ -126,40 +128,60 @@
 //     console.log(`HTTPS Server listening on port ${https_port}`)
 // );
 
+// import { createServer } from "http";
+// import {
+//   redirectionHandler,
+//   newUrlHandler,
+//   defaultHandler,
+//   notFoundHandler,
+// } from "./handler";
+// import { createServer as createHttpsServer } from "https";
+// import { readFileSync } from "fs";
+// import express, { Express } from "express";
+// const port = 5000;
+// const https_port = 5500;
+// const server = createServer(redirectionHandler);
+// // Inicia el servidor HTTP y lo pone a escuchar en el puerto especificado
+// server.listen(port, () =>
+//     console.log(`(Event) Server listening on port ${port}`)
+// );
+
+// // Configuración para el servidor HTTPS
+// const httpsConfig = {
+//     key: readFileSync("key.pem"), // Lee el archivo de clave privada
+//     cert: readFileSync("cert.pem"), // Lee el archivo de certificado
+// };
+
+// // Crea una instancia de Express
+// const expressApp: Express = express();
+
+// // Configura las rutas y los manejadores de las solicitudes
+// expressApp.get("/favicon.ico", notFoundHandler);
+// expressApp.get("/newurl", newUrlHandler);
+// expressApp.get("*", defaultHandler);
+
+// // Crea el servidor HTTPS y asigna el manejador de solicitudes y la configuración
+// const httpsServer = createHttpsServer(httpsConfig, expressApp);
+// httpsServer.listen(https_port, () =>
+//     console.log(`HTTPS Server listening on port ${https_port}`)
+// );
+
+
+
 import { createServer } from "http";
-import {
-  redirectionHandler,
-  newUrlHandler,
-  defaultHandler,
-  notFoundHandler,
-} from "./handler";
-import { createServer as createHttpsServer } from "https";
-import { readFileSync } from "fs";
 import express, { Express } from "express";
+import { basicHandler } from "./handler";
+// Define el puerto en el que se va a ejecutar el servidor
 const port = 5000;
-const https_port = 5500;
-const server = createServer(redirectionHandler);
-// Inicia el servidor HTTP y lo pone a escuchar en el puerto especificado
-server.listen(port, () =>
-    console.log(`(Event) Server listening on port ${port}`)
-);
-
-// Configuración para el servidor HTTPS
-const httpsConfig = {
-    key: readFileSync("key.pem"), // Lee el archivo de clave privada
-    cert: readFileSync("cert.pem"), // Lee el archivo de certificado
-};
-
 // Crea una instancia de Express
 const expressApp: Express = express();
-
 // Configura las rutas y los manejadores de las solicitudes
-expressApp.get("/favicon.ico", notFoundHandler);
-expressApp.get("/newurl", newUrlHandler);
-expressApp.get("*", defaultHandler);
-
-// Crea el servidor HTTPS y asigna el manejador de solicitudes y la configuración
-const httpsServer = createHttpsServer(httpsConfig, expressApp);
-httpsServer.listen(https_port, () =>
-    console.log(`HTTPS Server listening on port ${https_port}`)
-);
+expressApp.get("/favicon.ico", (req, resp) => {
+  resp.statusCode = 404;
+  resp.end();
+});
+// Configura el manejador de solicitudes predeterminado
+expressApp.get("*", basicHandler);
+// Crea el servidor HTTP y asigna la instancia de Express
+const server = createServer(expressApp);
+server.listen(port, () => console.log(`HTTP Server listening on port ${port}`));
