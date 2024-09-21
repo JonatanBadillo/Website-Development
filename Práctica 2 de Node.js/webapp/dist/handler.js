@@ -3,8 +3,10 @@
 // import { IncomingMessage, ServerResponse } from "http";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.basicHandler = void 0;
-// Definición de la función handler
 const basicHandler = (req, resp) => {
-    resp.end("Hello, World");
+    for (let i = 0; i < 10; i++) {
+        resp.write(`Message: ${i}\n`);
+    }
+    resp.end("End");
 };
 exports.basicHandler = basicHandler;
