@@ -645,20 +645,64 @@
 // };
 
 
+
+
+// Verificación de la capacidad del flujo en el archivo handler.ts en la carpeta src.
+// import { IncomingMessage, ServerResponse } from "http";
+// // Definición de la función handler básica
+// export const basicHandler = (req: IncomingMessage, resp: ServerResponse) => {
+//   // Establecer el encabezado de la respuesta como texto plano
+//   resp.setHeader("Content-Type", "text/plain");
+
+//   // Iterar 10,000 veces para escribir mensajes en la respuesta
+//   for (let i = 0; i < 10_000; i++) {
+//     // Verificar si el buffer de transmisión está lleno antes de escribir el mensaje
+//     if (resp.write(`Message: ${i}\n`)) {
+//       console.log("Stream buffer is at capacity");
+//     }
+//   }
+
+//   // Finalizar la respuesta
+//   resp.end("End");
+// };
+
+
+
+
+
+// Cómo evitar el almacenamiento excesivo de datos en búfer en el archivo handler.ts
+// en la carpeta src.
 import { IncomingMessage, ServerResponse } from "http";
-// Definición de la función handler básica
 export const basicHandler = (req: IncomingMessage, resp: ServerResponse) => {
   // Establecer el encabezado de la respuesta como texto plano
   resp.setHeader("Content-Type", "text/plain");
 
-  // Iterar 10,000 veces para escribir mensajes en la respuesta
-  for (let i = 0; i < 10_000; i++) {
-    // Verificar si el buffer de transmisión está lleno antes de escribir el mensaje
-    if (resp.write(`Message: ${i}\n`)) {
-      console.log("Stream buffer is at capacity");
-    }
-  }
+  let i = 0;
+  let canWrite = true;
 
-  // Finalizar la respuesta
-  resp.end("End");
+  const writeData = () => {
+    console.log("Comenzando a escribir datos");
+
+    // Iterar hasta que se hayan escrito 10,000 mensajes o el buffer esté lleno
+    do {
+      canWrite = resp.write(`Mensaje: ${i++}\n`);
+    } while (i < 10_000 && canWrite);
+
+    console.log("El buffer está lleno");
+
+    // Verificar si se han escrito todos los mensajes
+    if (i < 10_000) {
+      // Esperar al evento "drain" para continuar escribiendo
+      resp.once("drain", () => {
+        console.log("El buffer se ha vaciado");
+        writeData();
+      });
+    } else {
+      // Finalizar la respuesta
+      resp.end("Fin");
+    }
+  };
+
+  // Iniciar la escritura de datos
+  writeData();
 };
