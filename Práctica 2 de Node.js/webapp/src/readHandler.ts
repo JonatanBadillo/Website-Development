@@ -62,24 +62,61 @@
 
 
 
-// Transformación de datos
-// La clase Transform se utiliza para crear objetos, conocidos como transformadores, que
-// reciben datos de un flujo de lectura, los procesan de alguna manera y luego los pasan. Los
-// transformadores se aplican a los flujos con el método de canalización, como se muestra en el
-// Creación de un transformador en el archivo readHandler.ts en la carpeta src.
+// // Transformación de datos
+// // La clase Transform se utiliza para crear objetos, conocidos como transformadores, que
+// // reciben datos de un flujo de lectura, los procesan de alguna manera y luego los pasan. Los
+// // transformadores se aplican a los flujos con el método de canalización, como se muestra en el
+// // Creación de un transformador en el archivo readHandler.ts en la carpeta src.
+// import { IncomingMessage, ServerResponse } from "http";
+// import { Transform } from "stream";
+// // Exportamos la función readHandler que manejará la conducción de datos
+// export const readHandler = async (req: IncomingMessage, resp: ServerResponse) => {
+//     // Utilizamos el método pipe para conducir los datos de la solicitud al flujo de respuesta
+//     req.pipe(createLowerTransform()).pipe(resp);
+// }
+
+// // Creamos un transformador que convierte los datos a minúsculas
+// const createLowerTransform = () => new Transform({
+//     // La función transform recibe los datos, la codificación y una función de devolución de llamada
+//     transform(data, encoding, callback) {
+//         // Convertimos los datos a minúsculas y los pasamos a través de la función de devolución de llamada
+//         callback(null, data.toString().toLowerCase());
+//     }
+// });
+
+
+
+
+// Análisis de JSON en el archivo readHandler.ts en la carpeta src.
 import { IncomingMessage, ServerResponse } from "http";
 import { Transform } from "stream";
-// Exportamos la función readHandler que manejará la conducción de datos
+
+
+// Definimos la función readHandler que manejará la lectura de datos
 export const readHandler = async (req: IncomingMessage, resp: ServerResponse) => {
-    // Utilizamos el método pipe para conducir los datos de la solicitud al flujo de respuesta
-    req.pipe(createLowerTransform()).pipe(resp);
+    // Verificamos si el tipo de contenido es JSON
+    if (req.headers["content-type"] == "application/json") {
+        // Conducimos los datos de la solicitud a través de un transformador que analiza el JSON
+        req.pipe(createFromJsonTransform()).on("data", (payload) => {
+            // Verificamos si el payload es un array
+            if (payload instanceof Array) {
+                resp.write(`Recibido un array con ${payload.length} elementos`);
+            } else {
+                resp.write("No se recibió un array");
+            }
+            resp.end(); // Finalizamos la respuesta
+        });
+    } else {
+        // Si el tipo de contenido no es JSON, simplemente conducimos los datos de la solicitud a la respuesta
+        req.pipe(resp);
+    }
 }
 
-// Creamos un transformador que convierte los datos a minúsculas
-const createLowerTransform = () => new Transform({
-    // La función transform recibe los datos, la codificación y una función de devolución de llamada
+// Creamos un transformador que convierte los datos JSON en objetos JavaScript
+const createFromJsonTransform = () => new Transform({
+    readableObjectMode: true,
     transform(data, encoding, callback) {
-        // Convertimos los datos a minúsculas y los pasamos a través de la función de devolución de llamada
-        callback(null, data.toString().toLowerCase());
+        // Analizamos los datos JSON y los pasamos a través de la función de devolución de llamada
+        callback(null, JSON.parse(data));
     }
 });
