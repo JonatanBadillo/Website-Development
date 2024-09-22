@@ -6,15 +6,8 @@
 // }
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.readHandler = void 0;
-// Definimos la función readHandler como una función asíncrona que manejará la lectura de datos
+// Exportamos la función readHandler que manejará la conducción de datos
 const readHandler = async (req, resp) => {
-    // Establecemos la codificación de la solicitud como "utf-8"
-    req.setEncoding("utf-8");
-    // Iteramos de forma asíncrona sobre los datos de la solicitud
-    for await (const data of req) {
-        console.log(data); // Imprimimos los datos en la consola
-    }
-    console.log("End: all data read"); // Imprimimos un mensaje indicando que se han leído todos los datos
-    resp.end(); // Finalizamos la respuesta
+    req.pipe(resp); // Utilizamos el método pipe para conducir los datos de la solicitud al flujo de respuesta
 };
 exports.readHandler = readHandler;
