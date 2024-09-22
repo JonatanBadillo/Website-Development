@@ -195,11 +195,19 @@ import { basicHandler } from "./handler";
 import { readHandler } from "./readHandler";
 const port = 5000;
 const expressApp: Express = express();
+
+// Configura la ruta para el archivo favicon.ico
 expressApp.get("/favicon.ico", (req, resp) => {
   resp.statusCode = 404;
   resp.end();
 });
+
+// Configura el manejador de solicitudes predeterminado
 expressApp.get("*", basicHandler);
+
+// Agrega una nueva ruta para la solicitud POST "/read"
 expressApp.post("/read", readHandler);
+
+// Crea el servidor HTTP y asigna la instancia de Express
 const server = createServer(expressApp);
 server.listen(port, () => console.log(`HTTP Server listening on port ${port}`));
