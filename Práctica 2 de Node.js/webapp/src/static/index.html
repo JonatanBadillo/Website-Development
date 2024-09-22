@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script>
+    // Espera a que el DOM esté completamente cargado
+    document.addEventListener("DOMContentLoaded", function () {
+      // Agrega un evento de clic al botón con el id "btn"
+      document.getElementById("btn").addEventListener("click", sendReq);
+    });
+
+    // Función asincrónica para enviar la solicitud
+    sendReq = async () => {
+      let payload = "";
+      // Genera un mensaje de carga con un número de serie
+      for (let i = 0; i < 10_000; i++) {
+        payload += `Mensaje de carga: ${i}\n`;
+      }
+      // Realiza una solicitud POST al endpoint "/read" con el payload
+      const response = await fetch("/read", {
+        method: "POST",
+        body: payload,
+      });
+      // Actualiza el contenido del elemento con el id "msg" con el estado de la respuesta
+      document.getElementById("msg").textContent = response.statusText;
+      // Actualiza el contenido del elemento con el id "body" con el cuerpo de la respuesta
+      document.getElementById("body").textContent = await response.text();
+    };
+    </script>
+  </head>
+  <body>
+    <button id="btn">Send Request</button>
+    <div id="msg"></div>
+    <div id="body"></div>
+  </body>
+</html>
