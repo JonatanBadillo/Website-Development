@@ -644,9 +644,6 @@
 //   resp.end("End");
 // };
 
-
-
-
 // Verificación de la capacidad del flujo en el archivo handler.ts en la carpeta src.
 // import { IncomingMessage, ServerResponse } from "http";
 // // Definición de la función handler básica
@@ -666,43 +663,47 @@
 //   resp.end("End");
 // };
 
+// // Cómo evitar el almacenamiento excesivo de datos en búfer en el archivo handler.ts
+// // en la carpeta src.
+// import { IncomingMessage, ServerResponse } from "http";
+// export const basicHandler = (req: IncomingMessage, resp: ServerResponse) => {
+//   // Establecer el encabezado de la respuesta como texto plano
+//   resp.setHeader("Content-Type", "text/plain");
 
+//   let i = 0;
+//   let canWrite = true;
 
+//   const writeData = () => {
+//     console.log("Comenzando a escribir datos");
 
+//     // Iterar hasta que se hayan escrito 10,000 mensajes o el buffer esté lleno
+//     do {
+//       canWrite = resp.write(`Mensaje: ${i++}\n`);
+//     } while (i < 10_000 && canWrite);
 
-// Cómo evitar el almacenamiento excesivo de datos en búfer en el archivo handler.ts
-// en la carpeta src.
+//     console.log("El buffer está lleno");
+
+//     // Verificar si se han escrito todos los mensajes
+//     if (i < 10_000) {
+//       // Esperar al evento "drain" para continuar escribiendo
+//       resp.once("drain", () => {
+//         console.log("El buffer se ha vaciado");
+//         writeData();
+//       });
+//     } else {
+//       // Finalizar la respuesta
+//       resp.end("Fin");
+//     }
+//   };
+
+//   // Iniciar la escritura de datos
+//   writeData();
+// };
+
+// Actualización de los manejadores en el archivo handler.ts en la carpeta src.
 import { IncomingMessage, ServerResponse } from "http";
+import { readFileSync } from "fs";
 export const basicHandler = (req: IncomingMessage, resp: ServerResponse) => {
-  // Establecer el encabezado de la respuesta como texto plano
-  resp.setHeader("Content-Type", "text/plain");
-
-  let i = 0;
-  let canWrite = true;
-
-  const writeData = () => {
-    console.log("Comenzando a escribir datos");
-
-    // Iterar hasta que se hayan escrito 10,000 mensajes o el buffer esté lleno
-    do {
-      canWrite = resp.write(`Mensaje: ${i++}\n`);
-    } while (i < 10_000 && canWrite);
-
-    console.log("El buffer está lleno");
-
-    // Verificar si se han escrito todos los mensajes
-    if (i < 10_000) {
-      // Esperar al evento "drain" para continuar escribiendo
-      resp.once("drain", () => {
-        console.log("El buffer se ha vaciado");
-        writeData();
-      });
-    } else {
-      // Finalizar la respuesta
-      resp.end("Fin");
-    }
-  };
-
-  // Iniciar la escritura de datos
-  writeData();
+  resp.write(readFileSync("/Users/jonatanbadillo/Desktop/UNIVERSITY/8TH SEMESTER/SITIOS WEB/Práctica 2 de Node.js/webapp/src/static/index.html"));
+  resp.end();
 };

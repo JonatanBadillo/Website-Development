@@ -143,20 +143,35 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // httpsServer.listen(https_port, () =>
 //     console.log(`HTTPS Server listening on port ${https_port}`)
 // );
+// import { createServer } from "http";
+// import express, { Express } from "express";
+// import { basicHandler } from "./handler";
+// // Define el puerto en el que se va a ejecutar el servidor
+// const port = 5000;
+// // Crea una instancia de Express
+// const expressApp: Express = express();
+// // Configura las rutas y los manejadores de las solicitudes
+// expressApp.get("/favicon.ico", (req, resp) => {
+//   resp.statusCode = 404;
+//   resp.end();
+// });
+// // Configura el manejador de solicitudes predeterminado
+// expressApp.get("*", basicHandler);
+// // Crea el servidor HTTP y asigna la instancia de Express
+// const server = createServer(expressApp);
+// server.listen(port, () => console.log(`HTTP Server listening on port ${port}`));
+// Cómo agregar una ruta en el archivo server.ts de la carpeta src.
 const http_1 = require("http");
 const express_1 = __importDefault(require("express"));
 const handler_1 = require("./handler");
-// Define el puerto en el que se va a ejecutar el servidor
+const readHandler_1 = require("./readHandler");
 const port = 5000;
-// Crea una instancia de Express
 const expressApp = (0, express_1.default)();
-// Configura las rutas y los manejadores de las solicitudes
 expressApp.get("/favicon.ico", (req, resp) => {
     resp.statusCode = 404;
     resp.end();
 });
-// Configura el manejador de solicitudes predeterminado
 expressApp.get("*", handler_1.basicHandler);
-// Crea el servidor HTTP y asigna la instancia de Express
+expressApp.post("/read", readHandler_1.readHandler);
 const server = (0, http_1.createServer)(expressApp);
 server.listen(port, () => console.log(`HTTP Server listening on port ${port}`));
