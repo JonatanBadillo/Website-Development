@@ -244,6 +244,7 @@ import express, {Express, Request, Response } from "express";
 import { readHandler } from "./readHandler";
 const port = 5000;
 const expressApp: Express = express();
+expressApp.use(express.json());
 expressApp.post("/read", readHandler);
 expressApp.get("/sendcity", (req, resp) => {
  resp.sendFile("city.png", { root: "static"});
