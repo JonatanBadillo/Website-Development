@@ -244,19 +244,34 @@ import express, {Express, Request, Response } from "express";
 import { readHandler } from "./readHandler";
 const port = 5000;
 const expressApp: Express = express();
+
+// Middleware para analizar el cuerpo de la solicitud como JSON
 expressApp.use(express.json());
+
+// Ruta para la solicitud POST "/read"
 expressApp.post("/read", readHandler);
+
+// Ruta para enviar el archivo "city.png"
 expressApp.get("/sendcity", (req, resp) => {
- resp.sendFile("city.png", { root: "static"});
+    resp.sendFile("city.png", { root: "static" });
 });
+
+// Ruta para descargar el archivo "city.png"
 expressApp.get("/downloadcity", (req: Request, resp: Response) => {
- resp.download("static/city.png");
+    resp.download("static/city.png");
 });
+
+// Ruta para devolver una respuesta JSON
 expressApp.get("/json", (req: Request, resp: Response) => {
- resp.json("{name: Bancho}");
+    resp.json("{name: Bancho}");
 });
+
+// Middleware para servir archivos estáticos desde la carpeta "static"
 expressApp.use(express.static("static"));
+
+// Middleware para servir archivos estáticos desde la carpeta "node_modules/bootstrap/dist"
 expressApp.use(express.static("node_modules/bootstrap/dist"));
+
+// Crea el servidor HTTP y asigna la instancia de Express
 const server = createServer(expressApp);
-server.listen(port,
- () => console.log(`HTTP Server listening on port ${port}`));
+server.listen(port, () => console.log(`HTTP Server listening on port ${port}`));
