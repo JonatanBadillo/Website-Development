@@ -195,12 +195,31 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // const server = createServer(expressApp);
 // server.listen(port,
 //  () => console.log(`HTTP Server listening on port ${port}`));
+// import { createServer } from "http";
+// import express, { Express } from "express";
+// import { readHandler } from "./readHandler";
+// const port = 5000;
+// const expressApp: Express = express();
+// expressApp.post("/read", readHandler);
+// expressApp.use(express.static("static"));
+// expressApp.use(express.static("node_modules/bootstrap/dist"));
+// const server = createServer(expressApp);
+// server.listen(port, () => console.log(`HTTP Server listening on port ${port}`));
 const http_1 = require("http");
 const express_1 = __importDefault(require("express"));
 const readHandler_1 = require("./readHandler");
 const port = 5000;
 const expressApp = (0, express_1.default)();
 expressApp.post("/read", readHandler_1.readHandler);
+expressApp.get("/sendcity", (req, resp) => {
+    resp.sendFile("city.png", { root: "static" });
+});
+expressApp.get("/downloadcity", (req, resp) => {
+    resp.download("static/city.png");
+});
+expressApp.get("/json", (req, resp) => {
+    resp.json("{name: Bancho}");
+});
 expressApp.use(express_1.default.static("static"));
 expressApp.use(express_1.default.static("node_modules/bootstrap/dist"));
 const server = (0, http_1.createServer)(expressApp);
