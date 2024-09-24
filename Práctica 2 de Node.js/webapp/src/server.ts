@@ -184,10 +184,6 @@
 // const server = createServer(expressApp);
 // server.listen(port, () => console.log(`HTTP Server listening on port ${port}`));
 
-
-
-
-
 // // Cómo agregar una ruta en el archivo server.ts de la carpeta src.
 // import { createServer } from "http";
 // import express, { Express } from "express";
@@ -212,22 +208,31 @@
 // const server = createServer(expressApp);
 // server.listen(port, () => console.log(`HTTP Server listening on port ${port}`));
 
+// import { createServer } from "http";
+// import express, {Express } from "express";
+// //import { basicHandler } from "./handler";
+// import { readHandler } from "./readHandler";
+// const port = 5000;
+// const expressApp: Express = express();
+// //expressApp.get("/favicon.ico", (req, resp) => {
+// // resp.statusCode = 404;
 
+// // resp.end();
+// //});
+// //expressApp.get("*", basicHandler);
+// expressApp.post("/read", readHandler);
+// expressApp.use(express.static("static"));
+// const server = createServer(expressApp);
+// server.listen(port,
+//  () => console.log(`HTTP Server listening on port ${port}`));
 
 import { createServer } from "http";
-import express, {Express } from "express";
-//import { basicHandler } from "./handler";
+import express, { Express } from "express";
 import { readHandler } from "./readHandler";
 const port = 5000;
 const expressApp: Express = express();
-//expressApp.get("/favicon.ico", (req, resp) => {
-// resp.statusCode = 404;
-
-// resp.end();
-//});
-//expressApp.get("*", basicHandler);
 expressApp.post("/read", readHandler);
 expressApp.use(express.static("static"));
+expressApp.use(express.static("node_modules/bootstrap/dist"));
 const server = createServer(expressApp);
-server.listen(port,
- () => console.log(`HTTP Server listening on port ${port}`));
+server.listen(port, () => console.log(`HTTP Server listening on port ${port}`));
