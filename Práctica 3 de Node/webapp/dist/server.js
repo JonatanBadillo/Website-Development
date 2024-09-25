@@ -10,6 +10,7 @@ const port = 5000;
 const expressApp = (0, express_1.default)();
 // Middleware para servir archivos estáticos desde la carpeta "static"
 expressApp.use(express_1.default.static("static"));
+expressApp.use(express_1.default.static("node_modules/bootstrap/dist"));
 // Manejo de solicitudes POST a la ruta "/read"
 expressApp.post("/read", readHandler_1.readHandler);
 // Creación del servidor HTTP

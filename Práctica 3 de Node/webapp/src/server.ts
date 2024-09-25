@@ -8,6 +8,7 @@ const expressApp: Express = express();
 
 // Middleware para servir archivos estáticos desde la carpeta "static"
 expressApp.use(express.static("static"));
+expressApp.use(express.static("node_modules/bootstrap/dist"));
 
 // Manejo de solicitudes POST a la ruta "/read"
 expressApp.post("/read", readHandler);
