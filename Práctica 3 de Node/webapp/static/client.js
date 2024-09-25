@@ -3,11 +3,16 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 const sendReq = async () => {
-    let payload = "HELLO, WORLD!"; // Contenido para enviar al servidor
+    const inputText = document.getElementById("inputText").value; // Obtiene el texto del usuario
+
+    if (inputText.trim() === "") {
+        alert("Por favor ingresa un texto.");
+        return;
+    }
 
     const response = await fetch("/read", {
         method: "POST",
-        body: payload
+        body: inputText
     });
 
     document.getElementById("msg").textContent = response.statusText;
