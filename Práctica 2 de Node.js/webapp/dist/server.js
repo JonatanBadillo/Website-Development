@@ -236,6 +236,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// import { createServer } from "http";
+// import express, { Express } from "express";
+// import { readHandler } from "./readHandler";
+// const port = 5000;
+// const expressApp: Express = express();
+// expressApp.use(express.json());
+// expressApp.post("/read", readHandler);
+// expressApp.use(express.static("static"));
+// expressApp.use(express.static("node_modules/bootstrap/dist"));
+// const server = createServer(expressApp);
+// server.listen(port, () => console.log(`HTTP Server listening on port ${port}`));
 const http_1 = require("http");
 const express_1 = __importDefault(require("express"));
 const readHandler_1 = require("./readHandler");
@@ -245,5 +256,6 @@ expressApp.use(express_1.default.json());
 expressApp.post("/read", readHandler_1.readHandler);
 expressApp.use(express_1.default.static("static"));
 expressApp.use(express_1.default.static("node_modules/bootstrap/dist"));
+expressApp.use(express_1.default.static("dist/client"));
 const server = (0, http_1.createServer)(expressApp);
 server.listen(port, () => console.log(`HTTP Server listening on port ${port}`));
