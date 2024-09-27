@@ -10,27 +10,27 @@
       "nombre": "Halo Infinite",
       "descripcion": "Una nueva entrega en la famosa saga de disparos en primera persona.",
       "precio": 49.99,
-      "imagen": "images/img1.jpg",
+      "imagen": "images/img2.jpg",
       "consola": "Xbox"
     },
     {
       "nombre": "The Legend of Zelda: Breath of the Wild",
       "descripcion": "Un juego de mundo abierto ambientado en el reino de Hyrule.",
       "precio": 69.99,
-      "imagen": "/images/img1.jpg",
+      "imagen": "/images/img3.jpg",
       "consola": "Nintendo Switch"
     },
     {
       "nombre": "The Legend of Zelda: Breath of the Wild",
       "descripcion": "Un juego de mundo abierto ambientado en el reino de Hyrule.",
       "precio": 69.99,
-      "imagen": "/images/img1.jpg",
+      "imagen": "/images/img4.jpg",
       "consola": "Nintendo Switch"
     }, {
       "nombre": "The Last of Us Part II",
       "descripcion": "Un juego de acción y aventura que sigue la historia de Ellie.",
       "precio": 59.99,
-      "imagen": "/images/img1.jpg",
+      "imagen": "/images/img4.jpg",
       "consola": "PlayStation"
     }
   ]
