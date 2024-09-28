@@ -4,8 +4,10 @@
     "nombre": "The Last of Us Part II",
     "descripcion": "Un juego de acción y aventura que sigue la historia de Ellie.",
     "precio": 59.99,
-    "imagen": "/images/img1.jpg",
-    "consola": "PlayStation"
+    "consola": [
+      "PlayStation"
+    ],
+    "imagen": "/images/img1.jpg"
   },
   {
     "id": 2,
@@ -33,10 +35,12 @@
   },
   {
     "id": 5,
-    "nombre": "The Last of Us Part II",
-    "descripcion": "Un juego de acción y aventura que sigue la historia de Ellie.",
+    "nombre": "JAJAJAJA",
+    "descripcion": "1",
     "precio": 59.99,
-    "imagen": "/images/img4.jpg",
-    "consola": "PlayStation"
+    "consola": [
+      "PlayStation"
+    ],
+    "imagen": "/images/city (1).png"
   }
 ]

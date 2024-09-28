@@ -1,167 +1,222 @@
+// Variables globales para controlar el estado de edición
+let editando = false;
+let videojuegoIdActual = null;
+
+// Ejecutar el código una vez que el DOM esté completamente cargado
+document.addEventListener('DOMContentLoaded', () => {
+    // Lógica para agregar/editar el videojuego cuando se hace clic en "Guardar"
+    const guardarButton = document.getElementById('guardarVideojuego');
+    if (guardarButton) {
+        guardarButton.onclick = () => {
+            if (editando) {
+                editarVideojuego();
+            } else {
+                agregarVideojuego();
+            }
+        };
+    }
+
+    // Llamar a la función para cargar los videojuegos
+    cargarVideojuegos();
+});
+
 // Función para crear las cartas de videojuegos
 function crearCartas(videojuegos) {
-  // Obtener el contenedor donde se agregarán las tarjetas de videojuegos
-  const contenedorCartas = document.getElementById('cartasVideojuegos');
-  
-  // Limpiar el contenido 
-  contenedorCartas.innerHTML = ''; 
+    const contenedorCartas = document.getElementById('cartasVideojuegos');
+    contenedorCartas.innerHTML = ''; // Limpiar el contenido previo
 
-  // Verificar si hay videojuegos para mostrar
-  if (!videojuegos || videojuegos.length === 0) {
-      contenedorCartas.innerHTML = '<p>No hay videojuegos disponibles.</p>';
-      return;
-  }
+    if (!videojuegos || videojuegos.length === 0) {
+        contenedorCartas.innerHTML = '<p>No hay videojuegos disponibles.</p>';
+        return;
+    }
 
-  // Recorrer cada videojuego y crear su tarjeta
-  videojuegos.forEach(videojuego => {
-      console.log('Creando tarjeta para:', videojuego.nombre); // Mensaje 
+    videojuegos.forEach(videojuego => {
+        const colDiv = document.createElement('div');
+        colDiv.className = 'col';
 
-      // Crear un elemento 'div' para la columna 
-      const colDiv = document.createElement('div');
-      colDiv.className = 'col';
+        const cardDiv = document.createElement('div');
+        cardDiv.className = 'card h-100';
 
-      // Crear un elemento 'div' para la tarjeta 
-      const cardDiv = document.createElement('div');
-      cardDiv.className = 'card h-100';
+        const img = document.createElement('img');
+        img.src = videojuego.imagen;
+        img.className = 'card-img-top';
+        img.alt = videojuego.nombre;
 
-      // Crear un elemento 'img' para mostrar la imagen del videojuego
-      const img = document.createElement('img');
-      img.src = videojuego.imagen; // Asignar la URL de la imagen
-      img.className = 'card-img-top'; // Asignar la clase para el estilo
-      img.alt = videojuego.nombre; // Asignar un texto alternativo para la imagen
+        const cardBody = document.createElement('div');
+        cardBody.className = 'card-body';
 
-      // Mostrar la ruta de la imagen en la consola 
-      console.log('Ruta de la imagen:', img.src);
+        const title = document.createElement('h5');
+        title.className = 'card-title';
+        title.textContent = videojuego.nombre;
 
-      // Crear un elemento 'div' para el cuerpo de la tarjeta 
-      const cardBody = document.createElement('div');
-      cardBody.className = 'card-body';
+        const description = document.createElement('p');
+        description.className = 'card-text';
+        let consolasTexto = Array.isArray(videojuego.consola) ? videojuego.consola.join(', ') : videojuego.consola;
+        description.innerHTML = `<p><b>Descripción:</b> ${videojuego.descripcion}</p>
+                                 <p><b>Consola:</b> ${consolasTexto}</p>
+                                 <p><b>Precio:</b> $${videojuego.precio}</p>`;
 
-      // Crear un elemento 'h5' para el título de la tarjeta 
-      const title = document.createElement('h5');
-      title.className = 'card-title';
-      title.textContent = videojuego.nombre;
+        cardBody.appendChild(title);
+        cardBody.appendChild(description);
 
-      // Crear un elemento 'p' para la descripción del videojuego
-      const description = document.createElement('p');
-      description.className = 'card-text';
+        const cardFooter = document.createElement('div');
+        cardFooter.className = 'card-footer';
 
-      // Verificar si 'consola' es un arreglo o un string
-      let consolasTexto = Array.isArray(videojuego.consola) ? videojuego.consola.join(', ') : videojuego.consola;
+        const editButton = document.createElement('button');
+        editButton.className = 'btn btn-warning';
+        editButton.textContent = 'Editar';
+        editButton.onclick = () => prepararEdicion(videojuego); // Llamar a la función de edición
 
-      // Asignar el contenido HTML con la descripción, consolas y precio del videojuego
-      description.innerHTML = `<p><b>Descripción del videojuego:</b><br>${videojuego.descripcion}</p>
-                               <p><b>${consolasTexto}</b></p>
-                               <p><b>Precio: </b> $${videojuego.precio}</p>`;
-
-      // Agregar el título y la descripción al cuerpo de la tarjeta
-      cardBody.appendChild(title);
-      cardBody.appendChild(description);
-
-      // Crear un elemento 'div' para el pie de la tarjeta y asignar la clase 'card-footer'
-      const cardFooter = document.createElement('div');
-      cardFooter.className = 'card-footer';
-
-      // Crear un elemento 'small' para contener los botones de "Editar" y "Eliminar"
-      const small = document.createElement('small');
-      small.className = 'text-body-secondary';
-      small.innerHTML = `
-          <button type="button" class="btn btn-warning">Editar</button>
-          <button type="button" class="btn btn-danger">Eliminar</button>
-      `;
-
-      // Agregar los botones al pie de la tarjeta
-      cardFooter.appendChild(small);
-
-      // Construir la tarjeta agregando la imagen, el cuerpo y el pie a la tarjeta
-      cardDiv.appendChild(img);
-      cardDiv.appendChild(cardBody);
-      cardDiv.appendChild(cardFooter);
-
-      // Agregar la tarjeta a la columna
-      colDiv.appendChild(cardDiv);
-
-      // Finalmente, agregar la columna al contenedor principal de tarjetas
-      contenedorCartas.appendChild(colDiv);
-  });
+        cardFooter.appendChild(editButton);
+        cardDiv.appendChild(img);
+        cardDiv.appendChild(cardBody);
+        cardDiv.appendChild(cardFooter);
+        colDiv.appendChild(cardDiv);
+        contenedorCartas.appendChild(colDiv);
+    });
 }
 
+// Función para preparar la edición del videojuego
+function prepararEdicion(videojuego) {
+    editando = true;
+    videojuegoIdActual = videojuego.id;
+
+    // Llenar el formulario con los datos del videojuego
+    document.getElementById('videojuegoId').value = videojuego.id;
+    document.getElementById('nombreVideojuego').value = videojuego.nombre;
+    document.getElementById('descripcionVideojuego').value = videojuego.descripcion;
+    document.getElementById('precioVideojuego').value = videojuego.precio;
+
+    // Marcar las consolas seleccionadas
+    document.getElementById('consolaPlaystation').checked = videojuego.consola.includes('PlayStation');
+    document.getElementById('consolaXbox').checked = videojuego.consola.includes('Xbox');
+    document.getElementById('consolaNintendo').checked = videojuego.consola.includes('Nintendo Switch');
+
+    // Cambiar el texto del modal
+    document.getElementById('videojuegoModalLabel').textContent = 'Editar Videojuego';
+    document.getElementById('guardarVideojuego').textContent = 'Guardar Cambios';
+
+    // Mostrar el modal
+    new bootstrap.Modal(document.getElementById('videojuegoModal')).show();
+}
 
 // Función para agregar un videojuego
 function agregarVideojuego() {
-  // Capturar los datos del formulario (nombre, descripción, precio, imagen)
+    const nombre = document.getElementById('nombreVideojuego').value.trim();
+    const descripcion = document.getElementById('descripcionVideojuego').value.trim();
+    const precio = parseFloat(document.getElementById('precioVideojuego').value);
+    const imagen = document.getElementById('imagenVideojuego').files[0];
+
+    const consolas = [];
+    document.querySelectorAll('#videojuegoForm .form-check-input:checked').forEach(checkbox => {
+        consolas.push(checkbox.value);
+    });
+
+    if (!nombre || !descripcion || isNaN(precio) || consolas.length === 0) {
+        alert('Todos los campos son obligatorios.');
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('nombre', nombre);
+    formData.append('descripcion', descripcion);
+    formData.append('precio', precio);
+    formData.append('consolas', JSON.stringify(consolas));
+    if (imagen) {
+        formData.append('imagen', imagen);
+    }
+
+    fetch('/api/videojuegos', {
+        method: 'POST',
+        body: formData,
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error al agregar el videojuego.');
+            }
+            return response.json();
+        })
+        .then(data => {
+            crearCartas(data);
+            alert('Videojuego agregado correctamente.');
+            document.getElementById('videojuegoForm').reset();
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Ocurrió un error al agregar el videojuego.');
+        });
+}
+
+// Función para editar el videojuego
+function editarVideojuego() {
+  const id = videojuegoIdActual;
   const nombre = document.getElementById('nombreVideojuego').value.trim();
   const descripcion = document.getElementById('descripcionVideojuego').value.trim();
   const precio = parseFloat(document.getElementById('precioVideojuego').value);
   const imagen = document.getElementById('imagenVideojuego').files[0];
 
-  // Capturar las consolas seleccionadas en un arreglo
   const consolas = [];
   document.querySelectorAll('#videojuegoForm .form-check-input:checked').forEach(checkbox => {
       consolas.push(checkbox.value);
   });
 
-  // Validar los datos del formulario
-  if (!nombre || !descripcion || isNaN(precio) || consolas.length === 0 || !imagen) {
-      alert('Todos los campos son obligatorios y se debe seleccionar al menos una consola.');
-      return; // Salir de la función si hay algún error en la validación
+  if (!id || !nombre || !descripcion || isNaN(precio) || consolas.length === 0) {
+      alert('Todos los campos son obligatorios.');
+      return;
   }
 
-  // Crear un objeto FormData para enviar los datos
   const formData = new FormData();
+  formData.append('id', id);
   formData.append('nombre', nombre);
   formData.append('descripcion', descripcion);
   formData.append('precio', precio);
-  formData.append('consolas', JSON.stringify(consolas)); // Convertir las consolas a una cadena JSON
-  formData.append('imagen', imagen);
+  formData.append('consolas', JSON.stringify(consolas));
+  if (imagen) {
+      formData.append('imagen', imagen);
+  }
 
-  // Enviar los datos al servidor usando fetch
   fetch('/api/videojuegos', {
-      method: 'POST',
+      method: 'PUT',
       body: formData,
   })
-  .then(response => {
-      if (!response.ok) {
-          throw new Error('Error al agregar el videojuego.');
-      }
-      return response.json(); // Convertir la respuesta a JSON
-  })
-  .then(data => {
-      // Actualizar la lista de videojuegos
-      crearCartas(data);
-      alert('Videojuego agregado correctamente.');
-      // Limpiar el formulario
-      document.getElementById('videojuegoForm').reset();
-  })
-  .catch(error => {
-      console.error('Error:', error);
-      alert('Ocurrió un error al agregar el videojuego.');
-  });
+      .then(response => {
+          if (!response.ok) {
+              throw new Error('Error al editar el videojuego.');
+          }
+          return response.json();
+      })
+      .then(data => {
+          crearCartas(data);
+          alert('Videojuego editado correctamente.');
+          document.getElementById('videojuegoForm').reset();
+          editando = false;
+          videojuegoIdActual = null;
+      })
+      .catch(error => {
+          console.error('Error:', error);
+          alert('Ocurrió un error al editar el videojuego.');
+      });
 }
+
 
 // Función para cargar los datos de videojuegos desde el servidor
 function cargarVideojuegos() {
-  console.log('Iniciando la carga de videojuegos...'); // Mensaje 
+    console.log('Iniciando la carga de videojuegos...');
 
-  // Hacer una solicitud al servidor para obtener la lista de videojuegos
-  fetch('/api/videojuegos') // fetch por defecto es GET
-  .then(response => {
-      if (!response.ok) {
-          throw new Error('Error al cargar los datos de videojuegos.');
-      }
-      return response.json(); // Convertir la respuesta a JSON
-  })
-  .then(data => {
-      console.log('Datos recibidos del servidor:', data); // Mostrar los datos recibidos en la consola
-      crearCartas(data); // Crear las tarjetas de los videojuegos con los datos recibidos
-  })
-  .catch(error => {
-      console.error('Error al cargar los datos de videojuegos:', error);
-      const contenedorCartas = document.getElementById('cartasVideojuegos');
-      contenedorCartas.innerHTML = '<p>Error al cargar los videojuegos.</p>'; // Mostrar mensaje de error
-  });
+    fetch('/api/videojuegos')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error al cargar los datos de videojuegos.');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Datos recibidos del servidor:', data);
+            crearCartas(data);
+        })
+        .catch(error => {
+            console.error('Error al cargar los datos de videojuegos:', error);
+            const contenedorCartas = document.getElementById('cartasVideojuegos');
+            contenedorCartas.innerHTML = '<p>Error al cargar los videojuegos.</p>';
+        });
 }
-
-// Llamar a la función para cargar los videojuegos cuando la página haya terminado de cargarse
-document.addEventListener('DOMContentLoaded', cargarVideojuegos);
-

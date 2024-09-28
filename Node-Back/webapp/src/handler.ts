@@ -40,6 +40,8 @@ export const getVideojuegos = (req: Request, res: Response) => {
   });
 };
 
+import { v4 as uuidv4 } from 'uuid'; // Importar el generador de UUID
+
 // Función para agregar un nuevo videojuego
 export const postVideojuego = (req: Request, res: Response) => {
   const { nombre, descripcion, precio, consolas } = req.body;
@@ -52,7 +54,9 @@ export const postVideojuego = (req: Request, res: Response) => {
     return res.status(400).send('Todos los campos son obligatorios.');
   }
 
+  // Generar un ID único para el videojuego
   const newVideojuego = {
+    id: uuidv4(), // Generar un ID único usando UUID
     nombre,
     descripcion,
     precio: parseFloat(precio),
@@ -62,7 +66,7 @@ export const postVideojuego = (req: Request, res: Response) => {
 
   const dataPath = path.join(__dirname, '..', '..', 'data', 'videojuegos.json');
 
-  console.log(`Escribiendo nuevo videojuego en el archivo JSON`);
+  console.log(`Escribiendo nuevo videojuego en el archivo JSON: ${dataPath}`);
 
   fs.readFile(dataPath, 'utf8', (err, data) => {
     if (err) {
@@ -92,5 +96,65 @@ export const postVideojuego = (req: Request, res: Response) => {
   });
 };
 
+
+// Función para editar un videojuego
+export const editVideojuego = (req: Request, res: Response) => {
+    const { id, nombre, descripcion, precio, consolas } = req.body;
+    const imagen = req.file ? `/images/${req.file.originalname}` : '';
+
+    console.log(`Intentando editar el videojuego con ID: ${id}`);
+
+    if (!id || !nombre || !descripcion || !precio || !consolas) {
+        console.error('Validación fallida: Todos los campos son obligatorios.');
+        return res.status(400).send('Todos los campos son obligatorios.');
+    }
+
+    const dataPath = path.join(__dirname, '..', '..', 'data', 'videojuegos.json');
+
+    fs.readFile(dataPath, 'utf8', (err, data) => {
+        if (err) {
+            console.error('Error al leer el archivo de datos:', err);
+            return res.status(500).send('Error al leer el archivo de datos');
+        }
+
+        try {
+            const videojuegos = JSON.parse(data);
+            // Convertir el ID a número para asegurar que coincida con el ID en el archivo JSON
+            const index = videojuegos.findIndex((videojuego: any) => videojuego.id === Number(id));
+
+            if (index === -1) {
+                console.error(`Videojuego con ID ${id} no encontrado.`);
+                return res.status(404).send('Videojuego no encontrado.');
+            }
+
+            // Actualizar los datos del videojuego
+            videojuegos[index] = {
+                id: videojuegos[index].id, // Mantener el ID existente
+                nombre,
+                descripcion,
+                precio: parseFloat(precio),
+                consola: JSON.parse(consolas),
+                imagen: imagen || videojuegos[index].imagen, // Mantener la imagen existente si no se proporciona una nueva
+            };
+
+            console.log(`Videojuego con ID ${id} actualizado.`);
+
+            fs.writeFile(dataPath, JSON.stringify(videojuegos, null, 2), (writeErr) => {
+                if (writeErr) {
+                    console.error('Error al guardar los cambios del videojuego:', writeErr);
+                    return res.status(500).send('Error al guardar los cambios del videojuego.');
+                }
+
+                console.log('Videojuego editado exitosamente en el archivo JSON.');
+                res.json(videojuegos);
+            });
+        } catch (parseError) {
+            console.error('Error al parsear el JSON:', parseError);
+            return res.status(500).send('Error al parsear el archivo de datos');
+        }
+    });
+};
+
+  
 // Exportar la configuración de multer
 export const uploadHandler = upload.single('imagen');

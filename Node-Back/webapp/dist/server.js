@@ -21,5 +21,7 @@ expressApp.get('/', (req, res) => {
 expressApp.get('/api/videojuegos', handler_1.getVideojuegos);
 // Ruta para agregar un nuevo videojuego
 expressApp.post('/api/videojuegos', handler_1.uploadHandler, handler_1.postVideojuego);
+// Ruta para editar un videojuego
+expressApp.put('/api/videojuegos', handler_1.uploadHandler, handler_1.editVideojuego);
 // Inicio del servidor
 server.listen(port, () => console.log(`Servidor HTTP escuchando en el puerto ${port}`));

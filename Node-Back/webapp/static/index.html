@@ -1,84 +1,86 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Catálogo de Videojuegos</title>
-    <link href="css/bootstrap.min.css" rel="stylesheet" />
-  </head>
-  <body>
-    <div class="container mt-5">
-      <h1 class="text-center">Catálogo de Videojuegos</h1>
-      <!-- Botón que abre el modal -->
-      <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#videojuegoModal">
-        Agregar Videojuego
-      </button>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Catálogo de Videojuegos</title>
+  <link href="css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Bootstrap JS -->
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <!-- Script externo para el catálogo de videojuegos -->
+  <script src="js/catalogo.js"></script>
+</head>
+<body>
+  <div class="container mt-5">
+    <h1 class="text-center">Catálogo de Videojuegos</h1>
+    <!-- Botón que abre el modal para agregar videojuegos -->
+    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#videojuegoModal">
+      Agregar Videojuego
+    </button>
 
-      <!-- Modal -->
-      <div class="modal fade" id="videojuegoModal" tabindex="-1" aria-labelledby="videojuegoModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="videojuegoModalLabel">Agregar Videojuego</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <!-- Formulario dentro del modal -->
-              <form id="videojuegoForm" enctype="multipart/form-data">
-                <div class="mb-3">
-                  <label for="nombreVideojuego" class="form-label">Nombre del Videojuego</label>
-                  <input type="text" class="form-control" id="nombreVideojuego" placeholder="Nombre del videojuego" />
+    <!-- Modal para agregar/editar videojuegos -->
+    <div class="modal fade" id="videojuegoModal" tabindex="-1" aria-labelledby="videojuegoModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="videojuegoModalLabel">Agregar Videojuego</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <!-- Formulario dentro del modal -->
+            <form id="videojuegoForm" enctype="multipart/form-data">
+              <!-- Campo oculto para almacenar el ID del videojuego durante la edición -->
+              <input type="hidden" id="videojuegoId" />
+
+              <div class="mb-3">
+                <label for="nombreVideojuego" class="form-label">Nombre del Videojuego</label>
+                <input type="text" class="form-control" id="nombreVideojuego" placeholder="Nombre del videojuego" />
+              </div>
+              <div class="mb-3">
+                <label for="descripcionVideojuego" class="form-label">Descripción</label>
+                <textarea class="form-control" id="descripcionVideojuego" rows="3" placeholder="Descripción del videojuego"></textarea>
+              </div>
+              <div class="mb-3">
+                <label for="consolaVideojuego" class="form-label">Consolas</label>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="PlayStation" id="consolaPlaystation">
+                  <label class="form-check-label" for="consolaPlaystation">PlayStation</label>
                 </div>
-                <div class="mb-3">
-                  <label for="descripcionVideojuego" class="form-label">Descripción</label>
-                  <textarea class="form-control" id="descripcionVideojuego" rows="3" placeholder="Descripción del videojuego"></textarea>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="Xbox" id="consolaXbox">
+                  <label class="form-check-label" for="consolaXbox">Xbox</label>
                 </div>
-                <div class="mb-3">
-                  <label for="consolaVideojuego" class="form-label">Consolas</label>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="Playstation" id="consolaPlaystation">
-                    <label class="form-check-label" for="consolaPlaystation">Playstation</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="Xbox" id="consolaXbox">
-                    <label class="form-check-label" for="consolaXbox">Xbox</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="Nintendo" id="consolaNintendo">
-                    <label class="form-check-label" for="consolaNintendo">Nintendo</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="PC" id="consolaPC">
-                    <label class="form-check-label" for="consolaPC">PC</label>
-                  </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="Nintendo Switch" id="consolaNintendo">
+                  <label class="form-check-label" for="consolaNintendo">Nintendo Switch</label>
                 </div>
-                
-                <div class="mb-3">
-                  <label for="precioVideojuego" class="form-label">Precio</label>
-                  <input type="number" class="form-control" id="precioVideojuego" placeholder="Precio" />
-                </div>
-                <div class="mb-3">
-                  <label for="imagenVideojuego" class="form-label">Seleccionar Imagen</label>
-                  <input type="file" class="form-control" id="imagenVideojuego" accept="image/*" />
-                </div>
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-              <button type="button" class="btn btn-primary" onclick="agregarVideojuego()">Guardar Videojuego</button>
-            </div>
+              </div>
+              <div class="mb-3">
+                <label for="precioVideojuego" class="form-label">Precio</label>
+                <input type="number" class="form-control" id="precioVideojuego" placeholder="Precio" />
+              </div>
+              <div class="mb-3">
+                <label for="imagenVideojuego" class="form-label">Seleccionar Imagen</label>
+                <input type="file" class="form-control" id="imagenVideojuego" accept="image/*" />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            <button type="button" class="btn btn-primary" id="guardarVideojuego">Guardar Videojuego</button>
           </div>
         </div>
       </div>
-
-      <!-- Contenedor de Cartas de Videojuegos -->
-      <div id="cartasVideojuegos" class="row row-cols-1 row-cols-md-3 g-4 mt-2 mb-5">
-        <!-- Las cartas se generarán aquí por JavaScript -->
-      </div>
     </div>
 
-    <!-- Scripts -->
-    <script src="js/bootstrap.bundle.min.js"></script>
-    <script src="js/catalogo.js"></script>
-  </body>
+    <!-- Contenedor de tarjetas de videojuegos -->
+    <div id="cartasVideojuegos" class="row row-cols-1 row-cols-md-3 g-4 mt-2 mb-5">
+      <!-- Las tarjetas se generarán aquí por JavaScript -->
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/catalogo.js"></script>
+</body>
 </html>
