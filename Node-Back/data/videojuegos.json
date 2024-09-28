@@ -33,5 +33,15 @@
     "precio": 59.99,
     "imagen": "/images/img4.jpg",
     "consola": "PlayStation"
+  },
+  {
+    "nombre": "1432",
+    "descripcion": "eqwr",
+    "precio": 5,
+    "consola": [
+      "Playstation",
+      "PC"
+    ],
+    "imagen": "/images/city.png"
   }
 ]

@@ -5,12 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Catálogo de Videojuegos</title>
     <link href="css/bootstrap.min.css" rel="stylesheet" />
-    <!-- Bootstrap JS -->
-<script src="js/bootstrap.bundle.min.js"></script>
-
-<!-- Script externo para el catálogo de videojuegos -->
-<script src="js/catalogo.js"></script>
-
   </head>
   <body>
     <div class="container mt-5">
@@ -30,7 +24,7 @@
             </div>
             <div class="modal-body">
               <!-- Formulario dentro del modal -->
-              <form enctype="multipart/form-data">
+              <form id="videojuegoForm" enctype="multipart/form-data">
                 <div class="mb-3">
                   <label for="nombreVideojuego" class="form-label">Nombre del Videojuego</label>
                   <input type="text" class="form-control" id="nombreVideojuego" placeholder="Nombre del videojuego" />
@@ -71,39 +65,20 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-              <button type="button" class="btn btn-primary">Guardar Videojuego</button>
+              <button type="button" class="btn btn-primary" onclick="agregarVideojuego()">Guardar Videojuego</button>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Cartas de Videojuegos -->
-      <div class="row row-cols-1 row-cols-md-3 g-4 mt-2 mb-5">
-        <div class="col">
-          <div class="card h-100">
-            <img src="/images/img1.jpg" class="card-img-top" alt="..." />
-            <div class="card-body">
-              <h5 class="card-title">Nombre del Videojuego</h5>
-              <p class="card-text">
-                <p><b>Descripción del videojuego:</b><br> 
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. </p>
-                <p><b>XBOX</b></p>    
-                <p><b>Precio: </b> $100.00</p>
-              </p>
-            </div>
-            <div class="card-footer">
-              <small class="text-body-secondary">
-                <button type="button" class="btn btn-warning">Editar</button>
-                <button type="button" class="btn btn-danger">Eliminar</button>
-              </small>
-            </div>
-          </div>
-        
-        </div>
+      <!-- Contenedor de Cartas de Videojuegos -->
+      <div id="cartasVideojuegos" class="row row-cols-1 row-cols-md-3 g-4 mt-2 mb-5">
+        <!-- Las cartas se generarán aquí por JavaScript -->
       </div>
     </div>
 
-    <!-- Bootstrap JS -->
+    <!-- Scripts -->
     <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/catalogo.js"></script>
   </body>
 </html>

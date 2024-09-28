@@ -7,28 +7,83 @@ const http_1 = require("http");
 const express_1 = __importDefault(require("express"));
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
+const multer_1 = __importDefault(require("multer"));
 const expressApp = (0, express_1.default)();
 const server = (0, http_1.createServer)(expressApp);
 const port = 5000;
-// Middleware para servir archivos estáticos desde la carpeta "static"
-expressApp.use(express_1.default.static(path_1.default.join(__dirname, '..', 'static')));
-expressApp.use(express_1.default.static("node_modules/bootstrap/dist"));
-// Ruta para la raíz que redirige al index.html
-expressApp.get('/', (req, res) => {
-    res.sendFile(path_1.default.join(__dirname, '..', 'static', 'index.html'));
-    console.log('Página de inicio enviada');
+// Configuración de multer para manejar la subida de archivos
+const storage = multer_1.default.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, path_1.default.join(__dirname, '..', 'static', 'images')); // Directorio de destino para guardar las imágenes subidas
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.originalname); // Nombre de archivo original para guardar la imagen
+    }
 });
-// Nueva ruta para obtener los datos del JSON
+const upload = (0, multer_1.default)({ storage: storage });
+// Middleware para servir archivos estáticos
+expressApp.use(express_1.default.static(path_1.default.join(__dirname, '..', 'static'))); // Servir archivos estáticos desde la carpeta "static"
+expressApp.use(express_1.default.static("node_modules/bootstrap/dist")); // Servir archivos estáticos de Bootstrap desde la carpeta "node_modules"
+// Ruta para la raíz
+expressApp.get('/', (req, res) => {
+    res.sendFile(path_1.default.join(__dirname, '..', 'static', 'index.html')); // Enviar el archivo "index.html" como respuesta
+});
+// Ruta para obtener los videojuegos
 expressApp.get('/api/videojuegos', (req, res) => {
-    const dataPath = path_1.default.join(__dirname, '..', '..', 'data', 'videojuegos.json');
+    const dataPath = path_1.default.join(__dirname, '..', '..', 'data', 'videojuegos.json'); // Ruta del archivo JSON de videojuegos
+    // Mensaje de depuración
+    console.log(`Intentando leer el archivo JSON en: ${dataPath}`);
     fs_1.default.readFile(dataPath, 'utf8', (err, data) => {
         if (err) {
-            res.status(500).send('Error al leer el json');
-            console.error(err);
+            console.error('Error al leer el archivo de datos:', err);
+            return res.status(500).send('Error al leer el archivo de datos'); // Enviar respuesta de error si hay un problema al leer el archivo
         }
-        else {
-            res.json(JSON.parse(data));
-            console.log('Datos enviados');
+        try {
+            const videojuegos = JSON.parse(data);
+            res.json(videojuegos); // Enviar los videojuegos como respuesta en formato JSON
+        }
+        catch (parseError) {
+            console.error('Error al parsear el JSON:', parseError);
+            return res.status(500).send('Error al parsear el archivo de datos'); // Enviar respuesta de error si hay un problema al parsear el archivo JSON
+        }
+    });
+});
+// Ruta para agregar un nuevo videojuego
+expressApp.post('/api/videojuegos', upload.single('imagen'), (req, res) => {
+    const { nombre, descripcion, precio, consolas } = req.body;
+    const imagen = req.file ? `/images/${req.file.originalname}` : '';
+    if (!nombre || !descripcion || !precio || !consolas || !imagen) {
+        return res.status(400).send('Todos los campos son obligatorios.'); // Enviar respuesta de error si falta algún campo obligatorio
+    }
+    const newVideojuego = {
+        nombre,
+        descripcion,
+        precio: parseFloat(precio),
+        consola: JSON.parse(consolas),
+        imagen,
+    };
+    const dataPath = path_1.default.join(__dirname, '..', '..', 'data', 'videojuegos.json'); // Ruta del archivo JSON de videojuegos
+    // Mensaje de depuración
+    console.log(`Intentando escribir en el archivo JSON en: ${dataPath}`);
+    fs_1.default.readFile(dataPath, 'utf8', (err, data) => {
+        if (err) {
+            console.error('Error al leer el archivo de datos:', err);
+            return res.status(500).send('Error al leer el archivo de datos'); // Enviar respuesta de error si hay un problema al leer el archivo
+        }
+        try {
+            const videojuegos = JSON.parse(data);
+            videojuegos.push(newVideojuego);
+            fs_1.default.writeFile(dataPath, JSON.stringify(videojuegos, null, 2), (writeErr) => {
+                if (writeErr) {
+                    console.error('Error al guardar el videojuego:', writeErr);
+                    return res.status(500).send('Error al guardar el videojuego.'); // Enviar respuesta de error si hay un problema al guardar el videojuego
+                }
+                res.json(videojuegos); // Devolver la lista actualizada de videojuegos como respuesta
+            });
+        }
+        catch (parseError) {
+            console.error('Error al parsear el JSON:', parseError);
+            return res.status(500).send('Error al parsear el archivo de datos'); // Enviar respuesta de error si hay un problema al parsear el archivo JSON
         }
     });
 });
