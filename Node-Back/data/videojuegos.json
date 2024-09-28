@@ -52,5 +52,17 @@
       "Playstation"
     ],
     "imagen": "/images/img.jpg"
+  },
+  {
+    "nombre": "2",
+    "descripcion": "2",
+    "precio": 2,
+    "consola": [
+      "Playstation",
+      "Xbox",
+      "Nintendo",
+      "PC"
+    ],
+    "imagen": "/images/14ea485d35a85fec60e4688fe60d9570.jpg"
   }
 ]
