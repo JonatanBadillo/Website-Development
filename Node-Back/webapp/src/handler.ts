@@ -158,3 +158,47 @@ export const editVideojuego = (req: Request, res: Response) => {
   
 // Exportar la configuración de multer
 export const uploadHandler = upload.single('imagen');
+
+// Función para eliminar un videojuego
+export const deleteVideojuego = (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    console.log(`Intentando eliminar el videojuego con ID: ${id}`);
+
+    const dataPath = path.join(__dirname, '..', '..', 'data', 'videojuegos.json');
+
+    fs.readFile(dataPath, 'utf8', (err, data) => {
+        if (err) {
+            console.error('Error al leer el archivo de datos:', err);
+            return res.status(500).send('Error al leer el archivo de datos');
+        }
+
+        try {
+            const videojuegos = JSON.parse(data);
+            const index = videojuegos.findIndex((videojuego: any) => videojuego.id === Number(id));
+
+            if (index === -1) {
+                console.error(`Videojuego con ID ${id} no encontrado.`);
+                return res.status(404).send('Videojuego no encontrado.');
+            }
+
+            // Eliminar el videojuego del array
+            videojuegos.splice(index, 1);
+
+            console.log(`Videojuego con ID ${id} eliminado.`);
+
+            fs.writeFile(dataPath, JSON.stringify(videojuegos, null, 2), (writeErr) => {
+                if (writeErr) {
+                    console.error('Error al guardar los cambios después de la eliminación:', writeErr);
+                    return res.status(500).send('Error al guardar los cambios después de la eliminación.');
+                }
+
+                console.log('Videojuego eliminado exitosamente del archivo JSON.');
+                res.json(videojuegos); // Devolver la lista actualizada de videojuegos
+            });
+        } catch (parseError) {
+            console.error('Error al parsear el JSON:', parseError);
+            return res.status(500).send('Error al parsear el archivo de datos');
+        }
+    });
+};

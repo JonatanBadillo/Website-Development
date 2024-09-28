@@ -1,7 +1,7 @@
 import { createServer } from "http";
 import express, { Express } from "express";
 import path from 'path';
-import { getVideojuegos, postVideojuego, uploadHandler , editVideojuego } from './handler'; // Importar las funciones de handler.ts
+import { getVideojuegos, postVideojuego, uploadHandler , editVideojuego ,deleteVideojuego } from './handler'; // Importar las funciones de handler.ts
 
 const expressApp: Express = express();
 const server = createServer(expressApp);
@@ -24,6 +24,10 @@ expressApp.post('/api/videojuegos', uploadHandler, postVideojuego);
 
 // Ruta para editar un videojuego
 expressApp.put('/api/videojuegos', uploadHandler, editVideojuego);
+
+// Ruta para eliminar un videojuego
+expressApp.delete('/api/videojuegos/:id', deleteVideojuego);
+
 
 // Inicio del servidor
 server.listen(port, () => console.log(`Servidor HTTP escuchando en el puerto ${port}`));

@@ -32,15 +32,5 @@
     "precio": 39.99,
     "imagen": "/images/img4.jpg",
     "consola": "Xbox"
-  },
-  {
-    "id": 5,
-    "nombre": "JAJAJAJA",
-    "descripcion": "1",
-    "precio": 59.99,
-    "consola": [
-      "PlayStation"
-    ],
-    "imagen": "/images/city (1).png"
   }
 ]

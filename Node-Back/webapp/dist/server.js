@@ -23,5 +23,7 @@ expressApp.get('/api/videojuegos', handler_1.getVideojuegos);
 expressApp.post('/api/videojuegos', handler_1.uploadHandler, handler_1.postVideojuego);
 // Ruta para editar un videojuego
 expressApp.put('/api/videojuegos', handler_1.uploadHandler, handler_1.editVideojuego);
+// Ruta para eliminar un videojuego
+expressApp.delete('/api/videojuegos/:id', handler_1.deleteVideojuego);
 // Inicio del servidor
 server.listen(port, () => console.log(`Servidor HTTP escuchando en el puerto ${port}`));
