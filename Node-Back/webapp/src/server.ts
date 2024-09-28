@@ -9,7 +9,7 @@ const server = createServer(expressApp);
 const port = 5000;
 
 // Configuración de multer para manejar la subida de archivos
-const storage = multer.diskStorage({
+const storage = multer.diskStorage({ // Configuración de almacenamiento en disco
   destination: (req: Request, file: Express.Multer.File, cb: (error: Error | null, destination: string) => void) => {
     cb(null, path.join(__dirname, '..', 'static', 'images')); // Directorio de destino para guardar las imágenes subidas
   },
@@ -33,7 +33,7 @@ expressApp.get('/api/videojuegos', (req: Request, res: Response) => {
   const dataPath = path.join(__dirname, '..', '..', 'data', 'videojuegos.json'); // Ruta del archivo JSON de videojuegos
 
   // Mensaje de depuración
-  console.log(`Intentando leer el archivo JSON en: ${dataPath}`);
+  console.log(`Leyendo el archivo JSON`);
 
   fs.readFile(dataPath, 'utf8', (err, data) => {
     if (err) {
@@ -62,16 +62,16 @@ expressApp.post('/api/videojuegos', upload.single('imagen'), (req: Request, res:
 
   const newVideojuego = {
     nombre,
-    descripcion,
-    precio: parseFloat(precio),
-    consola: JSON.parse(consolas),
-    imagen,
+    descripcion, 
+    precio: parseFloat(precio), // Convertir el precio a un número de punto flotante
+    consola: JSON.parse(consolas), // Convertir la cadena de consolas en un arreglo
+    imagen, // Ruta de la imagen subida
   };
 
   const dataPath = path.join(__dirname, '..', '..', 'data', 'videojuegos.json'); // Ruta del archivo JSON de videojuegos
 
   // Mensaje de depuración
-  console.log(`Intentando escribir en el archivo JSON en: ${dataPath}`);
+  console.log(`Escribiendo en el archivo JSON `);
 
   fs.readFile(dataPath, 'utf8', (err, data) => {
     if (err) {

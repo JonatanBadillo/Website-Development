@@ -43,5 +43,14 @@
       "PC"
     ],
     "imagen": "/images/city.png"
+  },
+  {
+    "nombre": "1",
+    "descripcion": "1",
+    "precio": 2,
+    "consola": [
+      "Playstation"
+    ],
+    "imagen": "/images/img.jpg"
   }
 ]

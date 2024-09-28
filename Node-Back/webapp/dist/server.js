@@ -32,7 +32,7 @@ expressApp.get('/', (req, res) => {
 expressApp.get('/api/videojuegos', (req, res) => {
     const dataPath = path_1.default.join(__dirname, '..', '..', 'data', 'videojuegos.json'); // Ruta del archivo JSON de videojuegos
     // Mensaje de depuración
-    console.log(`Intentando leer el archivo JSON en: ${dataPath}`);
+    console.log(`Leyendo el archivo JSON`);
     fs_1.default.readFile(dataPath, 'utf8', (err, data) => {
         if (err) {
             console.error('Error al leer el archivo de datos:', err);
@@ -60,11 +60,11 @@ expressApp.post('/api/videojuegos', upload.single('imagen'), (req, res) => {
         descripcion,
         precio: parseFloat(precio),
         consola: JSON.parse(consolas),
-        imagen,
+        imagen, // Ruta de la imagen subida
     };
     const dataPath = path_1.default.join(__dirname, '..', '..', 'data', 'videojuegos.json'); // Ruta del archivo JSON de videojuegos
     // Mensaje de depuración
-    console.log(`Intentando escribir en el archivo JSON en: ${dataPath}`);
+    console.log(`Escribiendo en el archivo JSON `);
     fs_1.default.readFile(dataPath, 'utf8', (err, data) => {
         if (err) {
             console.error('Error al leer el archivo de datos:', err);
