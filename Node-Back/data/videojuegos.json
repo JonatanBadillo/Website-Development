@@ -1,5 +1,6 @@
 [
   {
+    "id": 1,
     "nombre": "The Last of Us Part II",
     "descripcion": "Un juego de acción y aventura que sigue la historia de Ellie.",
     "precio": 59.99,
@@ -7,13 +8,15 @@
     "consola": "PlayStation"
   },
   {
+    "id": 2,
     "nombre": "Halo Infinite",
     "descripcion": "Una nueva entrega en la famosa saga de disparos en primera persona.",
     "precio": 49.99,
-    "imagen": "images/img2.jpg",
+    "imagen": "/images/img2.jpg",
     "consola": "Xbox"
   },
   {
+    "id": 3,
     "nombre": "The Legend of Zelda: Breath of the Wild",
     "descripcion": "Un juego de mundo abierto ambientado en el reino de Hyrule.",
     "precio": 69.99,
@@ -21,6 +24,7 @@
     "consola": "Nintendo Switch"
   },
   {
+    "id": 4,
     "nombre": "Call of Duty: Modern Warfare III",
     "descripcion": "Un juego de disparos en primera persona que se desarrolla en un futuro cercano.",
     "precio": 39.99,
@@ -28,50 +32,11 @@
     "consola": "Xbox"
   },
   {
+    "id": 5,
     "nombre": "The Last of Us Part II",
     "descripcion": "Un juego de acción y aventura que sigue la historia de Ellie.",
     "precio": 59.99,
     "imagen": "/images/img4.jpg",
     "consola": "PlayStation"
-  },
-  {
-    "nombre": "1432",
-    "descripcion": "eqwr",
-    "precio": 5,
-    "consola": [
-      "Playstation",
-      "PC"
-    ],
-    "imagen": "/images/city.png"
-  },
-  {
-    "nombre": "1",
-    "descripcion": "1",
-    "precio": 2,
-    "consola": [
-      "Playstation"
-    ],
-    "imagen": "/images/img.jpg"
-  },
-  {
-    "nombre": "2",
-    "descripcion": "2",
-    "precio": 2,
-    "consola": [
-      "Playstation",
-      "Xbox",
-      "Nintendo",
-      "PC"
-    ],
-    "imagen": "/images/14ea485d35a85fec60e4688fe60d9570.jpg"
-  },
-  {
-    "nombre": "132",
-    "descripcion": "24342",
-    "precio": 2311,
-    "consola": [
-      "Playstation"
-    ],
-    "imagen": "/images/016f824b6729266c46d8f7240084da78.jpg"
   }
 ]
