@@ -64,5 +64,14 @@
       "PC"
     ],
     "imagen": "/images/14ea485d35a85fec60e4688fe60d9570.jpg"
+  },
+  {
+    "nombre": "132",
+    "descripcion": "24342",
+    "precio": 2311,
+    "consola": [
+      "Playstation"
+    ],
+    "imagen": "/images/016f824b6729266c46d8f7240084da78.jpg"
   }
 ]
