@@ -14,6 +14,7 @@ expressApp.use(express.static("node_modules/bootstrap/dist"));
 // Ruta para la raíz que redirige al index.html
 expressApp.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'static', 'index.html'));
+  console.log('Página de inicio enviada');
 });
 
 // Nueva ruta para obtener los datos del JSON
@@ -22,8 +23,10 @@ expressApp.get('/api/videojuegos', (req, res) => {
   fs.readFile(dataPath, 'utf8', (err, data) => {
     if (err) {
       res.status(500).send('Error al leer el json');
+      console.error(err);
     } else {
       res.json(JSON.parse(data));
+      console.log('Datos enviados');
     }
   });
 });

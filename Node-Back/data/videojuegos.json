@@ -1,37 +1,37 @@
 [
-    {
-      "nombre": "The Last of Us Part II",
-      "descripcion": "Un juego de acción y aventura que sigue la historia de Ellie.",
-      "precio": 59.99,
-      "imagen": "/images/img1.jpg",
-      "consola": "PlayStation"
-    },
-    {
-      "nombre": "Halo Infinite",
-      "descripcion": "Una nueva entrega en la famosa saga de disparos en primera persona.",
-      "precio": 49.99,
-      "imagen": "images/img2.jpg",
-      "consola": "Xbox"
-    },
-    {
-      "nombre": "The Legend of Zelda: Breath of the Wild",
-      "descripcion": "Un juego de mundo abierto ambientado en el reino de Hyrule.",
-      "precio": 69.99,
-      "imagen": "/images/img3.jpg",
-      "consola": "Nintendo Switch"
-    },
-    {
-      "nombre": "The Legend of Zelda: Breath of the Wild",
-      "descripcion": "Un juego de mundo abierto ambientado en el reino de Hyrule.",
-      "precio": 69.99,
-      "imagen": "/images/img4.jpg",
-      "consola": "Nintendo Switch"
-    }, {
-      "nombre": "The Last of Us Part II",
-      "descripcion": "Un juego de acción y aventura que sigue la historia de Ellie.",
-      "precio": 59.99,
-      "imagen": "/images/img4.jpg",
-      "consola": "PlayStation"
-    }
-  ]
-  
+  {
+    "nombre": "The Last of Us Part II",
+    "descripcion": "Un juego de acción y aventura que sigue la historia de Ellie.",
+    "precio": 59.99,
+    "imagen": "/images/img1.jpg",
+    "consola": "PlayStation"
+  },
+  {
+    "nombre": "Halo Infinite",
+    "descripcion": "Una nueva entrega en la famosa saga de disparos en primera persona.",
+    "precio": 49.99,
+    "imagen": "images/img2.jpg",
+    "consola": "Xbox"
+  },
+  {
+    "nombre": "The Legend of Zelda: Breath of the Wild",
+    "descripcion": "Un juego de mundo abierto ambientado en el reino de Hyrule.",
+    "precio": 69.99,
+    "imagen": "/images/img3.jpg",
+    "consola": "Nintendo Switch"
+  },
+  {
+    "nombre": "Call of Duty: Modern Warfare III",
+    "descripcion": "Un juego de disparos en primera persona que se desarrolla en un futuro cercano.",
+    "precio": 39.99,
+    "imagen": "/images/img4.jpg",
+    "consola": "Xbox"
+  },
+  {
+    "nombre": "The Last of Us Part II",
+    "descripcion": "Un juego de acción y aventura que sigue la historia de Ellie.",
+    "precio": 59.99,
+    "imagen": "/images/img4.jpg",
+    "consola": "PlayStation"
+  }
+]
