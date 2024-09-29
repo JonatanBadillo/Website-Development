@@ -13,9 +13,11 @@
     "id": 2,
     "nombre": "Halo Infinite",
     "descripcion": "Una nueva entrega en la famosa saga de disparos en primera persona.",
-    "precio": 49.99,
-    "imagen": "/images/img2.jpg",
-    "consola": "Xbox"
+    "precio": 51,
+    "consola": [
+      "Xbox"
+    ],
+    "imagen": "/images/img2.jpg"
   },
   {
     "id": 3,
@@ -24,13 +26,5 @@
     "precio": 69.99,
     "imagen": "/images/img3.jpg",
     "consola": "Nintendo Switch"
-  },
-  {
-    "id": 4,
-    "nombre": "Call of Duty: Modern Warfare III",
-    "descripcion": "Un juego de disparos en primera persona que se desarrolla en un futuro cercano.",
-    "precio": 39.99,
-    "imagen": "/images/img4.jpg",
-    "consola": "Xbox"
   }
 ]
