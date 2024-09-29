@@ -41,7 +41,6 @@ const getVideojuegos = (req, res) => {
     });
 };
 exports.getVideojuegos = getVideojuegos;
-const uuid_1 = require("uuid"); // Importar el generador de UUID
 // Función para agregar un nuevo videojuego
 const postVideojuego = (req, res) => {
     const { nombre, descripcion, precio, consolas } = req.body;
@@ -51,17 +50,8 @@ const postVideojuego = (req, res) => {
         console.error('Validación fallida: Todos los campos son obligatorios.');
         return res.status(400).send('Todos los campos son obligatorios.');
     }
-    // Generar un ID único para el videojuego
-    const newVideojuego = {
-        id: (0, uuid_1.v4)(),
-        nombre,
-        descripcion,
-        precio: parseFloat(precio),
-        consola: JSON.parse(consolas),
-        imagen,
-    };
     const dataPath = path_1.default.join(__dirname, '..', '..', 'data', 'videojuegos.json');
-    console.log(`Escribiendo nuevo videojuego en el archivo JSON: ${dataPath}`);
+    console.log(`Leyendo el archivo JSON desde: ${dataPath}`);
     fs_1.default.readFile(dataPath, 'utf8', (err, data) => {
         if (err) {
             console.error('Error al leer el archivo de datos:', err);
@@ -69,6 +59,17 @@ const postVideojuego = (req, res) => {
         }
         try {
             const videojuegos = JSON.parse(data);
+            // Calcular el siguiente ID
+            const nextId = videojuegos.length > 0 ? Math.max(...videojuegos.map((v) => v.id)) + 1 : 1;
+            // Crear el nuevo videojuego
+            const newVideojuego = {
+                id: nextId,
+                nombre,
+                descripcion,
+                precio: parseFloat(precio),
+                consola: JSON.parse(consolas),
+                imagen,
+            };
             videojuegos.push(newVideojuego);
             console.log(`Nuevo videojuego agregado. Total de videojuegos: ${videojuegos.length}`);
             fs_1.default.writeFile(dataPath, JSON.stringify(videojuegos, null, 2), (writeErr) => {
@@ -104,7 +105,6 @@ const editVideojuego = (req, res) => {
         }
         try {
             const videojuegos = JSON.parse(data);
-            // Convertir el ID a número para asegurar que coincida con el ID en el archivo JSON
             const index = videojuegos.findIndex((videojuego) => videojuego.id === Number(id));
             if (index === -1) {
                 console.error(`Videojuego con ID ${id} no encontrado.`);

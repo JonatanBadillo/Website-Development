@@ -13,7 +13,7 @@
     "id": 2,
     "nombre": "Halo Infinite",
     "descripcion": "Una nueva entrega en la famosa saga de disparos en primera persona.",
-    "precio": 51,
+    "precio": 49.99,
     "consola": [
       "Xbox"
     ],
@@ -24,7 +24,20 @@
     "nombre": "The Legend of Zelda: Breath of the Wild",
     "descripcion": "Un juego de mundo abierto ambientado en el reino de Hyrule.",
     "precio": 69.99,
-    "imagen": "/images/img3.jpg",
-    "consola": "Nintendo Switch"
+    "consola": [
+      "Nintendo Switch"
+    ],
+    "imagen": "/images/img3.jpg"
+  },
+  {
+    "id": 4,
+    "nombre": "Call of Duty",
+    "descripcion": "Juego de guerra",
+    "precio": 29.99,
+    "consola": [
+      "PlayStation",
+      "Xbox"
+    ],
+    "imagen": "/images/img4.jpg"
   }
 ]

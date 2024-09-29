@@ -22,66 +22,66 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Función para crear las cartas de videojuegos
 function crearCartas(videojuegos) {
-  const contenedorCartas = document.getElementById('cartasVideojuegos');
-  contenedorCartas.innerHTML = ''; // Limpiar el contenido previo
+    const contenedorCartas = document.getElementById('cartasVideojuegos');
+    contenedorCartas.innerHTML = ''; // Limpiar el contenido previo
 
-  if (!videojuegos || videojuegos.length === 0) {
-      contenedorCartas.innerHTML = '<p>No hay videojuegos disponibles.</p>';
-      return;
-  }
+    if (!videojuegos || videojuegos.length === 0) {
+        contenedorCartas.innerHTML = '<p>No hay videojuegos disponibles.</p>';
+        return;
+    }
 
-  videojuegos.forEach(videojuego => {
-      const colDiv = document.createElement('div');
-      colDiv.className = 'col';
+    videojuegos.forEach(videojuego => {
+        const colDiv = document.createElement('div');
+        colDiv.className = 'col';
 
-      const cardDiv = document.createElement('div');
-      cardDiv.className = 'card h-100';
+        const cardDiv = document.createElement('div');
+        cardDiv.className = 'card h-100';
 
-      const img = document.createElement('img');
-      img.src = videojuego.imagen;
-      img.className = 'card-img-top';
-      img.alt = videojuego.nombre;
+        const img = document.createElement('img');
+        img.src = videojuego.imagen;
+        img.className = 'card-img-top';
+        img.alt = videojuego.nombre;
 
-      const cardBody = document.createElement('div');
-      cardBody.className = 'card-body';
+        const cardBody = document.createElement('div');
+        cardBody.className = 'card-body';
 
-      const title = document.createElement('h5');
-      title.className = 'card-title';
-      title.textContent = videojuego.nombre;
+        const title = document.createElement('h5');
+        title.className = 'card-title';
+        title.textContent = videojuego.nombre;
 
-      const description = document.createElement('p');
-      description.className = 'card-text';
-      let consolasTexto = Array.isArray(videojuego.consola) ? videojuego.consola.join(', ') : videojuego.consola;
-      description.innerHTML = `<p><b>Descripción:</b> ${videojuego.descripcion}</p>
-                               <p><b>Consola:</b> ${consolasTexto}</p>
-                               <p><b>Precio:</b> $${videojuego.precio}</p>`;
+        const description = document.createElement('p');
+        description.className = 'card-text';
+        let consolasTexto = Array.isArray(videojuego.consola) ? videojuego.consola.join(', ') : videojuego.consola;
+        description.innerHTML = `<p><b>Descripción:</b> ${videojuego.descripcion}</p>
+                                 <p><b>Consola:</b> ${consolasTexto}</p>
+                                 <p><b>Precio:</b> $${videojuego.precio}</p>`;
 
-      cardBody.appendChild(title);
-      cardBody.appendChild(description);
+        cardBody.appendChild(title);
+        cardBody.appendChild(description);
 
-      const cardFooter = document.createElement('div');
-      cardFooter.className = 'card-footer';
+        const cardFooter = document.createElement('div');
+        cardFooter.className = 'card-footer';
 
-      // Botón "Editar"
-      const editButton = document.createElement('button');
-      editButton.className = 'btn btn-warning';
-      editButton.textContent = 'Editar';
-      editButton.onclick = () => prepararEdicion(videojuego); // Llamar a la función de edición
+        // Botón "Editar"
+        const editButton = document.createElement('button');
+        editButton.className = 'btn btn-warning';
+        editButton.textContent = 'Editar';
+        editButton.onclick = () => prepararEdicion(videojuego); // Llamar a la función de edición
 
-      // Botón "Eliminar"
-      const deleteButton = document.createElement('button');
-      deleteButton.className = 'btn btn-danger ms-2'; // Agregar margen izquierdo
-      deleteButton.textContent = 'Eliminar';
-      deleteButton.onclick = () => eliminarVideojuego(videojuego.id); // Llamar a la función de eliminación
+        // Botón "Eliminar"
+        const deleteButton = document.createElement('button');
+        deleteButton.className = 'btn btn-danger ms-2'; // Agregar margen izquierdo
+        deleteButton.textContent = 'Eliminar';
+        deleteButton.onclick = () => eliminarVideojuego(videojuego.id); // Llamar a la función de eliminación
 
-      cardFooter.appendChild(editButton);
-      cardFooter.appendChild(deleteButton);
-      cardDiv.appendChild(img);
-      cardDiv.appendChild(cardBody);
-      cardDiv.appendChild(cardFooter);
-      colDiv.appendChild(cardDiv);
-      contenedorCartas.appendChild(colDiv);
-  });
+        cardFooter.appendChild(editButton);
+        cardFooter.appendChild(deleteButton);
+        cardDiv.appendChild(img);
+        cardDiv.appendChild(cardBody);
+        cardDiv.appendChild(cardFooter);
+        colDiv.appendChild(cardDiv);
+        contenedorCartas.appendChild(colDiv);
+    });
 }
 
 // Función para preparar la edición del videojuego
@@ -157,55 +157,54 @@ function agregarVideojuego() {
 
 // Función para editar el videojuego
 function editarVideojuego() {
-  const id = videojuegoIdActual;
-  const nombre = document.getElementById('nombreVideojuego').value.trim();
-  const descripcion = document.getElementById('descripcionVideojuego').value.trim();
-  const precio = parseFloat(document.getElementById('precioVideojuego').value);
-  const imagen = document.getElementById('imagenVideojuego').files[0];
+    const id = videojuegoIdActual;
+    const nombre = document.getElementById('nombreVideojuego').value.trim();
+    const descripcion = document.getElementById('descripcionVideojuego').value.trim();
+    const precio = parseFloat(document.getElementById('precioVideojuego').value);
+    const imagen = document.getElementById('imagenVideojuego').files[0];
 
-  const consolas = [];
-  document.querySelectorAll('#videojuegoForm .form-check-input:checked').forEach(checkbox => {
-      consolas.push(checkbox.value);
-  });
+    const consolas = [];
+    document.querySelectorAll('#videojuegoForm .form-check-input:checked').forEach(checkbox => {
+        consolas.push(checkbox.value);
+    });
 
-  if (!id || !nombre || !descripcion || isNaN(precio) || consolas.length === 0) {
-      alert('Todos los campos son obligatorios.');
-      return;
-  }
+    if (!id || !nombre || !descripcion || isNaN(precio) || consolas.length === 0) {
+        alert('Todos los campos son obligatorios.');
+        return;
+    }
 
-  const formData = new FormData();
-  formData.append('id', id);
-  formData.append('nombre', nombre);
-  formData.append('descripcion', descripcion);
-  formData.append('precio', precio);
-  formData.append('consolas', JSON.stringify(consolas));
-  if (imagen) {
-      formData.append('imagen', imagen);
-  }
+    const formData = new FormData();
+    formData.append('id', id);
+    formData.append('nombre', nombre);
+    formData.append('descripcion', descripcion);
+    formData.append('precio', precio);
+    formData.append('consolas', JSON.stringify(consolas));
+    if (imagen) {
+        formData.append('imagen', imagen);
+    }
 
-  fetch('/api/videojuegos', {
-      method: 'PUT',
-      body: formData,
-  })
-      .then(response => {
-          if (!response.ok) {
-              throw new Error('Error al editar el videojuego.');
-          }
-          return response.json();
-      })
-      .then(data => {
-          crearCartas(data);
-          alert('Videojuego editado correctamente.');
-          document.getElementById('videojuegoForm').reset();
-          editando = false;
-          videojuegoIdActual = null;
-      })
-      .catch(error => {
-          console.error('Error:', error);
-          alert('Ocurrió un error al editar el videojuego.');
-      });
+    fetch('/api/videojuegos', {
+        method: 'PUT',
+        body: formData,
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error al editar el videojuego.');
+            }
+            return response.json();
+        })
+        .then(data => {
+            crearCartas(data);
+            alert('Videojuego editado correctamente.');
+            document.getElementById('videojuegoForm').reset();
+            editando = false;
+            videojuegoIdActual = null;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Ocurrió un error al editar el videojuego.');
+        });
 }
-
 
 // Función para cargar los datos de videojuegos desde el servidor
 function cargarVideojuegos() {
@@ -231,25 +230,25 @@ function cargarVideojuegos() {
 
 // Función para eliminar un videojuego
 function eliminarVideojuego(id) {
-  if (!confirm('¿Estás seguro de que deseas eliminar este videojuego?')) {
-      return; // Cancelar la eliminación si el usuario no confirma
-  }
+    if (!confirm('¿Estás seguro de que deseas eliminar este videojuego?')) {
+        return; // Cancelar la eliminación si el usuario no confirma
+    }
 
-  fetch(`/api/videojuegos/${id}`, {
-      method: 'DELETE',
-  })
-  .then(response => {
-      if (!response.ok) {
-          throw new Error('Error al eliminar el videojuego.');
-      }
-      return response.json();
-  })
-  .then(data => {
-      crearCartas(data); // Actualizar la lista de videojuegos después de la eliminación
-      alert('Videojuego eliminado correctamente.');
-  })
-  .catch(error => {
-      console.error('Error:', error);
-      alert('Ocurrió un error al eliminar el videojuego.');
-  });
+    fetch(`/api/videojuegos/${id}`, {
+        method: 'DELETE',
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error al eliminar el videojuego.');
+        }
+        return response.json();
+    })
+    .then(data => {
+        crearCartas(data); // Actualizar la lista de videojuegos después de la eliminación
+        alert('Videojuego eliminado correctamente.');
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Ocurrió un error al eliminar el videojuego.');
+    });
 }

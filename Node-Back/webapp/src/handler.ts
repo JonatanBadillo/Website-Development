@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import path from 'path';
 import fs from 'fs';
 import multer from 'multer';
+import { v4 as uuidv4 } from 'uuid'; // Importar el generador de UUID
 
 // Configuración de multer para manejar la subida de archivos
 const storage = multer.diskStorage({
@@ -40,8 +41,6 @@ export const getVideojuegos = (req: Request, res: Response) => {
   });
 };
 
-import { v4 as uuidv4 } from 'uuid'; // Importar el generador de UUID
-
 // Función para agregar un nuevo videojuego
 export const postVideojuego = (req: Request, res: Response) => {
   const { nombre, descripcion, precio, consolas } = req.body;
@@ -54,19 +53,9 @@ export const postVideojuego = (req: Request, res: Response) => {
     return res.status(400).send('Todos los campos son obligatorios.');
   }
 
-  // Generar un ID único para el videojuego
-  const newVideojuego = {
-    id: uuidv4(), // Generar un ID único usando UUID
-    nombre,
-    descripcion,
-    precio: parseFloat(precio),
-    consola: JSON.parse(consolas),
-    imagen,
-  };
-
   const dataPath = path.join(__dirname, '..', '..', 'data', 'videojuegos.json');
 
-  console.log(`Escribiendo nuevo videojuego en el archivo JSON: ${dataPath}`);
+  console.log(`Leyendo el archivo JSON desde: ${dataPath}`);
 
   fs.readFile(dataPath, 'utf8', (err, data) => {
     if (err) {
@@ -76,8 +65,20 @@ export const postVideojuego = (req: Request, res: Response) => {
 
     try {
       const videojuegos = JSON.parse(data);
-      videojuegos.push(newVideojuego);
+      // Calcular el siguiente ID
+      const nextId = videojuegos.length > 0 ? Math.max(...videojuegos.map((v: any) => v.id)) + 1 : 1;
 
+      // Crear el nuevo videojuego
+      const newVideojuego = {
+        id: nextId, // ID numérico y consecutivo
+        nombre,
+        descripcion,
+        precio: parseFloat(precio),
+        consola: JSON.parse(consolas),
+        imagen,
+      };
+
+      videojuegos.push(newVideojuego);
       console.log(`Nuevo videojuego agregado. Total de videojuegos: ${videojuegos.length}`);
 
       fs.writeFile(dataPath, JSON.stringify(videojuegos, null, 2), (writeErr) => {
@@ -95,7 +96,6 @@ export const postVideojuego = (req: Request, res: Response) => {
     }
   });
 };
-
 
 // Función para editar un videojuego
 export const editVideojuego = (req: Request, res: Response) => {
@@ -119,7 +119,6 @@ export const editVideojuego = (req: Request, res: Response) => {
 
         try {
             const videojuegos = JSON.parse(data);
-            // Convertir el ID a número para asegurar que coincida con el ID en el archivo JSON
             const index = videojuegos.findIndex((videojuego: any) => videojuego.id === Number(id));
 
             if (index === -1) {
@@ -155,7 +154,6 @@ export const editVideojuego = (req: Request, res: Response) => {
     });
 };
 
-  
 // Exportar la configuración de multer
 export const uploadHandler = upload.single('imagen');
 
