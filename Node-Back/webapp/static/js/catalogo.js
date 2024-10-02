@@ -25,11 +25,13 @@ function crearCartas(videojuegos) {
     const contenedorCartas = document.getElementById('cartasVideojuegos');
     contenedorCartas.innerHTML = ''; // Limpiar el contenido previo
 
+    // Mostrar un mensaje si no hay videojuegos disponibles
     if (!videojuegos || videojuegos.length === 0) {
         contenedorCartas.innerHTML = '<p>No hay videojuegos disponibles.</p>';
         return;
     }
 
+    // Crear una carta para cada videojuego
     videojuegos.forEach(videojuego => {
         const colDiv = document.createElement('div');
         colDiv.className = 'col';
@@ -87,6 +89,7 @@ function crearCartas(videojuegos) {
 // Función para preparar la edición del videojuego
 function prepararEdicion(videojuego) {
     editando = true;
+    // Guardar el ID del videojuego actual
     videojuegoIdActual = videojuego.id;
 
     // Llenar el formulario con los datos del videojuego
@@ -110,11 +113,13 @@ function prepararEdicion(videojuego) {
 
 // Función para agregar un videojuego
 function agregarVideojuego() {
+    // Obtener los valores de los campos del formulario
     const nombre = document.getElementById('nombreVideojuego').value.trim();
     const descripcion = document.getElementById('descripcionVideojuego').value.trim();
     const precio = parseFloat(document.getElementById('precioVideojuego').value);
     const imagen = document.getElementById('imagenVideojuego').files[0];
 
+    // Obtener las consolas seleccionadas
     const consolas = [];
     document.querySelectorAll('#videojuegoForm .form-check-input:checked').forEach(checkbox => {
         consolas.push(checkbox.value);
@@ -125,6 +130,7 @@ function agregarVideojuego() {
         return;
     }
 
+    // Crear un objeto FormData para enviar los datos del formulario
     const formData = new FormData();
     formData.append('nombre', nombre);
     formData.append('descripcion', descripcion);
@@ -134,21 +140,22 @@ function agregarVideojuego() {
         formData.append('imagen', imagen);
     }
 
+    // Enviar los datos del formulario al servidor mediante una petición POST
     fetch('/api/videojuegos', {
         method: 'POST',
         body: formData,
-    })
+    })// Promesa que se ejecuta cuando la petición se completa
         .then(response => {
             if (!response.ok) {
                 throw new Error('Error al agregar el videojuego.');
             }
             return response.json();
-        })
+        })// Promesa que se ejecuta cuando se obtiene la respuesta del servidor
         .then(data => {
             crearCartas(data);
             alert('Videojuego agregado correctamente.');
             document.getElementById('videojuegoForm').reset();
-        })
+        })// Promesa que se ejecuta si ocurre un error en la petición
         .catch(error => {
             console.error('Error:', error);
             alert('Ocurrió un error al agregar el videojuego.');
