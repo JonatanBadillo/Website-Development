@@ -247,19 +247,20 @@ function eliminarVideojuego(id) {
         return; // Cancelar la eliminación si el usuario no confirma
     }
 
+    // Realizar una petición DELETE al servidor para eliminar el videojuego
     fetch(`/api/videojuegos/${id}`, {
         method: 'DELETE',
-    })
+    }) // Promesa que se ejecuta cuando la petición se completa
     .then(response => {
         if (!response.ok) {
             throw new Error('Error al eliminar el videojuego.');
         }
         return response.json();
-    })
+    }) // Promesa que se ejecuta cuando se obtiene la respuesta del servidor
     .then(data => {
         crearCartas(data); // Actualizar la lista de videojuegos después de la eliminación
         alert('Videojuego eliminado correctamente.');
-    })
+    }) // Promesa que se ejecuta si ocurre un error en la petición
     .catch(error => {
         console.error('Error:', error);
         alert('Ocurrió un error al eliminar el videojuego.');
