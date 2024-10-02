@@ -14,7 +14,7 @@ const privateKey = fs.readFileSync(path.join(__dirname, '..', 'key.pem'), 'utf8'
 const certificate = fs.readFileSync(path.join(__dirname, '..', 'cert.pem'), 'utf8');
 const credentials = { key: privateKey, cert: certificate };
 
-// Middleware para servir archivos estáticos
+// para servir archivos estáticos
 expressApp.use(express.static(path.join(__dirname, '..', 'static')));
 expressApp.use(express.static("node_modules/bootstrap/dist"));
 

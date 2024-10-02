@@ -9,9 +9,11 @@ const fs_1 = __importDefault(require("fs"));
 const multer_1 = __importDefault(require("multer"));
 // Configuración de multer para manejar la subida de archivos
 const storage = multer_1.default.diskStorage({
+    // Definir la carpeta de destino y el nombre del archivo
     destination: (req, file, cb) => {
         const destinationPath = path_1.default.join(__dirname, '..', 'static', 'images');
-        console.log(`Configurando destino de archivo en: ${destinationPath}`);
+        console.log(`Configurando destino de archivo en: ${destinationPath}`); // Mostrar la ruta de destino
+        // Crear la carpeta si no existe
         cb(null, destinationPath);
     },
     filename: (req, file, cb) => {
@@ -19,6 +21,7 @@ const storage = multer_1.default.diskStorage({
         cb(null, file.originalname);
     }
 });
+// Configurar multer con la configuración de storage
 const upload = (0, multer_1.default)({ storage: storage });
 // Función para obtener los videojuegos
 const getVideojuegos = (req, res) => {
@@ -58,6 +61,7 @@ const postVideojuego = (req, res) => {
             return res.status(500).send('Error al leer el archivo de datos');
         }
         try {
+            // Parsear el archivo JSON y convertirlo en un array de objetos
             const videojuegos = JSON.parse(data);
             // Calcular el siguiente ID
             const nextId = videojuegos.length > 0 ? Math.max(...videojuegos.map((v) => v.id)) + 1 : 1;

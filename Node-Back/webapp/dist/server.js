@@ -16,7 +16,7 @@ const httpsPort = 5050; // Puerto para HTTPS
 const privateKey = fs_1.default.readFileSync(path_1.default.join(__dirname, '..', 'key.pem'), 'utf8');
 const certificate = fs_1.default.readFileSync(path_1.default.join(__dirname, '..', 'cert.pem'), 'utf8');
 const credentials = { key: privateKey, cert: certificate };
-// Middleware para servir archivos estáticos
+// para servir archivos estáticos
 expressApp.use(express_1.default.static(path_1.default.join(__dirname, '..', 'static')));
 expressApp.use(express_1.default.static("node_modules/bootstrap/dist"));
 // Ruta para la raíz

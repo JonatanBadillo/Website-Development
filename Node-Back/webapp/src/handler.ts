@@ -6,9 +6,11 @@ import { v4 as uuidv4 } from 'uuid'; // Importar el generador de UUID
 
 // Configuración de multer para manejar la subida de archivos
 const storage = multer.diskStorage({
+  // Definir la carpeta de destino y el nombre del archivo
   destination: (req, file, cb) => {
     const destinationPath = path.join(__dirname, '..', 'static', 'images');
-    console.log(`Configurando destino de archivo en: ${destinationPath}`);
+    console.log(`Configurando destino de archivo en: ${destinationPath}`); // Mostrar la ruta de destino
+    // Crear la carpeta si no existe
     cb(null, destinationPath);
   },
   filename: (req, file, cb) => {
@@ -16,6 +18,7 @@ const storage = multer.diskStorage({
     cb(null, file.originalname);
   }
 });
+// Configurar multer con la configuración de storage
 const upload = multer({ storage: storage });
 
 // Función para obtener los videojuegos
@@ -64,6 +67,7 @@ export const postVideojuego = (req: Request, res: Response) => {
     }
 
     try {
+      // Parsear el archivo JSON y convertirlo en un array de objetos
       const videojuegos = JSON.parse(data);
       // Calcular el siguiente ID
       const nextId = videojuegos.length > 0 ? Math.max(...videojuegos.map((v: any) => v.id)) + 1 : 1;
