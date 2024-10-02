@@ -222,17 +222,18 @@ function editarVideojuego() {
 function cargarVideojuegos() {
     console.log('Iniciando la carga de videojuegos...');
 
+    // Realizar una petición GET al servidor para obtener los videojuegos 
     fetch('/api/videojuegos')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Error al cargar los datos de videojuegos.');
             }
             return response.json();
-        })
+        }) // Promesa que se ejecuta cuando se obtiene la respuesta del servidor
         .then(data => {
             console.log('Datos recibidos del servidor:', data);
             crearCartas(data);
-        })
+        })// Promesa que se ejecuta si ocurre un error en la petición
         .catch(error => {
             console.error('Error al cargar los datos de videojuegos:', error);
             const contenedorCartas = document.getElementById('cartasVideojuegos');
