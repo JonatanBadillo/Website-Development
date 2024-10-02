@@ -186,7 +186,7 @@ export const deleteVideojuego = (req: Request, res: Response) => {
     console.log(`Intentando eliminar el videojuego con ID: ${id}`);
 
     const dataPath = path.join(__dirname, '..', '..', 'data', 'videojuegos.json');
-
+  // Leer el archivo JSON
     fs.readFile(dataPath, 'utf8', (err, data) => {
         if (err) {
             console.error('Error al leer el archivo de datos:', err);
@@ -194,6 +194,7 @@ export const deleteVideojuego = (req: Request, res: Response) => {
         }
 
         try {
+          // Parsear el archivo JSON y convertirlo en un array de objetos
             const videojuegos = JSON.parse(data);
             const index = videojuegos.findIndex((videojuego: any) => videojuego.id === Number(id));
 
@@ -206,7 +207,7 @@ export const deleteVideojuego = (req: Request, res: Response) => {
             videojuegos.splice(index, 1);
 
             console.log(`Videojuego con ID ${id} eliminado.`);
-
+            // Guardar el array actualizado en el archivo JSON
             fs.writeFile(dataPath, JSON.stringify(videojuegos, null, 2), (writeErr) => {
                 if (writeErr) {
                     console.error('Error al guardar los cambios después de la eliminación:', writeErr);
