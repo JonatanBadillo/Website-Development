@@ -19,23 +19,27 @@ const storage = multer.diskStorage({
   }
 });
 // Configurar multer con la configuración de storage
-const upload = multer({ storage: storage });
+const upload = multer({ storage: storage }); 
 
 // Función para obtener los videojuegos
 export const getVideojuegos = (req: Request, res: Response) => {
+  // Ruta del archivo JSON
   const dataPath = path.join(__dirname, '..', '..', 'data', 'videojuegos.json');
 
   console.log(`Leyendo el archivo JSON desde: ${dataPath}`);
 
+  // Leer el archivo JSON
   fs.readFile(dataPath, 'utf8', (err, data) => {
     if (err) {
       console.error('Error al leer el archivo de datos:', err);
       return res.status(500).send('Error al leer el archivo de datos');
     }
 
+    // Parsear el archivo JSON como un array de objetos y devolverlo como respuesta
     try {
       const videojuegos = JSON.parse(data);
-      console.log(`Se encontraron ${videojuegos.length} videojuegos en el archivo JSON.`);
+      // Mostrar la cantidad de videojuegos encontrados
+      console.log(`Se encontraron ${videojuegos.length} videojuegos en el archivo JSON.`); 
       res.json(videojuegos);
     } catch (parseError) {
       console.error('Error al parsear el JSON:', parseError);
@@ -51,13 +55,15 @@ export const postVideojuego = (req: Request, res: Response) => {
 
   console.log(`Intentando agregar un nuevo videojuego: ${nombre}`);
 
+  // Validar que todos los campos obligatorios estén presentes
   if (!nombre || !descripcion || !precio || !consolas || !imagen) {
     console.error('Validación fallida: Todos los campos son obligatorios.');
     return res.status(400).send('Todos los campos son obligatorios.');
   }
 
+  
   const dataPath = path.join(__dirname, '..', '..', 'data', 'videojuegos.json');
-
+  // Leer el archivo JSON
   console.log(`Leyendo el archivo JSON desde: ${dataPath}`);
 
   fs.readFile(dataPath, 'utf8', (err, data) => {
@@ -69,7 +75,7 @@ export const postVideojuego = (req: Request, res: Response) => {
     try {
       // Parsear el archivo JSON y convertirlo en un array de objetos
       const videojuegos = JSON.parse(data);
-      // Calcular el siguiente ID
+      // Calcular el siguiente ID 
       const nextId = videojuegos.length > 0 ? Math.max(...videojuegos.map((v: any) => v.id)) + 1 : 1;
 
       // Crear el nuevo videojuego
@@ -82,9 +88,11 @@ export const postVideojuego = (req: Request, res: Response) => {
         imagen,
       };
 
+      // Agregar el nuevo videojuego al array
       videojuegos.push(newVideojuego);
       console.log(`Nuevo videojuego agregado. Total de videojuegos: ${videojuegos.length}`);
 
+      // Guardar el array actualizado en el archivo JSON
       fs.writeFile(dataPath, JSON.stringify(videojuegos, null, 2), (writeErr) => {
         if (writeErr) {
           console.error('Error al guardar el videojuego:', writeErr);
@@ -92,6 +100,7 @@ export const postVideojuego = (req: Request, res: Response) => {
         }
 
         console.log('Nuevo videojuego guardado exitosamente en el archivo JSON.');
+        // Devolver el array actualizado de videojuegos
         res.json(videojuegos);
       });
     } catch (parseError) {
