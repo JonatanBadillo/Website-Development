@@ -164,22 +164,26 @@ function agregarVideojuego() {
 
 // Función para editar el videojuego
 function editarVideojuego() {
+    // Obtener los valores de los campos del formulario
     const id = videojuegoIdActual;
     const nombre = document.getElementById('nombreVideojuego').value.trim();
     const descripcion = document.getElementById('descripcionVideojuego').value.trim();
     const precio = parseFloat(document.getElementById('precioVideojuego').value);
     const imagen = document.getElementById('imagenVideojuego').files[0];
 
+    // Obtener las consolas seleccionadas
     const consolas = [];
     document.querySelectorAll('#videojuegoForm .form-check-input:checked').forEach(checkbox => {
         consolas.push(checkbox.value);
     });
 
+    // Validar los campos del formulario
     if (!id || !nombre || !descripcion || isNaN(precio) || consolas.length === 0) {
         alert('Todos los campos son obligatorios.');
         return;
     }
 
+    // Crear un objeto FormData para enviar los datos del formulario
     const formData = new FormData();
     formData.append('id', id);
     formData.append('nombre', nombre);
@@ -190,23 +194,24 @@ function editarVideojuego() {
         formData.append('imagen', imagen);
     }
 
+    // Enviar los datos del formulario al servidor mediante una petición PUT
     fetch('/api/videojuegos', {
         method: 'PUT',
         body: formData,
-    })
+    })// Promesa que se ejecuta cuando la petición se completa
         .then(response => {
             if (!response.ok) {
                 throw new Error('Error al editar el videojuego.');
             }
             return response.json();
-        })
+        })// Promesa que se ejecuta cuando se obtiene la respuesta del servidor
         .then(data => {
             crearCartas(data);
             alert('Videojuego editado correctamente.');
             document.getElementById('videojuegoForm').reset();
             editando = false;
             videojuegoIdActual = null;
-        })
+        })// Promesa que se ejecuta si ocurre un error en la petición
         .catch(error => {
             console.error('Error:', error);
             alert('Ocurrió un error al editar el videojuego.');
