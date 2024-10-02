@@ -50,6 +50,7 @@ export const getVideojuegos = (req: Request, res: Response) => {
 
 // Función para agregar un nuevo videojuego
 export const postVideojuego = (req: Request, res: Response) => {
+  // Obtener los datos del nuevo videojuego
   const { nombre, descripcion, precio, consolas } = req.body;
   const imagen = req.file ? `/images/${req.file.originalname}` : '';
 
@@ -112,11 +113,13 @@ export const postVideojuego = (req: Request, res: Response) => {
 
 // Función para editar un videojuego
 export const editVideojuego = (req: Request, res: Response) => {
+  // Obtener los datos del videojuego a editar
     const { id, nombre, descripcion, precio, consolas } = req.body;
     const imagen = req.file ? `/images/${req.file.originalname}` : '';
 
     console.log(`Intentando editar el videojuego con ID: ${id}`);
 
+    // Validar que todos los campos obligatorios estén presentes
     if (!id || !nombre || !descripcion || !precio || !consolas) {
         console.error('Validación fallida: Todos los campos son obligatorios.');
         return res.status(400).send('Todos los campos son obligatorios.');
@@ -124,6 +127,7 @@ export const editVideojuego = (req: Request, res: Response) => {
 
     const dataPath = path.join(__dirname, '..', '..', 'data', 'videojuegos.json');
 
+    // Leer el archivo JSON
     fs.readFile(dataPath, 'utf8', (err, data) => {
         if (err) {
             console.error('Error al leer el archivo de datos:', err);
@@ -131,9 +135,12 @@ export const editVideojuego = (req: Request, res: Response) => {
         }
 
         try {
+          // Parsear el archivo JSON y convertirlo en un array de objetos
             const videojuegos = JSON.parse(data);
+            // Buscar el videojuego por ID
             const index = videojuegos.findIndex((videojuego: any) => videojuego.id === Number(id));
 
+            // Verificar si el videojuego no existe
             if (index === -1) {
                 console.error(`Videojuego con ID ${id} no encontrado.`);
                 return res.status(404).send('Videojuego no encontrado.');
@@ -151,12 +158,14 @@ export const editVideojuego = (req: Request, res: Response) => {
 
             console.log(`Videojuego con ID ${id} actualizado.`);
 
+            // Guardar el array actualizado en el archivo JSON
             fs.writeFile(dataPath, JSON.stringify(videojuegos, null, 2), (writeErr) => {
                 if (writeErr) {
                     console.error('Error al guardar los cambios del videojuego:', writeErr);
                     return res.status(500).send('Error al guardar los cambios del videojuego.');
                 }
 
+                // Devolver el array actualizado de videojuegos
                 console.log('Videojuego editado exitosamente en el archivo JSON.');
                 res.json(videojuegos);
             });
