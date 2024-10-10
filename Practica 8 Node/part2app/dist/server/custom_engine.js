@@ -13,9 +13,12 @@ const renderTemplate = (path, context, callback) => {
     });
 };
 const parseTemplate = (template, context) => {
+    const ctx = Object.keys(context)
+        .map((k) => `const ${k} = context.${k}`)
+        .join(";");
     const expr = /{{(.*)}}/gm;
     return template.toString().replaceAll(expr, (match, group) => {
-        return context[group.trim()] ?? "(no data)";
+        return eval(`${ctx};${group}`);
     });
 };
 const registerCustomTemplateEngine = (expressApp) => expressApp.engine("custom", renderTemplate);
