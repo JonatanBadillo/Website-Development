@@ -6,6 +6,7 @@
  </head>
  <body>
     <!-- Mostrar el mensaje -->
+    {{ @partial("message") }}
     <h3 class="m-2">Message: {{ message }}</h3>
     <!-- Mostrar el mensaje en minúsculas -->
     <h3 class="m-2">Lower: {{ message.toLowerCase() }}</h3>
