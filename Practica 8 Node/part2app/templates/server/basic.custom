@@ -1,9 +1,15 @@
 <!DOCTYPE html>
 <html>
- <head><link href="/css/bootstrap.min.css" rel="stylesheet" /></head>
+ <head>
+    <!-- Enlace a la hoja de estilos de Bootstrap -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet" />
+ </head>
  <body>
- <h3 class="m-2">Message: {{ message }}</h3>
-<h3 class="m-2">Lower: {{ message.toLowerCase() }}</h3>
- <h3 class="m-2">Count: {{ 2 * 3 }}</h3>
+    <!-- Mostrar el mensaje -->
+    <h3 class="m-2">Message: {{ message }}</h3>
+    <!-- Mostrar el mensaje en minúsculas -->
+    <h3 class="m-2">Lower: {{ message.toLowerCase() }}</h3>
+    <!-- Mostrar el resultado de la operación 2 * 3 -->
+    <h3 class="m-2">Count: {{ 2 * 3 }}</h3>
  </body>
 </html>
