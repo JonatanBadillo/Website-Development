@@ -51,7 +51,10 @@ expressApp.use((0, helmet_1.default)());
 expressApp.use(express_1.default.json());
 // Definimos una ruta dinámica que renderiza una plantilla personalizada
 expressApp.get("/dynamic/:file", (req, resp) => {
-    resp.render(`${req.params.file}.custom`, { message: "Hello template" });
+    resp.render(`${req.params.file}.custom`, {
+        message: "Hello template",
+        req,
+    });
 });
 // Definimos una ruta POST para manejar pruebas
 expressApp.post("/test", testHandler_1.testHandler);

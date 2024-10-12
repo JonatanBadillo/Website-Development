@@ -13,3 +13,12 @@ export const partial = (file: string, context: any) => {
  const path = `./${context.settings.views}/${file}.custom`;
  return readFileSync(path, "utf-8");
 }
+
+// La función 'conditional' toma una expresión, dos nombres de archivo y un contexto,
+// y devuelve el contenido del archivo correspondiente según el resultado de la evaluación
+// de la expresión. La evaluación de la expresión se realiza mediante la función 'evalFunc'.
+export const conditional = (expression: string,
+    trueFile: string, falseFile: string, context: any,
+    evalFunc: (expr: string) => any) => {
+    return partial(evalFunc(expression) ? trueFile : falseFile, context);
+}
