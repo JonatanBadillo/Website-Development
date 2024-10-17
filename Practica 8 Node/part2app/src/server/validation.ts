@@ -13,7 +13,20 @@ type ValidatedRequest = Request & {
 export const validate = (propName: string) => {
   const tests: Record<string, (val: string) => boolean> = {};
   const handler = (req: Request, resp: Response, next: NextFunction) => {
-    // TODO - perform validation checks
+    const vreq = req as ValidatedRequest;
+    if (!vreq.validation) {
+      vreq.validation = { results: {}, valid: true };
+    }
+    vreq.validation.results[propName] = { valid: true };
+    Object.keys(tests).forEach((k) => {
+      let valid = (vreq.validation.results[propName][k] = tests[k](
+        req.body?.[propName]
+      ));
+      if (!valid) {
+        vreq.validation.results[propName].valid = false;
+        vreq.validation.valid = false;
+      }
+    });
     next();
   };
   handler.required = () => {

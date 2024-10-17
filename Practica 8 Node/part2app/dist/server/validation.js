@@ -4,7 +4,18 @@ exports.getValidationResults = exports.validate = void 0;
 const validate = (propName) => {
     const tests = {};
     const handler = (req, resp, next) => {
-        // TODO - perform validation checks
+        const vreq = req;
+        if (!vreq.validation) {
+            vreq.validation = { results: {}, valid: true };
+        }
+        vreq.validation.results[propName] = { valid: true };
+        Object.keys(tests).forEach((k) => {
+            let valid = (vreq.validation.results[propName][k] = tests[k](req.body?.[propName]));
+            if (!valid) {
+                vreq.validation.results[propName].valid = false;
+                vreq.validation.valid = false;
+            }
+        });
         next();
     };
     handler.required = () => {
