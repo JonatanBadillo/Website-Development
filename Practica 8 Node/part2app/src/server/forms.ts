@@ -12,13 +12,15 @@ export const registerFormRoutes = (app: Express) => {
     resp.end();
   });
   app.post("/form", fileMiddleware.single("datafile"), (req, resp) => {
-    resp.write(`Content-Type: ${req.headers["content-type"]}\n`);
+    resp.setHeader("Content-Type", "text/html");
+    17;
+
     for (const key in req.body) {
-      resp.write(`${key}: ${req.body[key]}\n`);
+      resp.write(`<div>${key}: ${req.body[key]}</div>`);
     }
     if (req.file) {
-      resp.write(`---\nFile: ${req.file.originalname}\n`);
-      resp.write(req.file.buffer.toString());
+      resp.write(`<div>File: ${req.file.originalname}</div>`);
+      resp.write(`<div>${req.file.buffer.toString()}</div>`);
     }
     resp.end();
   });
