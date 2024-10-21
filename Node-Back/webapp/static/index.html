@@ -34,12 +34,18 @@
 
               <div class="mb-3">
                 <label for="nombreVideojuego" class="form-label">Nombre del Videojuego</label>
-                <input type="text" class="form-control" id="nombreVideojuego" placeholder="Nombre del videojuego" />
+                <input type="text" class="form-control" id="nombreVideojuego" placeholder="Nombre del videojuego" required minlength="3">
+                <!-- Div para mostrar error de nombre -->
+                <div id="error-nombre" class="text-danger error-message" style="display: none;"></div>
               </div>
+
               <div class="mb-3">
                 <label for="descripcionVideojuego" class="form-label">Descripción</label>
-                <textarea class="form-control" id="descripcionVideojuego" rows="3" placeholder="Descripción del videojuego"></textarea>
+                <textarea class="form-control" id="descripcionVideojuego" rows="3" placeholder="Descripción del videojuego" required></textarea>
+                <!-- Div para mostrar error de descripción -->
+                <div id="error-descripcion" class="text-danger error-message" style="display: none;"></div>
               </div>
+
               <div class="mb-3">
                 <label for="consolaVideojuego" class="form-label">Consolas</label>
                 <div class="form-check">
@@ -54,11 +60,17 @@
                   <input class="form-check-input" type="checkbox" value="Nintendo Switch" id="consolaNintendo">
                   <label class="form-check-label" for="consolaNintendo">Nintendo Switch</label>
                 </div>
+                <!-- Div para mostrar error de consolas -->
+                <div id="error-consolas" class="text-danger error-message" style="display: none;"></div>
               </div>
+
               <div class="mb-3">
                 <label for="precioVideojuego" class="form-label">Precio</label>
-                <input type="number" class="form-control" id="precioVideojuego" placeholder="Precio" />
+                <input type="number" class="form-control" id="precioVideojuego" placeholder="Precio" required min="0.01">
+                <!-- Div para mostrar error de precio -->
+                <div id="error-precio" class="text-danger error-message" style="display: none;"></div>
               </div>
+
               <div class="mb-3">
                 <label for="imagenVideojuego" class="form-label">Seleccionar Imagen</label>
                 <input type="file" class="form-control" id="imagenVideojuego" accept="image/*" />

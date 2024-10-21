@@ -28,5 +28,15 @@
       "Nintendo Switch"
     ],
     "imagen": "/images/img3.jpg"
+  },
+  {
+    "id": 4,
+    "nombre": "111",
+    "descripcion": "1",
+    "precio": 1,
+    "consola": [
+      "Nintendo Switch"
+    ],
+    "imagen": "/images/DSC_0051.JPG"
   }
 ]

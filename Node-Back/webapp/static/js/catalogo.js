@@ -269,29 +269,56 @@ function eliminarVideojuego(id) {
 
 
 // Función para validar datos del formulario antes de enviarlo
+// Función para mostrar mensajes de error en los campos del formulario
+function mostrarError(campo, mensaje) {
+    const errorDiv = document.getElementById(`error-${campo}`);
+    if (errorDiv) {
+        errorDiv.innerHTML = mensaje;
+        errorDiv.style.display = 'block';
+    }
+}
+
+// Función para limpiar los mensajes de error
+function limpiarErrores() {
+    const errores = document.querySelectorAll('.error-message');
+    errores.forEach(error => {
+        error.innerHTML = '';
+        error.style.display = 'none';
+    });
+}
+
+// Función para validar datos del formulario antes de enviarlo
 function validarFormulario() {
+    limpiarErrores();  // Limpiar mensajes anteriores
+
     const nombre = document.getElementById('nombreVideojuego').value.trim();
     const descripcion = document.getElementById('descripcionVideojuego').value.trim();
     const precio = parseFloat(document.getElementById('precioVideojuego').value);
     const consolasSeleccionadas = document.querySelectorAll('#videojuegoForm .form-check-input:checked');
 
+    let esValido = true;
+
     if (!nombre || nombre.length < 3) {
-        alert('El nombre debe tener al menos 3 caracteres.');
-        return false;
+        mostrarError('nombre', 'El nombre debe tener al menos 3 caracteres.');
+        esValido = false;
     }
+
     if (!descripcion) {
-        alert('La descripción es obligatoria.');
-        return false;
+        mostrarError('descripcion', 'La descripción es obligatoria.');
+        esValido = false;
     }
+
     if (isNaN(precio) || precio <= 0) {
-        alert('El precio debe ser un número válido y mayor que 0.');
-        return false;
+        mostrarError('precio', 'El precio debe ser un número válido y mayor que 0.');
+        esValido = false;
     }
+
     if (consolasSeleccionadas.length === 0) {
-        alert('Debes seleccionar al menos una consola.');
-        return false;
+        mostrarError('consolas', 'Debes seleccionar al menos una consola.');
+        esValido = false;
     }
-    return true;
+
+    return esValido;
 }
 
 // Asignar la función al evento de envío del formulario
