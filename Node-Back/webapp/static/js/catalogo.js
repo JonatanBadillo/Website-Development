@@ -164,32 +164,29 @@ function agregarVideojuego() {
 
 // Función para editar el videojuego
 function editarVideojuego() {
-    // Obtener los valores de los campos del formulario
     const id = videojuegoIdActual;
     const nombre = document.getElementById('nombreVideojuego').value.trim();
     const descripcion = document.getElementById('descripcionVideojuego').value.trim();
     const precio = parseFloat(document.getElementById('precioVideojuego').value);
-    const imagen = document.getElementById('imagenVideojuego').files[0];
+    const imagen = document.getElementById('imagenVideojuego').files[0];  // Obtener la imagen si se seleccionó una nueva
 
-    // Obtener las consolas seleccionadas
     const consolas = [];
     document.querySelectorAll('#videojuegoForm .form-check-input:checked').forEach(checkbox => {
         consolas.push(checkbox.value);
     });
 
-    // Validar los campos del formulario
-    if (!id || !nombre || !descripcion || isNaN(precio) || consolas.length === 0) {
-        alert('Todos los campos son obligatorios.');
-        return;
+    if (!validarFormulario()) {
+        return;  // Si el formulario no es válido, no se envía
     }
 
-    // Crear un objeto FormData para enviar los datos del formulario
     const formData = new FormData();
     formData.append('id', id);
     formData.append('nombre', nombre);
     formData.append('descripcion', descripcion);
     formData.append('precio', precio);
     formData.append('consolas', JSON.stringify(consolas));
+
+    // Solo agregamos la imagen si se seleccionó una nueva
     if (imagen) {
         formData.append('imagen', imagen);
     }
@@ -198,25 +195,26 @@ function editarVideojuego() {
     fetch('/api/videojuegos', {
         method: 'PUT',
         body: formData,
-    })// Promesa que se ejecuta cuando la petición se completa
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Error al editar el videojuego.');
-            }
-            return response.json();
-        })// Promesa que se ejecuta cuando se obtiene la respuesta del servidor
-        .then(data => {
-            crearCartas(data);
-            alert('Videojuego editado correctamente.');
-            document.getElementById('videojuegoForm').reset();
-            editando = false;
-            videojuegoIdActual = null;
-        })// Promesa que se ejecuta si ocurre un error en la petición
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Ocurrió un error al editar el videojuego.');
-        });
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error al editar el videojuego.');
+        }
+        return response.json();
+    })
+    .then(data => {
+        crearCartas(data);
+        alert('Videojuego editado correctamente.');
+        document.getElementById('videojuegoForm').reset();
+        editando = false;
+        videojuegoIdActual = null;
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Ocurrió un error al editar el videojuego.');
+    });
 }
+
 
 // Función para cargar los datos de videojuegos desde el servidor
 function cargarVideojuegos() {
@@ -294,7 +292,7 @@ function validarFormulario() {
     const descripcion = document.getElementById('descripcionVideojuego').value.trim();
     const precio = parseFloat(document.getElementById('precioVideojuego').value);
     const consolasSeleccionadas = document.querySelectorAll('#videojuegoForm .form-check-input:checked');
-    const imagen = document.getElementById('imagenVideojuego').files[0];  // Comprobar si se ha seleccionado una imagen
+    const imagen = document.getElementById('imagenVideojuego').files[0];  // Obtener la imagen seleccionada (si hay)
 
     let esValido = true;
 
@@ -318,13 +316,15 @@ function validarFormulario() {
         esValido = false;
     }
 
-    if (!imagen) {
+    // Validar imagen solo si NO estamos editando (es decir, si estamos agregando)
+    if (!editando && !imagen) {
         mostrarError('imagen', 'Debes seleccionar una imagen para el videojuego.');
         esValido = false;
     }
 
     return esValido;
 }
+
 
 
 // Asignar la función al evento de envío del formulario
