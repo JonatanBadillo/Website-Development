@@ -266,3 +266,48 @@ function eliminarVideojuego(id) {
         alert('Ocurrió un error al eliminar el videojuego.');
     });
 }
+
+
+// Función para validar datos del formulario antes de enviarlo
+function validarFormulario() {
+    const nombre = document.getElementById('nombreVideojuego').value.trim();
+    const descripcion = document.getElementById('descripcionVideojuego').value.trim();
+    const precio = parseFloat(document.getElementById('precioVideojuego').value);
+    const consolasSeleccionadas = document.querySelectorAll('#videojuegoForm .form-check-input:checked');
+
+    if (!nombre || nombre.length < 3) {
+        alert('El nombre debe tener al menos 3 caracteres.');
+        return false;
+    }
+    if (!descripcion) {
+        alert('La descripción es obligatoria.');
+        return false;
+    }
+    if (isNaN(precio) || precio <= 0) {
+        alert('El precio debe ser un número válido y mayor que 0.');
+        return false;
+    }
+    if (consolasSeleccionadas.length === 0) {
+        alert('Debes seleccionar al menos una consola.');
+        return false;
+    }
+    return true;
+}
+
+// Asignar la función al evento de envío del formulario
+document.addEventListener('DOMContentLoaded', () => {
+    const guardarButton = document.getElementById('guardarVideojuego');
+    if (guardarButton) {
+        guardarButton.onclick = () => {
+            if (validarFormulario()) {
+                if (editando) {
+                    editarVideojuego();
+                } else {
+                    agregarVideojuego();
+                }
+            }
+        };
+    }
+
+    cargarVideojuegos();
+});
