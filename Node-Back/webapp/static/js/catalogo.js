@@ -268,7 +268,6 @@ function eliminarVideojuego(id) {
 }
 
 
-// Función para validar datos del formulario antes de enviarlo
 // Función para mostrar mensajes de error en los campos del formulario
 function mostrarError(campo, mensaje) {
     const errorDiv = document.getElementById(`error-${campo}`);
@@ -295,6 +294,7 @@ function validarFormulario() {
     const descripcion = document.getElementById('descripcionVideojuego').value.trim();
     const precio = parseFloat(document.getElementById('precioVideojuego').value);
     const consolasSeleccionadas = document.querySelectorAll('#videojuegoForm .form-check-input:checked');
+    const imagen = document.getElementById('imagenVideojuego').files[0];  // Comprobar si se ha seleccionado una imagen
 
     let esValido = true;
 
@@ -318,8 +318,14 @@ function validarFormulario() {
         esValido = false;
     }
 
+    if (!imagen) {
+        mostrarError('imagen', 'Debes seleccionar una imagen para el videojuego.');
+        esValido = false;
+    }
+
     return esValido;
 }
+
 
 // Asignar la función al evento de envío del formulario
 document.addEventListener('DOMContentLoaded', () => {
