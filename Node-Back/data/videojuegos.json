@@ -28,16 +28,5 @@
       "Nintendo Switch"
     ],
     "imagen": "/images/img3.jpg"
-  },
-  {
-    "id": 4,
-    "nombre": "Call of Duty",
-    "descripcion": "Juego de guerra",
-    "precio": 49.99,
-    "consola": [
-      "PlayStation",
-      "Xbox"
-    ],
-    "imagen": "/images/img4.jpg"
   }
 ]

@@ -48,55 +48,66 @@ const getVideojuegos = (req, res) => {
     });
 };
 exports.getVideojuegos = getVideojuegos;
+// Desinfección de datos
+const sanitizeValue = (value) => {
+    const matchPattern = /[&<>="'`]/g;
+    const characterMappings = {
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        "\"": "&quot;",
+        "=": "&#x3D;",
+        "'": "&#x27;",
+        "`": "&#x60;"
+    };
+    return value?.replace(matchPattern, match => characterMappings[match]);
+};
+// Validar campos de un videojuego
+const validateVideojuego = (nombre, descripcion, precio, consolas) => {
+    if (!nombre || !descripcion || !precio || !consolas) {
+        return { isValid: false, message: "Todos los campos son obligatorios." };
+    }
+    if (nombre.length < 3) {
+        return { isValid: false, message: "El nombre debe tener al menos 3 caracteres." };
+    }
+    if (isNaN(parseFloat(precio))) {
+        return { isValid: false, message: "El precio debe ser un número válido." };
+    }
+    return { isValid: true, message: "" };
+};
 // Función para agregar un nuevo videojuego
 const postVideojuego = (req, res) => {
-    // Obtener los datos del nuevo videojuego
     const { nombre, descripcion, precio, consolas } = req.body;
     const imagen = req.file ? `/images/${req.file.originalname}` : '';
-    console.log(`Intentando agregar un nuevo videojuego: ${nombre}`);
-    // Validar que todos los campos obligatorios estén presentes
-    if (!nombre || !descripcion || !precio || !consolas || !imagen) {
-        console.error('Validación fallida: Todos los campos son obligatorios.');
-        return res.status(400).send('Todos los campos son obligatorios.');
+    // Validar los campos
+    const validation = validateVideojuego(nombre, descripcion, precio, consolas);
+    if (!validation.isValid) {
+        return res.status(400).send(validation.message);
     }
+    // Continuar con el flujo si la validación es exitosa
     const dataPath = path_1.default.join(__dirname, '..', '..', 'data', 'videojuegos.json');
-    // Leer el archivo JSON
-    console.log(`Leyendo el archivo JSON desde: ${dataPath}`);
     fs_1.default.readFile(dataPath, 'utf8', (err, data) => {
-        if (err) {
-            console.error('Error al leer el archivo de datos:', err);
+        if (err)
             return res.status(500).send('Error al leer el archivo de datos');
-        }
         try {
-            // Parsear el archivo JSON y convertirlo en un array de objetos
             const videojuegos = JSON.parse(data);
-            // Calcular el siguiente ID 
             const nextId = videojuegos.length > 0 ? Math.max(...videojuegos.map((v) => v.id)) + 1 : 1;
-            // Crear el nuevo videojuego
             const newVideojuego = {
                 id: nextId,
-                nombre,
-                descripcion,
+                nombre: sanitizeValue(nombre),
+                descripcion: sanitizeValue(descripcion),
                 precio: parseFloat(precio),
                 consola: JSON.parse(consolas),
                 imagen,
             };
-            // Agregar el nuevo videojuego al array
             videojuegos.push(newVideojuego);
-            console.log(`Nuevo videojuego agregado. Total de videojuegos: ${videojuegos.length}`);
-            // Guardar el array actualizado en el archivo JSON
             fs_1.default.writeFile(dataPath, JSON.stringify(videojuegos, null, 2), (writeErr) => {
-                if (writeErr) {
-                    console.error('Error al guardar el videojuego:', writeErr);
-                    return res.status(500).send('Error al guardar el videojuego.');
-                }
-                console.log('Nuevo videojuego guardado exitosamente en el archivo JSON.');
-                // Devolver el array actualizado de videojuegos
+                if (writeErr)
+                    return res.status(500).send('Error al guardar el videojuego');
                 res.json(videojuegos);
             });
         }
         catch (parseError) {
-            console.error('Error al parsear el JSON:', parseError);
             return res.status(500).send('Error al parsear el archivo de datos');
         }
     });
@@ -104,55 +115,39 @@ const postVideojuego = (req, res) => {
 exports.postVideojuego = postVideojuego;
 // Función para editar un videojuego
 const editVideojuego = (req, res) => {
-    // Obtener los datos del videojuego a editar
     const { id, nombre, descripcion, precio, consolas } = req.body;
     const imagen = req.file ? `/images/${req.file.originalname}` : '';
-    console.log(`Intentando editar el videojuego con ID: ${id}`);
-    // Validar que todos los campos obligatorios estén presentes
-    if (!id || !nombre || !descripcion || !precio || !consolas) {
-        console.error('Validación fallida: Todos los campos son obligatorios.');
-        return res.status(400).send('Todos los campos son obligatorios.');
+    // Validar los campos
+    const validation = validateVideojuego(nombre, descripcion, precio, consolas);
+    if (!validation.isValid) {
+        return res.status(400).send(validation.message);
     }
     const dataPath = path_1.default.join(__dirname, '..', '..', 'data', 'videojuegos.json');
-    // Leer el archivo JSON
     fs_1.default.readFile(dataPath, 'utf8', (err, data) => {
-        if (err) {
-            console.error('Error al leer el archivo de datos:', err);
+        if (err)
             return res.status(500).send('Error al leer el archivo de datos');
-        }
         try {
-            // Parsear el archivo JSON y convertirlo en un array de objetos
             const videojuegos = JSON.parse(data);
-            // Buscar el videojuego por ID
             const index = videojuegos.findIndex((videojuego) => videojuego.id === Number(id));
-            // Verificar si el videojuego no existe
             if (index === -1) {
-                console.error(`Videojuego con ID ${id} no encontrado.`);
                 return res.status(404).send('Videojuego no encontrado.');
             }
-            // Actualizar los datos del videojuego
+            // Actualizar el videojuego
             videojuegos[index] = {
                 id: videojuegos[index].id,
-                nombre,
-                descripcion,
+                nombre: sanitizeValue(nombre),
+                descripcion: sanitizeValue(descripcion),
                 precio: parseFloat(precio),
                 consola: JSON.parse(consolas),
-                imagen: imagen || videojuegos[index].imagen, // Mantener la imagen existente si no se proporciona una nueva
+                imagen: imagen || videojuegos[index].imagen,
             };
-            console.log(`Videojuego con ID ${id} actualizado.`);
-            // Guardar el array actualizado en el archivo JSON
             fs_1.default.writeFile(dataPath, JSON.stringify(videojuegos, null, 2), (writeErr) => {
-                if (writeErr) {
-                    console.error('Error al guardar los cambios del videojuego:', writeErr);
-                    return res.status(500).send('Error al guardar los cambios del videojuego.');
-                }
-                // Devolver el array actualizado de videojuegos
-                console.log('Videojuego editado exitosamente en el archivo JSON.');
+                if (writeErr)
+                    return res.status(500).send('Error al guardar los cambios.');
                 res.json(videojuegos);
             });
         }
         catch (parseError) {
-            console.error('Error al parsear el JSON:', parseError);
             return res.status(500).send('Error al parsear el archivo de datos');
         }
     });
@@ -163,37 +158,27 @@ exports.uploadHandler = upload.single('imagen');
 // Función para eliminar un videojuego
 const deleteVideojuego = (req, res) => {
     const { id } = req.params;
-    console.log(`Intentando eliminar el videojuego con ID: ${id}`);
+    if (!id || isNaN(Number(id))) {
+        return res.status(400).send('ID de videojuego no válido.');
+    }
     const dataPath = path_1.default.join(__dirname, '..', '..', 'data', 'videojuegos.json');
-    // Leer el archivo JSON
     fs_1.default.readFile(dataPath, 'utf8', (err, data) => {
-        if (err) {
-            console.error('Error al leer el archivo de datos:', err);
+        if (err)
             return res.status(500).send('Error al leer el archivo de datos');
-        }
         try {
-            // Parsear el archivo JSON y convertirlo en un array de objetos
             const videojuegos = JSON.parse(data);
             const index = videojuegos.findIndex((videojuego) => videojuego.id === Number(id));
             if (index === -1) {
-                console.error(`Videojuego con ID ${id} no encontrado.`);
                 return res.status(404).send('Videojuego no encontrado.');
             }
-            // Eliminar el videojuego del array
-            videojuegos.splice(index, 1);
-            console.log(`Videojuego con ID ${id} eliminado.`);
-            // Guardar el array actualizado en el archivo JSON
+            videojuegos.splice(index, 1); // Eliminar el videojuego
             fs_1.default.writeFile(dataPath, JSON.stringify(videojuegos, null, 2), (writeErr) => {
-                if (writeErr) {
-                    console.error('Error al guardar los cambios después de la eliminación:', writeErr);
-                    return res.status(500).send('Error al guardar los cambios después de la eliminación.');
-                }
-                console.log('Videojuego eliminado exitosamente del archivo JSON.');
-                res.json(videojuegos); // Devolver la lista actualizada de videojuegos
+                if (writeErr)
+                    return res.status(500).send('Error al guardar los cambios.');
+                res.json(videojuegos);
             });
         }
         catch (parseError) {
-            console.error('Error al parsear el JSON:', parseError);
             return res.status(500).send('Error al parsear el archivo de datos');
         }
     });
