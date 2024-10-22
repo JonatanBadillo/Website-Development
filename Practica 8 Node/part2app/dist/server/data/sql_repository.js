@@ -20,7 +20,11 @@ class SqlRepository {
         return this.executeQuery(sql_queries_1.queryAllSql, { $limit });
     }
     getResultsByName($name, $limit) {
-        return this.executeQuery(sql_queries_1.queryByNameSql, { $name, $limit });
+        return this.executeQuery(`
+        SELECT Results.*, name, age, years, nextage FROM Results
+        INNER JOIN People ON personId = People.id
+        INNER JOIN Calculations ON calculationId = Calculations.id
+        WHERE name = "${$name}"`, {});
     }
     executeQuery(sql, params) {
         return new Promise((resolve, reject) => {

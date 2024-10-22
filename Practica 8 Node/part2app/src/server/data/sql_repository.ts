@@ -19,7 +19,11 @@ export class SqlRepository implements Repository {
     return this.executeQuery(queryAllSql, { $limit });
   }
   getResultsByName($name: string, $limit: number): Promise<Result[]> {
-    return this.executeQuery(queryByNameSql, { $name, $limit });
+    return this.executeQuery(`
+        SELECT Results.*, name, age, years, nextage FROM Results
+        INNER JOIN People ON personId = People.id
+        INNER JOIN Calculations ON calculationId = Calculations.id
+        WHERE name = "${$name}"`, {});
   }
 
   executeQuery(sql: string, params: any): Promise<Result[]> {
