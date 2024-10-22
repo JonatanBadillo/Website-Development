@@ -31,11 +31,11 @@
   },
   {
     "id": 4,
-    "nombre": "&amp;amp;lt;a class&amp;amp;#x3D;&amp;amp;quot;btn btn-primary&amp;amp;quot; href&amp;amp;#x3D;&amp;amp;quot;http://amazon.com&amp;amp;quot;&amp;amp;gt;Click Me!&amp;amp;lt;/ a&amp;amp;gt;",
+    "nombre": "111",
     "descripcion": "1",
     "precio": 1,
     "consola": [
-      "Nintendo Switch"
+      "Xbox"
     ],
     "imagen": "/images/DSC_0025.JPG"
   }

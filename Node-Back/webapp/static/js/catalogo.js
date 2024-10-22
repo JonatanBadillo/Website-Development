@@ -111,6 +111,21 @@ function prepararEdicion(videojuego) {
     new bootstrap.Modal(document.getElementById('videojuegoModal')).show();
 }
 
+
+// Función para limpiar los campos del formulario
+function limpiarFormulario() {
+    document.getElementById('videojuegoId').value = '';  // Limpiar el ID del videojuego
+    document.getElementById('nombreVideojuego').value = '';
+    document.getElementById('descripcionVideojuego').value = '';
+    document.getElementById('precioVideojuego').value = '';
+    document.getElementById('imagenVideojuego').value = '';  // Limpiar el campo de imagen
+    document.querySelectorAll('#videojuegoForm .form-check-input').forEach(checkbox => {
+        checkbox.checked = false;  // Deseleccionar las consolas
+    });
+    limpiarErrores();  // Limpiar cualquier mensaje de error
+}
+
+
 // Función para agregar un videojuego
 function agregarVideojuego() {
     // Obtener los valores de los campos del formulario
@@ -205,7 +220,7 @@ function editarVideojuego() {
     .then(data => {
         crearCartas(data);
         alert('Videojuego editado correctamente.');
-        document.getElementById('videojuegoForm').reset();
+        limpiarFormulario();  // Limpiar el formulario después de editar
         editando = false;
         videojuegoIdActual = null;
     })
