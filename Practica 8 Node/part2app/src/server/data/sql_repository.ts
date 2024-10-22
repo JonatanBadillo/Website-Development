@@ -1,31 +1,36 @@
+import { readFileSync } from "fs";
 import { Database } from "sqlite3";
 import { Repository, Result } from "./repository";
-import { readFileSync } from "fs";
-
-// Clase que implementa la interfaz Repository utilizando una base de datos SQLite
+import { queryAllSql, queryByNameSql } from "./sql_queries";
 export class SqlRepository implements Repository {
-    db: Database;
+  db: Database;
 
-    // Constructor que inicializa la base de datos y ejecuta un script SQL
-    constructor() {
-        this.db = new Database("age.db");
-        this.db.exec(readFileSync("age.sql").toString(), (err) => {
-            if (err != undefined) throw err; // Lanza un error si ocurre algún problema al ejecutar el script SQL
-        });
-    }
+  constructor() {
+    this.db = new Database("age.db");
+    this.db.exec(readFileSync("age.sql").toString(), (err) => {
+      if (err != undefined) throw err;
+    });
+  }
+  saveResult(r: Result): Promise<number> {
+    throw new Error("Method not implemented.");
+  }
 
-    // Método para guardar un resultado en la base de datos (aún no implementado)
-    saveResult(r: Result): Promise<number> {
-        throw new Error("Method not implemented.");
-    }
+  getAllResults($limit: number): Promise<Result[]> {
+    return this.executeQuery(queryAllSql, { $limit });
+  }
+  getResultsByName($name: string, $limit: number): Promise<Result[]> {
+    return this.executeQuery(queryByNameSql, { $name, $limit });
+  }
 
-    // Método para obtener todos los resultados con un límite (aún no implementado)
-    getAllResults($limit: number): Promise<Result[]> {
-        throw new Error("Method not implemented.");
-    }
-
-    // Método para obtener resultados por nombre con un límite (aún no implementado)
-    getResultsByName($name: string, $limit: number): Promise<Result[]> {
-        throw new Error("Method not implemented.");
-    }
+  executeQuery(sql: string, params: any): Promise<Result[]> {
+    return new Promise<Result[]>((resolve, reject) => {
+      this.db.all<Result>(sql, params, (err, rows) => {
+        if (err == undefined) {
+          resolve(rows);
+        } else {
+          reject(err);
+        }
+      });
+    });
+  }
 }
