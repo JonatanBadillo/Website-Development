@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addSeedData = exports.defineRelationships = exports.initializeModels = void 0;
+exports.fromOrmModel = exports.addSeedData = exports.defineRelationships = exports.initializeModels = void 0;
 const sequelize_1 = require("sequelize");
 const orm_models_1 = require("./orm_models");
 const primaryKey = {
@@ -43,3 +43,13 @@ INSERT INTO ResultModels (calculationId, personId, createdAt, updatedAt) VALUES
 (2, 1, date(), date());`);
 };
 exports.addSeedData = addSeedData;
+const fromOrmModel = (model) => {
+    return {
+        id: model?.id || 0,
+        name: model?.Person?.name || "",
+        age: model?.Calculation?.age || 0,
+        years: model?.Calculation?.years || 0,
+        nextage: model?.Calculation?.nextage || 0,
+    };
+};
+exports.fromOrmModel = fromOrmModel;
