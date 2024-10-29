@@ -4,6 +4,7 @@ exports.SqlRepository = void 0;
 const fs_1 = require("fs");
 const sqlite3_1 = require("sqlite3");
 const sql_queries_1 = require("./sql_queries");
+const sql_helpers_1 = require("./sql_helpers");
 class SqlRepository {
     db;
     constructor() {
@@ -13,18 +14,27 @@ class SqlRepository {
                 throw err;
         });
     }
-    saveResult(r) {
-        throw new Error("Method not implemented.");
+    async saveResult(r) {
+        return await new sql_helpers_1.TransactionHelper()
+            .add(sql_queries_1.insertPerson, { $name: r.name })
+            .add(sql_queries_1.insertCalculation, {
+            $age: r.age,
+            $years: r.years,
+            $nextage: r.nextage,
+        })
+            .add(sql_queries_1.insertResult, {
+            $name: r.name,
+            $age: r.age,
+            $years: r.years,
+            $nextage: r.nextage,
+        })
+            .run(this.db);
     }
     getAllResults($limit) {
         return this.executeQuery(sql_queries_1.queryAllSql, { $limit });
     }
     getResultsByName($name, $limit) {
-        return this.executeQuery(`
-        SELECT Results.*, name, age, years, nextage FROM Results
-        INNER JOIN People ON personId = People.id
-        INNER JOIN Calculations ON calculationId = Calculations.id
-        WHERE name = "${$name}"`, {});
+        return this.executeQuery(sql_queries_1.queryByNameSql, { $name, $limit });
     }
     executeQuery(sql, params) {
         return new Promise((resolve, reject) => {
