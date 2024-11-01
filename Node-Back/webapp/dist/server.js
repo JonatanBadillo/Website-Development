@@ -9,6 +9,12 @@ const express_1 = __importDefault(require("express"));
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
 const handler_1 = require("./handler"); // Importar las funciones de handler.ts
+const database_1 = require("./database");
+database_1.sequelize.sync().then(() => {
+    console.log("Base de datos sincronizada.");
+}).catch(err => {
+    console.error("Error al sincronizar la base de datos:", err);
+});
 const expressApp = (0, express_1.default)();
 const httpPort = 5000; // Puerto para HTTP
 const httpsPort = 5050; // Puerto para HTTPS

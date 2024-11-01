@@ -3,9 +3,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteVideojuego = exports.uploadHandler = exports.editVideojuego = exports.postVideojuego = exports.getVideojuegos = void 0;
+exports.uploadHandler = exports.deleteVideojuego = exports.editVideojuego = exports.postVideojuego = exports.getVideojuegos = void 0;
+const models_1 = require("./models");
 const path_1 = __importDefault(require("path"));
-const fs_1 = __importDefault(require("fs"));
 const multer_1 = __importDefault(require("multer"));
 // Configuración de multer para manejar la subida de archivos
 const storage = multer_1.default.diskStorage({
@@ -23,31 +23,78 @@ const storage = multer_1.default.diskStorage({
 });
 // Configurar multer con la configuración de storage
 const upload = (0, multer_1.default)({ storage: storage });
-// Función para obtener los videojuegos
-const getVideojuegos = (req, res) => {
-    // Ruta del archivo JSON
-    const dataPath = path_1.default.join(__dirname, '..', '..', 'data', 'videojuegos.json');
-    console.log(`Leyendo el archivo JSON desde: ${dataPath}`);
-    // Leer el archivo JSON
-    fs_1.default.readFile(dataPath, 'utf8', (err, data) => {
-        if (err) {
-            console.error('Error al leer el archivo de datos:', err);
-            return res.status(500).send('Error al leer el archivo de datos');
-        }
-        // Parsear el archivo JSON como un array de objetos y devolverlo como respuesta
-        try {
-            const videojuegos = JSON.parse(data);
-            // Mostrar la cantidad de videojuegos encontrados
-            console.log(`Se encontraron ${videojuegos.length} videojuegos en el archivo JSON.`);
-            res.json(videojuegos);
-        }
-        catch (parseError) {
-            console.error('Error al parsear el JSON:', parseError);
-            return res.status(500).send('Error al parsear el archivo de datos');
-        }
-    });
+// Obtener todos los videojuegos
+const getVideojuegos = async (req, res) => {
+    try {
+        const videojuegos = await models_1.Videojuego.findAll();
+        res.json(videojuegos);
+    }
+    catch (error) {
+        res.status(500).send('Error al obtener los videojuegos');
+    }
 };
 exports.getVideojuegos = getVideojuegos;
+// Agregar un nuevo videojuego
+const postVideojuego = async (req, res) => {
+    try {
+        const { nombre, descripcion, precio, consolas } = req.body;
+        const imagen = req.file ? `/images/${req.file.originalname}` : '';
+        const nuevoVideojuego = await models_1.Videojuego.create({
+            nombre,
+            descripcion,
+            precio: parseFloat(precio),
+            consola: JSON.parse(consolas),
+            imagen
+        });
+        res.json(nuevoVideojuego);
+    }
+    catch (error) {
+        res.status(500).send('Error al agregar el videojuego');
+    }
+};
+exports.postVideojuego = postVideojuego;
+// Editar un videojuego
+const editVideojuego = async (req, res) => {
+    try {
+        const { id, nombre, descripcion, precio, consolas } = req.body;
+        const imagen = req.file ? `/images/${req.file.originalname}` : '';
+        const videojuego = await models_1.Videojuego.findByPk(id);
+        if (videojuego) {
+            videojuego.nombre = nombre;
+            videojuego.descripcion = descripcion;
+            videojuego.precio = parseFloat(precio);
+            videojuego.consola = JSON.parse(consolas);
+            videojuego.imagen = imagen || videojuego.imagen;
+            await videojuego.save();
+            res.json(videojuego);
+        }
+        else {
+            res.status(404).send('Videojuego no encontrado.');
+        }
+    }
+    catch (error) {
+        res.status(500).send('Error al editar el videojuego');
+    }
+};
+exports.editVideojuego = editVideojuego;
+// Eliminar un videojuego
+const deleteVideojuego = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const videojuego = await models_1.Videojuego.findByPk(id);
+        if (videojuego) {
+            await videojuego.destroy();
+            res.json({ message: 'Videojuego eliminado correctamente' });
+        }
+        else {
+            res.status(404).send('Videojuego no encontrado.');
+        }
+    }
+    catch (error) {
+        res.status(500).send('Error al eliminar el videojuego');
+    }
+};
+exports.deleteVideojuego = deleteVideojuego;
 // Desinfección de datos
 const sanitizeValue = (value) => {
     const matchPattern = /[&<>="'`]/g;
@@ -75,112 +122,5 @@ const validateVideojuego = (nombre, descripcion, precio, consolas) => {
     }
     return { isValid: true, message: "" };
 };
-// Función para agregar un nuevo videojuego
-const postVideojuego = (req, res) => {
-    const { nombre, descripcion, precio, consolas } = req.body;
-    const imagen = req.file ? `/images/${req.file.originalname}` : '';
-    // Validar los campos
-    const validation = validateVideojuego(nombre, descripcion, precio, consolas);
-    if (!validation.isValid) {
-        return res.status(400).send(validation.message);
-    }
-    // Continuar con el flujo si la validación es exitosa
-    const dataPath = path_1.default.join(__dirname, '..', '..', 'data', 'videojuegos.json');
-    fs_1.default.readFile(dataPath, 'utf8', (err, data) => {
-        if (err)
-            return res.status(500).send('Error al leer el archivo de datos');
-        try {
-            const videojuegos = JSON.parse(data);
-            const nextId = videojuegos.length > 0 ? Math.max(...videojuegos.map((v) => v.id)) + 1 : 1;
-            const newVideojuego = {
-                id: nextId,
-                nombre: sanitizeValue(nombre),
-                descripcion: sanitizeValue(descripcion),
-                precio: parseFloat(precio),
-                consola: JSON.parse(consolas),
-                imagen,
-            };
-            videojuegos.push(newVideojuego);
-            fs_1.default.writeFile(dataPath, JSON.stringify(videojuegos, null, 2), (writeErr) => {
-                if (writeErr)
-                    return res.status(500).send('Error al guardar el videojuego');
-                res.json(videojuegos);
-            });
-        }
-        catch (parseError) {
-            return res.status(500).send('Error al parsear el archivo de datos');
-        }
-    });
-};
-exports.postVideojuego = postVideojuego;
-// Función para editar un videojuego
-const editVideojuego = (req, res) => {
-    const { id, nombre, descripcion, precio, consolas } = req.body;
-    const imagen = req.file ? `/images/${req.file.originalname}` : '';
-    // Validar los campos
-    const validation = validateVideojuego(nombre, descripcion, precio, consolas);
-    if (!validation.isValid) {
-        return res.status(400).send(validation.message);
-    }
-    const dataPath = path_1.default.join(__dirname, '..', '..', 'data', 'videojuegos.json');
-    fs_1.default.readFile(dataPath, 'utf8', (err, data) => {
-        if (err)
-            return res.status(500).send('Error al leer el archivo de datos');
-        try {
-            const videojuegos = JSON.parse(data);
-            const index = videojuegos.findIndex((videojuego) => videojuego.id === Number(id));
-            if (index === -1) {
-                return res.status(404).send('Videojuego no encontrado.');
-            }
-            // Actualizar el videojuego
-            videojuegos[index] = {
-                id: videojuegos[index].id,
-                nombre: sanitizeValue(nombre),
-                descripcion: sanitizeValue(descripcion),
-                precio: parseFloat(precio),
-                consola: JSON.parse(consolas),
-                imagen: imagen || videojuegos[index].imagen,
-            };
-            fs_1.default.writeFile(dataPath, JSON.stringify(videojuegos, null, 2), (writeErr) => {
-                if (writeErr)
-                    return res.status(500).send('Error al guardar los cambios.');
-                res.json(videojuegos);
-            });
-        }
-        catch (parseError) {
-            return res.status(500).send('Error al parsear el archivo de datos');
-        }
-    });
-};
-exports.editVideojuego = editVideojuego;
 // Exportar la configuración de multer
 exports.uploadHandler = upload.single('imagen');
-// Función para eliminar un videojuego
-const deleteVideojuego = (req, res) => {
-    const { id } = req.params;
-    if (!id || isNaN(Number(id))) {
-        return res.status(400).send('ID de videojuego no válido.');
-    }
-    const dataPath = path_1.default.join(__dirname, '..', '..', 'data', 'videojuegos.json');
-    fs_1.default.readFile(dataPath, 'utf8', (err, data) => {
-        if (err)
-            return res.status(500).send('Error al leer el archivo de datos');
-        try {
-            const videojuegos = JSON.parse(data);
-            const index = videojuegos.findIndex((videojuego) => videojuego.id === Number(id));
-            if (index === -1) {
-                return res.status(404).send('Videojuego no encontrado.');
-            }
-            videojuegos.splice(index, 1); // Eliminar el videojuego
-            fs_1.default.writeFile(dataPath, JSON.stringify(videojuegos, null, 2), (writeErr) => {
-                if (writeErr)
-                    return res.status(500).send('Error al guardar los cambios.');
-                res.json(videojuegos);
-            });
-        }
-        catch (parseError) {
-            return res.status(500).send('Error al parsear el archivo de datos');
-        }
-    });
-};
-exports.deleteVideojuego = deleteVideojuego;

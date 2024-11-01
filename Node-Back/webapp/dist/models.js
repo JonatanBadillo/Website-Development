@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Videojuego = void 0;
-// src/models.ts
 const sequelize_1 = require("sequelize");
 const database_1 = require("./database");
 class Videojuego extends sequelize_1.Model {

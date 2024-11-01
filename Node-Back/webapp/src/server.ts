@@ -5,6 +5,17 @@ import path from 'path';
 import fs from 'fs';
 import { getVideojuegos, postVideojuego, uploadHandler, editVideojuego, deleteVideojuego } from './handler'; // Importar las funciones de handler.ts
 
+import { sequelize } from './database';
+import { Videojuego } from './models';
+
+
+sequelize.sync().then(() => {
+    console.log("Base de datos sincronizada.");
+}).catch(err => {
+    console.error("Error al sincronizar la base de datos:", err);
+});
+
+
 const expressApp: Express = express();
 const httpPort = 5000; // Puerto para HTTP
 const httpsPort = 5050; // Puerto para HTTPS
