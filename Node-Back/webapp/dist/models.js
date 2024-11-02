@@ -4,12 +4,6 @@ exports.Videojuego = void 0;
 const sequelize_1 = require("sequelize");
 const database_1 = require("./database");
 class Videojuego extends sequelize_1.Model {
-    id;
-    nombre;
-    descripcion;
-    precio;
-    consola;
-    imagen;
 }
 exports.Videojuego = Videojuego;
 Videojuego.init({
@@ -40,5 +34,6 @@ Videojuego.init({
     }
 }, {
     sequelize: database_1.sequelize,
-    modelName: 'Videojuego'
+    modelName: 'Videojuego',
+    tableName: 'Videojuegos'
 });

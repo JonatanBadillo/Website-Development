@@ -6,19 +6,25 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.uploadHandler = exports.deleteVideojuego = exports.editVideojuego = exports.postVideojuego = exports.getVideojuegos = void 0;
 const models_1 = require("./models");
 const path_1 = __importDefault(require("path"));
+const fs_1 = __importDefault(require("fs"));
 const multer_1 = __importDefault(require("multer"));
+const uuid_1 = require("uuid"); // Importar el generador de UUID
 // Configuración de multer para manejar la subida de archivos
 const storage = multer_1.default.diskStorage({
     // Definir la carpeta de destino y el nombre del archivo
     destination: (req, file, cb) => {
         const destinationPath = path_1.default.join(__dirname, '..', 'static', 'images');
-        console.log(`Configurando destino de archivo en: ${destinationPath}`); // Mostrar la ruta de destino
+        console.log(`Configurando destino de archivo en: ${destinationPath}`);
         // Crear la carpeta si no existe
+        if (!fs_1.default.existsSync(destinationPath)) {
+            fs_1.default.mkdirSync(destinationPath, { recursive: true });
+        }
         cb(null, destinationPath);
     },
     filename: (req, file, cb) => {
-        console.log(`Guardando archivo con nombre: ${file.originalname}`);
-        cb(null, file.originalname);
+        const uniqueSuffix = `${(0, uuid_1.v4)()}-${file.originalname}`;
+        console.log(`Guardando archivo con nombre: ${uniqueSuffix}`);
+        cb(null, uniqueSuffix);
     }
 });
 // Configurar multer con la configuración de storage
@@ -30,6 +36,7 @@ const getVideojuegos = async (req, res) => {
         res.json(videojuegos);
     }
     catch (error) {
+        console.error('Error al obtener los videojuegos:', error);
         res.status(500).send('Error al obtener los videojuegos');
     }
 };
@@ -38,10 +45,15 @@ exports.getVideojuegos = getVideojuegos;
 const postVideojuego = async (req, res) => {
     try {
         const { nombre, descripcion, precio, consolas } = req.body;
-        const imagen = req.file ? `/images/${req.file.originalname}` : '';
+        const imagen = req.file ? `/images/${req.file.filename}` : '';
+        // Validación de campos
+        const validation = validateVideojuego(nombre, descripcion, precio, consolas);
+        if (!validation.isValid) {
+            return res.status(400).send(validation.message);
+        }
         const nuevoVideojuego = await models_1.Videojuego.create({
-            nombre,
-            descripcion,
+            nombre: sanitizeValue(nombre),
+            descripcion: sanitizeValue(descripcion),
             precio: parseFloat(precio),
             consola: JSON.parse(consolas),
             imagen
@@ -49,6 +61,7 @@ const postVideojuego = async (req, res) => {
         res.json(nuevoVideojuego);
     }
     catch (error) {
+        console.error('Error al agregar el videojuego:', error);
         res.status(500).send('Error al agregar el videojuego');
     }
 };
@@ -57,11 +70,16 @@ exports.postVideojuego = postVideojuego;
 const editVideojuego = async (req, res) => {
     try {
         const { id, nombre, descripcion, precio, consolas } = req.body;
-        const imagen = req.file ? `/images/${req.file.originalname}` : '';
+        const imagen = req.file ? `/images/${req.file.filename}` : '';
+        // Validación de campos
+        const validation = validateVideojuego(nombre, descripcion, precio, consolas);
+        if (!validation.isValid) {
+            return res.status(400).send(validation.message);
+        }
         const videojuego = await models_1.Videojuego.findByPk(id);
         if (videojuego) {
-            videojuego.nombre = nombre;
-            videojuego.descripcion = descripcion;
+            videojuego.nombre = sanitizeValue(nombre);
+            videojuego.descripcion = sanitizeValue(descripcion);
             videojuego.precio = parseFloat(precio);
             videojuego.consola = JSON.parse(consolas);
             videojuego.imagen = imagen || videojuego.imagen;
@@ -73,6 +91,7 @@ const editVideojuego = async (req, res) => {
         }
     }
     catch (error) {
+        console.error('Error al editar el videojuego:', error);
         res.status(500).send('Error al editar el videojuego');
     }
 };
@@ -91,6 +110,7 @@ const deleteVideojuego = async (req, res) => {
         }
     }
     catch (error) {
+        console.error('Error al eliminar el videojuego:', error);
         res.status(500).send('Error al eliminar el videojuego');
     }
 };
