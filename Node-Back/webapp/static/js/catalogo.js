@@ -134,7 +134,6 @@ function agregarVideojuego() {
     const descripcion = document.getElementById('descripcionVideojuego').value.trim();
     const precio = parseFloat(document.getElementById('precioVideojuego').value);
     const imagen = document.getElementById('imagenVideojuego').files[0];
-
     const consolas = [];
     document.querySelectorAll('#videojuegoForm .form-check-input:checked').forEach(checkbox => {
         consolas.push(checkbox.value);
@@ -164,16 +163,17 @@ function agregarVideojuego() {
         }
         return response.json();
     })
-    .then(data => {
-        crearCartas(data);
+    .then(() => {
         alert('Videojuego agregado correctamente.');
         limpiarFormulario();
+        cargarVideojuegos(); // Actualizar la lista de videojuegos
     })
     .catch(error => {
         console.error('Error:', error);
         alert('Ocurrió un error al agregar el videojuego.');
     });
 }
+
 
 // Función para editar el videojuego
 function editarVideojuego() {
@@ -182,7 +182,6 @@ function editarVideojuego() {
     const descripcion = document.getElementById('descripcionVideojuego').value.trim();
     const precio = parseFloat(document.getElementById('precioVideojuego').value);
     const imagen = document.getElementById('imagenVideojuego').files[0];
-
     const consolas = [];
     document.querySelectorAll('#videojuegoForm .form-check-input:checked').forEach(checkbox => {
         consolas.push(checkbox.value);
@@ -194,7 +193,6 @@ function editarVideojuego() {
     formData.append('descripcion', descripcion);
     formData.append('precio', precio);
     formData.append('consolas', JSON.stringify(consolas));
-
     if (imagen) {
         formData.append('imagen', imagen);
     }
@@ -209,10 +207,10 @@ function editarVideojuego() {
         }
         return response.json();
     })
-    .then(data => {
-        crearCartas(data);
+    .then(() => {
         alert('Videojuego editado correctamente.');
         limpiarFormulario();
+        cargarVideojuegos(); // Actualizar la lista de videojuegos
         editando = false;
         videojuegoIdActual = null;
     })
@@ -221,6 +219,7 @@ function editarVideojuego() {
         alert('Ocurrió un error al editar el videojuego.');
     });
 }
+
 
 // Función para cargar los datos de videojuegos desde el servidor
 function cargarVideojuegos() {
@@ -259,15 +258,16 @@ function eliminarVideojuego(id) {
         }
         return response.json();
     })
-    .then(data => {
-        crearCartas(data);
+    .then(() => {
         alert('Videojuego eliminado correctamente.');
+        cargarVideojuegos(); // Actualizar la lista de videojuegos
     })
     .catch(error => {
         console.error('Error:', error);
         alert('Ocurrió un error al eliminar el videojuego.');
     });
 }
+
 
 // Función para mostrar mensajes de error en los campos del formulario
 function mostrarError(campo, mensaje) {
