@@ -2,6 +2,8 @@
 import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional } from 'sequelize';
 import { sequelize } from './database';
 
+
+// Creamos el modelo Videojuego usando Sequelize para definir la estructura de la tabla y sus columnas
 export class Videojuego extends Model<InferAttributes<Videojuego>, InferCreationAttributes<Videojuego>> {
   declare id: CreationOptional<number>;
   declare nombre: string;
@@ -30,7 +32,7 @@ Videojuego.init({
     allowNull: false
   },
   consola: {
-    type: DataTypes.JSON,
+    type: DataTypes.JSON, // Almacenamos las consolas como un array en formato JSON
     allowNull: false
   },
   imagen: {

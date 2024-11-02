@@ -29,7 +29,7 @@ const upload = multer({ storage: storage });
 // Obtener todos los videojuegos
 export const getVideojuegos = async (req: Request, res: Response) => {
   try {
-    const videojuegos = await Videojuego.findAll();
+    const videojuegos = await Videojuego.findAll(); //  `findAll` de Sequelize
     res.json(videojuegos);
   } catch (error) {
     console.error('Error al obtener los videojuegos:', error);
