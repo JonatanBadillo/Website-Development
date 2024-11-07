@@ -3,7 +3,7 @@ import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOpt
 import { sequelize } from './database';
 
 
-// Creamos el modelo Videojuego usando Sequelize para definir la estructura de la tabla y sus columnas
+// Creamos el modelo Videojuego Sequelize para definir la estructura de la tabla y sus columnas
 export class Videojuego extends Model<InferAttributes<Videojuego>, InferCreationAttributes<Videojuego>> {
   declare id: CreationOptional<number>;
   declare nombre: string;

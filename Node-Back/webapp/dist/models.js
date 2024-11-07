@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Videojuego = void 0;
 const sequelize_1 = require("sequelize");
 const database_1 = require("./database");
-// Creamos el modelo Videojuego usando Sequelize para definir la estructura de la tabla y sus columnas
+// Creamos el modelo Videojuego Sequelize para definir la estructura de la tabla y sus columnas
 class Videojuego extends sequelize_1.Model {
 }
 exports.Videojuego = Videojuego;
