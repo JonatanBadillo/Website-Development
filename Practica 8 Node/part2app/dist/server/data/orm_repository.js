@@ -69,5 +69,28 @@ class OrmRepository {
         const count = await orm_models_1.ResultModel.destroy({ where: { id } });
         return count == 1;
     }
+    async update(r) {
+        const mod = await this.sequelize.transaction(async (transaction) => {
+            const stored = await orm_models_1.ResultModel.findByPk(r.id);
+            if (stored !== null) {
+                const [person] = await orm_models_1.Person.findOrCreate({
+                    where: { name: r.name },
+                    transaction,
+                });
+                const [calculation] = await orm_models_1.Calculation.findOrCreate({
+                    where: {
+                        age: r.age,
+                        years: r.years,
+                        nextage: r.nextage,
+                    },
+                    transaction,
+                });
+                stored.personId = person.id;
+                stored.calculationId = calculation.id;
+                return await stored.save({ transaction });
+            }
+        });
+        return mod ? this.getResultById(mod.id) : undefined;
+    }
 }
 exports.OrmRepository = OrmRepository;
